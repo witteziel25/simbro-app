@@ -9,13 +9,21 @@
             <i class="fas fa-key text-3xl text-[#FF6B00]"></i>
         </div>
         <h2 class="text-2xl font-black">Verifikasi Kode OTP</h2>
-        <p class="text-gray-500 text-sm mt-1">Masukkan 4 digit kode yang dikirim</p>
+        <p class="text-gray-500 text-sm mt-1">
+            Masukkan 4 digit kode yang dikirim ke email
+            <strong>{{ session('otp_email') }}</strong>
+        </p>
+
         @if(session('info'))
             <div class="bg-blue-50 text-blue-700 p-2 rounded-lg text-xs mt-3">{{ session('info') }}</div>
+        @endif
+        @if(session('error'))
+            <div class="bg-red-50 text-red-600 p-2 rounded-lg text-sm mt-3">{{ session('error') }}</div>
         @endif
         @if($errors->any())
             <div class="bg-red-50 text-red-600 p-2 rounded-lg text-sm mt-3">{{ $errors->first() }}</div>
         @endif
+
         <form method="POST" action="{{ route('verify.otp') }}" class="mt-6 space-y-6">
             @csrf
             <div class="flex justify-center gap-3">

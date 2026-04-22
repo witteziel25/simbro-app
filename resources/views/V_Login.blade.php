@@ -23,7 +23,7 @@
                 <input type="password" name="password" placeholder="Password" class="w-full px-4 py-3 rounded-xl border focus:border-[#FF6B00] outline-none" required>
             </div>
             <div class="flex justify-between text-sm mb-6">
-                <a href="{{ route('password.otp') }}" class="text-[#FF6B00]">Lupa Password</a>
+                <a href="{{ route('password.request') }}" class="text-[#FF6B00]">Lupa Password</a>
                 <a href="{{ route('register') }}" class="text-[#FF6B00]">Daftar</a>
             </div>
             <button type="submit" class="w-full bg-[#FF6B00] text-white font-bold py-3 rounded-xl shadow-lg">Masuk</button>

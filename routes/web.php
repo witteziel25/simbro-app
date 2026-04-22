@@ -48,3 +48,11 @@ Route::prefix('admin')->group(function () {
     Route::post('/profile/update', [C_Profil::class, 'klikUpdateAdminProfil'])->name('admin.profile.update');
     Route::get('/data-customer', [C_Profil::class, 'showDataCustomer'])->name('admin.data.customer');
 });
+
+// Lupa password (OTP via username)
+Route::get('/forgot-password', [C_Authentication::class, 'showForgotForm'])->name('password.request');
+Route::post('/send-otp', [C_Authentication::class, 'sendOtp'])->name('send.otp');
+Route::get('/otp-verification', [C_Authentication::class, 'showOtpForm'])->name('password.otp');
+Route::post('/verify-otp', [C_Authentication::class, 'verifyOTP'])->name('verify.otp');
+Route::get('/reset-password', [C_Authentication::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [C_Authentication::class, 'resetPassword'])->name('password.update');
