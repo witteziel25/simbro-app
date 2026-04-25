@@ -8,12 +8,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OtpMail;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class C_Authentication extends Controller
 {
-    // ==============================================
     // HALAMAN FORM LOGIN & REGISTER
-    // ==============================================
     public function showFormLogin()
     {
         return view('V_Login');
@@ -24,18 +23,20 @@ class C_Authentication extends Controller
         return view('V_Register');
     }
 
-    // ==============================================
-    // PROSES LOGIN & REGISTER
-    // ==============================================
+    // PROSES LOGIN
     public function klikLogin(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'username' => 'required',
             'password' => 'required'
         ], [
             'username.required' => 'Harap isi data dengan lengkap',
             'password.required' => 'Harap isi data dengan lengkap'
         ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
         $user = M_User::where('username', $request->username)->first();
 
@@ -48,7 +49,8 @@ class C_Authentication extends Controller
                 'nama_lengkap' => $user->nama_lengkap,
                 'email' => $user->email,
                 'no_hp' => $user->no_hp,
-                'alamat' => $user->alamat
+                'alamat' => $user->alamat,
+                'peran' => $user->peran,
             ]);
 
             if ($user->role == 1) {
@@ -61,26 +63,38 @@ class C_Authentication extends Controller
         }
     }
 
+    // PROSES REGISTER
     public function klikRegister(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nama_lengkap' => 'required',
             'email' => 'required|email|unique:m_users,email',
-            'no_hp' => 'required',
+            'no_hp' => 'required|digits_between:10,13',
             'alamat' => 'required',
             'username' => 'required|unique:m_users,username',
-            'password' => 'required|min:8'
+            'password' => 'required|min:8',
+            'password_confirmation' => 'required|same:password',
+            'peran' => 'required|in:peternak,rumah_pemotongan',
         ], [
-            'nama_lengkap.required' => 'Harap isi data dengan lengkap',
-            'email.required' => 'Harap isi data dengan lengkap',
+            'nama_lengkap.required' => 'Nama lengkap wajib diisi',
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Format email tidak valid',
             'email.unique' => 'Email sudah terdaftar',
-            'no_hp.required' => 'Harap isi data dengan lengkap',
-            'alamat.required' => 'Harap isi data dengan lengkap',
-            'username.required' => 'Harap isi data dengan lengkap',
+            'no_hp.required' => 'Nomor telepon wajib diisi',
+            'no_hp.digits_between' => 'Nomor telepon harus antara 10-13 digit',
+            'alamat.required' => 'Alamat wajib diisi',
+            'username.required' => 'Username wajib diisi',
             'username.unique' => 'Username sudah terdaftar',
-            'password.required' => 'Harap isi data dengan lengkap',
-            'password.min' => 'Password minimal 8 digit'
+            'password.required' => 'Password wajib diisi',
+            'password.min' => 'Password minimal 8 digit',
+            'password_confirmation.required' => 'Konfirmasi password wajib diisi',
+            'password_confirmation.same' => 'Konfirmasi password tidak cocok',
+            'peran.required' => 'Peran wajib dipilih',
         ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
         M_User::create([
             'nama_lengkap' => $request->nama_lengkap,
@@ -89,36 +103,38 @@ class C_Authentication extends Controller
             'alamat' => $request->alamat,
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'role' => 0
+            'role' => 0,
+            'peran' => $request->peran,
         ]);
 
         return redirect()->route('login')->with('success', 'Pendaftaran berhasil, silakan login.');
     }
 
+    // LOGOUT (redirect ke landing page)
     public function klikLogout()
     {
         session()->flush();
-        return redirect()->route('login')->with('success', 'Logout telah berhasil');
+        return redirect()->route('landing')->with('success', 'Anda telah logout.');
     }
 
-    // ==============================================
-    // HALAMAN HOME BERDASARKAN ROLE
-    // ==============================================
+    // HALAMAN HOME
     public function showCustomerHome()
     {
-        if (session('role') != 0) return redirect()->route('login');
+        if (!session('user_logged_in') || session('role') != 0) {
+            return redirect()->route('login')->withErrors('Silakan login terlebih dahulu.');
+        }
         return view('customer.V_Home');
     }
 
     public function showAdminHome()
     {
-        if (session('role') != 1) return redirect()->route('login');
+        if (!session('user_logged_in') || session('role') != 1) {
+            return redirect()->route('login')->withErrors('Silakan login terlebih dahulu.');
+        }
         return view('admin.V_Home');
     }
 
-    // ==============================================
-    // LUPA PASSWORD DENGAN OTP (via username)
-    // ==============================================
+    // LUPA PASSWORD
     public function showForgotForm()
     {
         return view('V_ForgotPassword');
@@ -126,42 +142,41 @@ class C_Authentication extends Controller
 
     public function sendOtp(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'username' => 'required|exists:m_users,username'
         ], [
             'username.required' => 'Username wajib diisi',
-            'username.exists' => 'Username tidak terdaftar di sistem kami'
+            'username.exists' => 'Data tidak sesuai. Mohon isi kembali'
         ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
 
         $user = M_User::where('username', $request->username)->first();
         $otp = rand(1000, 9999);
 
-        // Simpan session dengan kadaluarsa 15 menit
         session([
             'otp_code' => $otp,
             'otp_email' => $user->email,
             'otp_expires' => Carbon::now()->addMinutes(15)->timestamp,
             'otp_verified' => false
         ]);
-        session()->save(); // Pastikan session langsung disimpan
+        session()->save();
 
-        // Kirim email OTP
         try {
             Mail::to($user->email)->send(new OtpMail($otp, $user->nama_lengkap));
             return redirect()->route('password.otp')->with('info', "Kode OTP telah dikirim ke email $user->email");
         } catch (\Exception $e) {
-            // Email gagal, tapi session tetap ada untuk testing (tampilkan kode OTP)
             return redirect()->route('password.otp')->with('error', 'Gagal mengirim email. Kode OTP: ' . $otp);
         }
     }
 
     public function showOtpForm()
     {
-        // Cek apakah session otp_code ada
         if (!session('otp_code')) {
             return redirect()->route('password.request')->withErrors('Sesi tidak ditemukan. Silakan minta OTP ulang.');
         }
-        // Cek kadaluarsa
         if (session('otp_expires') < Carbon::now()->timestamp) {
             session()->forget(['otp_code', 'otp_email', 'otp_expires', 'otp_verified']);
             return redirect()->route('password.request')->withErrors('Sesi OTP telah kadaluwarsa. Silakan minta ulang.');

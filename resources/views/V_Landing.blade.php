@@ -19,10 +19,10 @@
         </p>
         <div class="flex flex-wrap justify-center gap-5">
             <a href="{{ route('login') }}" class="bg-[#FF6B00] hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105">
-                <i class="fas fa-sign-in-alt mr-2"></i> Sudah punya akun? Masuk
+                <i class="fas fa-sign-in-alt mr-2"></i> Masuk
             </a>
             <a href="{{ route('register') }}" class="bg-white border-2 border-[#FF6B00] text-[#FF6B00] hover:bg-orange-50 font-bold py-3 px-8 rounded-full shadow-md transition transform hover:scale-105">
-                <i class="fas fa-user-plus mr-2"></i> Belum punya akun? Daftar
+                <i class="fas fa-user-plus mr-2"></i> Daftar
             </a>
         </div>
     </div>

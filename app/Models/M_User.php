@@ -17,7 +17,8 @@ class M_User extends Authenticatable
         'alamat',
         'username',
         'password',
-        'role'
+        'role',
+        'peran',
     ];
     protected $hidden = [
         'password',
