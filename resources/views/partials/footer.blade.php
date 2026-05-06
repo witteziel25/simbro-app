@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
         <div>
             <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-[#FF6B00] rounded-lg flex items-center justify-center"><i class="fas fa-drumstick-bite text-white text-sm"></i></div>
+                <img src="{{ asset('images/logo-simbro-1.png') }}" alt="SIMBRO" class="w-8 h-8 object-contain">
                 <span class="font-black text-xl text-[#FF6B00]">SIMBRO</span>
             </div>
             <p class="text-gray-600 text-sm mt-3">Solusi digital pasokan ayam broiler premium.</p>
@@ -14,9 +14,9 @@
         </div>
         <div>
             <h4 class="font-bold">Kantor Pusat</h4>
-            <p class="text-gray-600 text-sm mt-2">Jl. Raya Jember No. 88, Jember, Jawa Timur</p>
+            <p class="text-gray-600 text-sm mt-2">Jl. Gajah Mada Gg. 18 No. 14 Jember Jawa Timur</p>
             <p class="text-gray-600 text-sm mt-1"><i class="fas fa-phone-alt text-[#FF6B00]"></i> +62 812 3456 7890</p>
-            <p class="text-gray-600 text-sm"><i class="fas fa-envelope text-[#FF6B00]"></i> cs@simbro.co.id</p>
+            <p class="text-gray-600 text-sm"><i class="fas fa-envelope text-[#FF6B00]"></i> simbroweb@gmail.com</p>
         </div>
         <div>
             <h4 class="font-bold">Jam Operasional</h4>

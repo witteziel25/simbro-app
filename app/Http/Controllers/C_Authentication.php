@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class C_Authentication extends Controller
 {
-    // HALAMAN FORM LOGIN & REGISTER
+    // FORM LOGIN & REGISTER
     public function showFormLogin()
     {
         return view('V_Login');
@@ -30,8 +30,8 @@ class C_Authentication extends Controller
             'username' => 'required',
             'password' => 'required'
         ], [
-            'username.required' => 'Harap isi data dengan lengkap',
-            'password.required' => 'Harap isi data dengan lengkap'
+            'username.required' => 'Username wajib diisi',
+            'password.required' => 'Password wajib diisi'
         ]);
 
         if ($validator->fails()) {
@@ -50,7 +50,6 @@ class C_Authentication extends Controller
                 'email' => $user->email,
                 'no_hp' => $user->no_hp,
                 'alamat' => $user->alamat,
-                'peran' => $user->peran,
             ]);
 
             if ($user->role == 1) {
@@ -74,22 +73,20 @@ class C_Authentication extends Controller
             'username' => 'required|unique:m_users,username',
             'password' => 'required|min:8',
             'password_confirmation' => 'required|same:password',
-            'peran' => 'required|in:peternak,rumah_pemotongan',
         ], [
-            'nama_lengkap.required' => 'Nama lengkap wajib diisi',
-            'email.required' => 'Email wajib diisi',
-            'email.email' => 'Format email tidak valid',
-            'email.unique' => 'Email sudah terdaftar',
-            'no_hp.required' => 'Nomor telepon wajib diisi',
-            'no_hp.digits_between' => 'Nomor telepon harus antara 10-13 digit',
-            'alamat.required' => 'Alamat wajib diisi',
-            'username.required' => 'Username wajib diisi',
-            'username.unique' => 'Username sudah terdaftar',
-            'password.required' => 'Password wajib diisi',
-            'password.min' => 'Password minimal 8 digit',
-            'password_confirmation.required' => 'Konfirmasi password wajib diisi',
-            'password_confirmation.same' => 'Konfirmasi password tidak cocok',
-            'peran.required' => 'Peran wajib dipilih',
+            'nama_lengkap.required' => 'Harap isi data dengan lengkap',
+            'email.required' => 'Harap isi data dengan lengkap',
+            'email.email' => 'Data tidak sesuai, harap isi kembali',
+            'email.unique' => 'Data tidak sesuai, harap isi kembali',
+            'no_hp.required' => 'Harap isi data dengan lengkap',
+            'no_hp.digits_between' => 'Data tidak sesuai, harap isi kembali',
+            'alamat.required' => 'Harap isi data dengan lengkap',
+            'username.required' => 'Harap isi data dengan lengkap',
+            'username.unique' => 'Data tidak sesuai, harap isi kembali',
+            'password.required' => 'Harap isi data dengan lengkap',
+            'password.min' => 'Data tidak sesuai, harap isi kembali',
+            'password_confirmation.required' => 'Harap isi data dengan lengkap',
+            'password_confirmation.same' => 'Data tidak sesuai, harap isi kembali',
         ]);
 
         if ($validator->fails()) {
@@ -103,14 +100,12 @@ class C_Authentication extends Controller
             'alamat' => $request->alamat,
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'role' => 0,
-            'peran' => $request->peran,
         ]);
 
         return redirect()->route('login')->with('success', 'Pendaftaran berhasil, silakan login.');
     }
 
-    // LOGOUT (redirect ke landing page)
+    // LOGOUT
     public function klikLogout()
     {
         session()->flush();
@@ -118,23 +113,18 @@ class C_Authentication extends Controller
     }
 
     // HALAMAN HOME
-    public function showCustomerHome()
+    public function showHome()
     {
-        if (!session('user_logged_in') || session('role') != 0) {
-            return redirect()->route('login')->withErrors('Silakan login terlebih dahulu.');
+        $produk = \App\Models\M_Produk::all();
+
+        if (session('role') == 1) {
+            return view('admin.V_Home', compact('produk'));
+        } else {
+            return view('customer.V_Home', compact('produk'));
         }
-        return view('customer.V_Home');
     }
 
-    public function showAdminHome()
-    {
-        if (!session('user_logged_in') || session('role') != 1) {
-            return redirect()->route('login')->withErrors('Silakan login terlebih dahulu.');
-        }
-        return view('admin.V_Home');
-    }
-
-    // LUPA PASSWORD
+    // LUPA PASSWORD - OTP - RESET
     public function showForgotForm()
     {
         return view('V_ForgotPassword');
@@ -146,7 +136,7 @@ class C_Authentication extends Controller
             'username' => 'required|exists:m_users,username'
         ], [
             'username.required' => 'Username wajib diisi',
-            'username.exists' => 'Data tidak sesuai. Mohon isi kembali'
+            'username.exists' => 'Data tidak sesuai, harap isi kembali'
         ]);
 
         if ($validator->fails()) {
@@ -207,7 +197,7 @@ class C_Authentication extends Controller
             session()->save();
             return redirect()->route('password.reset')->with('success', 'Data Sesuai');
         } else {
-            return back()->withErrors(['otp' => 'Data tidak sesuai. Mohon isi kembali']);
+            return back()->withErrors(['otp' => 'Data tidak sesuai, harap isi kembali']);
         }
     }
 
@@ -226,13 +216,11 @@ class C_Authentication extends Controller
     public function resetPassword(Request $request)
     {
         $request->validate([
-            'password' => 'required|min:8',
-            'password_confirmation' => 'required|same:password'
+            'password' => 'required|min:8|confirmed',
         ], [
             'password.required' => 'Password wajib diisi',
-            'password.min' => 'Password minimal 8 digit',
-            'password_confirmation.required' => 'Konfirmasi password wajib diisi',
-            'password_confirmation.same' => 'Konfirmasi password tidak cocok'
+            'password.min' => 'Data tidak sesuai, harap isi kembali',
+            'password.confirmed' => 'Data tidak sesuai, harap isi kembali',
         ]);
 
         $user = M_User::where('email', session('otp_email'))->first();

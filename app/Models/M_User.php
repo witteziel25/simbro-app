@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class M_User extends Authenticatable
 {
     use HasFactory;
+
     protected $table = 'm_users';
     protected $primaryKey = 'user_id';
     protected $fillable = [
@@ -18,7 +19,6 @@ class M_User extends Authenticatable
         'username',
         'password',
         'role',
-        'peran',
     ];
     protected $hidden = [
         'password',

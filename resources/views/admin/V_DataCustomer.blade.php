@@ -3,18 +3,26 @@
 @section('title', 'Data Customer - SIMBRO Admin')
 
 @section('content')
-<div class="min-h-screen py-8 px-4 md:px-12">
-    <div class="max-w-7xl mx-auto mb-6">
-        <a href="{{ route('admin.home') }}" class="inline-flex items-center gap-2 text-gray-600 hover:text-[#FF6B00] transition">
-            <i class="fas fa-arrow-left"></i> Kembali ke Beranda Admin
-        </a>
-    </div>
-    <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-md overflow-hidden">
-        <div class="bg-gradient-to-r from-[#FF6B00] to-orange-500 px-8 py-6">
-            <h1 class="text-2xl font-bold text-white">Data Seluruh Customer</h1>
-            <p class="text-orange-100">Berikut adalah daftar customer yang terdaftar di SIMBRO</p>
+
+<div class="min-h-screen bg-white">
+    <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="flex items-center gap-4">
+                <img src="{{ asset('images/logo-simbro-2.png') }}" alt="SIMBRO" class="h-12 w-auto">
+                <div>
+                    <h1 class="text-2xl font-bold">Data Customer</h1>
+                    <p class="text-orange-100 text-sm">Pantau dan periksa seluruh customer yang terdaftar di SIMBRO</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <i class="fas fa-arrow-left"></i>
+                <a href="{{ route('admin.home') }}" class="inline-flex items-center gap-2 text-white hover:underline transition text-sm font-bold"> Kembali ke Beranda</a>
+            </div>
         </div>
-        <div class="p-6 overflow-x-auto">
+    </div>
+
+    <div class="w-full px-4 py-8 sm:px-6 lg:px-8">
+    <div class="overflow-x-auto">
             @if($customers->count() > 0)
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
@@ -43,9 +51,10 @@
                     </tbody>
                 </table>
             @else
-                <p class="text-center text-gray-500 py-8">Belum ada customer terdaftar.</p>
+                <div class="text-center text-gray-500 py-8">Belum ada customer terdaftar.</div>
             @endif
         </div>
     </div>
 </div>
+
 @endsection

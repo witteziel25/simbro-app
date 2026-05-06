@@ -3,6 +3,7 @@
 @section('title', 'Verifikasi OTP - SIMBRO')
 
 @section('content')
+
 <div class="min-h-screen flex items-center justify-center p-6">
     <div class="max-w-md w-full bg-white rounded-3xl shadow-xl border p-8 text-center">
         <div class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -32,10 +33,12 @@
                 <input type="text" name="otp3" maxlength="1" class="w-14 h-14 text-center text-2xl font-bold border rounded-xl focus:border-[#FF6B00] outline-none" required>
                 <input type="text" name="otp4" maxlength="1" class="w-14 h-14 text-center text-2xl font-bold border rounded-xl focus:border-[#FF6B00] outline-none" required>
             </div>
-            <button type="submit" class="w-full bg-[#FF6B00] text-white font-bold py-3 rounded-xl shadow-lg">Konfirmasi</button>
+            <button type="submit" class="w-full bg-[#FF6B00] hover:bg-orange-700 text-white font-bold py-3 rounded-xl shadow-lg transition">Konfirmasi</button>
         </form>
     </div>
 </div>
+
+@push('scripts')
 <script>
     document.querySelectorAll('input[name^="otp"]').forEach((input, index, arr) => {
         input.addEventListener('input', (e) => {
@@ -43,4 +46,6 @@
         });
     });
 </script>
+@endpush
+
 @endsection

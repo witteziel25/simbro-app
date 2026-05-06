@@ -3,230 +3,242 @@
 @section('title', 'Profil Saya - SIMBRO')
 
 @section('content')
-<div class="min-h-screen py-8 px-4 md:px-12">
-    <div class="max-w-6xl mx-auto mb-6">
-        <a href="{{ route('customer.home') }}" id="backLink" class="inline-flex items-center gap-2 text-gray-600 hover:text-[#FF6B00] transition">
-            <i class="fas fa-arrow-left"></i> Kembali ke Beranda
-        </a>
-    </div>
-    <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-md overflow-hidden">
-        <div class="bg-gradient-to-r from-[#FF6B00] to-orange-500 px-8 py-6">
-            <div class="flex items-center gap-4">
-                <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg">
-                    <i class="fas fa-user-circle text-5xl text-[#FF6B00]"></i>
-                </div>
-                <div>
-                    <h1 class="text-2xl font-bold text-white" id="displayNama">{{ $user->nama_lengkap }}</h1>
-                    <p class="text-orange-100">Customer ID: #{{ $user->user_id }}</p>
-                </div>
-            </div>
+
+<div class="min-h-screen flex flex-col md:flex-row">
+    <div class="w-full md:w-80 bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] flex flex-col justify-center px-10 py-10 text-white">
+        <img src="{{ asset('images/logo-simbro-2.png') }}" alt="SIMBRO" class="h-28 w-28 mb-4">
+        <h1 class="text-3xl font-bold mb-3">Profil Saya</h1>
+        <p class="text-orange-100 text-sm mb-4">Lihat dan kelola data akun profil Anda. Klik "Edit" untuk mengubah data profil anda.</p>
+        <div class="mt-3">
+            <i class="fas fa-arrow-left"></i>
+            <a href="{{ route('customer.home') }}" class="inline-flex items-center gap-2 text-white hover:underline transition text-sm font-bold"> Kembali ke Beranda</a>
         </div>
+    </div>
 
-        <form id="profileForm" class="p-8 md:p-10 space-y-6">
-            @csrf
-            <input type="hidden" name="user_id" value="{{ $user->user_id }}">
+    <div class="flex-1 bg-white p-6 md:p-32 overflow-y-auto">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-xl font-bold text-gray-800 mb-5 border-l-4 border-[#FF6B00] pl-3">Informasi Akun Customer</h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
-                <!-- Nama Lengkap -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Nama Lengkap</label>
-                    <div class="mt-1 view-mode" id="viewNama">{{ $user->nama_lengkap }}</div>
-                    <input type="text" name="nama_lengkap" value="{{ $user->nama_lengkap }}" class="edit-mode w-full px-4 py-2 border rounded-xl focus:border-[#FF6B00] outline-none" style="display: none;">
-                    <div class="error-container mt-1"></div>
-                </div>
-                <!-- Username -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Username</label>
-                    <div class="mt-1 view-mode" id="viewUsername">{{ $user->username }}</div>
-                    <input type="text" name="username" value="{{ $user->username }}" class="edit-mode w-full px-4 py-2 border rounded-xl focus:border-[#FF6B00] outline-none" style="display: none;">
-                    <div class="error-container mt-1"></div>
-                </div>
-                <!-- Email -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Email</label>
-                    <div class="mt-1 view-mode" id="viewEmail">{{ $user->email }}</div>
-                    <input type="email" name="email" value="{{ $user->email }}" class="edit-mode w-full px-4 py-2 border rounded-xl focus:border-[#FF6B00] outline-none" style="display: none;">
-                    <div class="error-container mt-1"></div>
-                </div>
-                <!-- No HP -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">No. Telepon</label>
-                    <div class="mt-1 view-mode" id="viewHp">{{ $user->no_hp }}</div>
-                    <input type="text" name="no_hp" value="{{ $user->no_hp }}" class="edit-mode w-full px-4 py-2 border rounded-xl focus:border-[#FF6B00] outline-none" style="display: none;">
-                    <div class="error-container mt-1"></div>
-                </div>
-                <!-- Peran -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Peran</label>
-                    <div class="mt-1 view-mode" id="viewPeran">{{ $user->peran == 'peternak' ? 'Peternak' : 'Rumah Pemotongan' }}</div>
-                    <select name="peran" class="edit-mode w-full px-4 py-2 border rounded-xl focus:border-[#FF6B00] outline-none" style="display: none;">
-                        <option value="peternak" {{ $user->peran == 'peternak' ? 'selected' : '' }}>Peternak</option>
-                        <option value="rumah_pemotongan" {{ $user->peran == 'rumah_pemotongan' ? 'selected' : '' }}>Rumah Pemotongan</option>
-                    </select>
-                    <div class="error-container mt-1"></div>
-                </div>
-                <!-- Password -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Password</label>
-                    <div class="mt-1 view-mode">••••••••</div>
-                    <div class="edit-mode" style="display: none;">
-                        <div class="relative">
-                            <input type="password" name="password" id="password" placeholder="Kosongkan jika tidak diubah" class="w-full px-4 py-2 border rounded-xl pr-10">
-                            <button type="button" onclick="togglePassword('password')" class="absolute inset-y-0 right-3 flex items-center text-gray-500">
-                                <i class="fas fa-eye-slash"></i>
-                            </button>
-                        </div>
-                        <p class="text-xs text-gray-400 mt-2">*Kosongkan jika tidak ingin mengubah password (minimal 8 digit jika diisi)</p>
+            <form id="profileForm" method="POST" action="{{ route('customer.profile.update') }}">
+                @csrf
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">ID</label>
+                        <p class="bg-gray-100 p-2 rounded-lg">{{ $user->user_id }}</p>
                     </div>
-                    <div class="error-container mt-1"></div>
-                </div>
-                <!-- Alamat -->
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Alamat</label>
-                    <div class="mt-1 view-mode" id="viewAlamat">{{ $user->alamat }}</div>
-                    <textarea name="alamat" rows="2" class="edit-mode w-full px-4 py-2 border rounded-xl focus:border-[#FF6B00] outline-none" style="display: none;">{{ $user->alamat }}</textarea>
-                    <div class="error-container mt-1"></div>
-                </div>
-            </div>
 
-            <div class="flex flex-wrap gap-4 pt-4 border-t">
-                <button type="button" id="editBtn" class="bg-[#FF6B00] text-white px-6 py-2.5 rounded-xl font-semibold shadow-md hover:bg-orange-700 transition">
-                    <i class="fas fa-edit mr-2"></i> Edit Profil
-                </button>
-                <button type="submit" id="saveBtn" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold shadow-md hover:bg-green-700 transition" style="display: none;">
-                    <i class="fas fa-save mr-2"></i> Simpan Perubahan
-                </button>
-                <button type="button" id="cancelBtn" class="bg-gray-500 text-white px-6 py-2.5 rounded-xl font-semibold shadow-md hover:bg-gray-600 transition" style="display: none;">
-                    <i class="fas fa-times mr-2"></i> Batal
-                </button>
-                <button type="button" id="logoutBtn" class="border border-red-300 text-red-500 px-6 py-2.5 rounded-xl font-semibold hover:bg-red-50 transition">
-                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
-                </button>
-            </div>
-        </form>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Lengkap</label>
+                        <div class="view"><p class="bg-gray-100 p-2 rounded-lg">{{ $user->nama_lengkap }}</p></div>
+                        <div class="edit hidden">
+                            <input type="text" name="nama_lengkap" value="{{ $user->nama_lengkap }}" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] outline-none">
+                            <div id="error-nama_lengkap" class="error-text text-red-500 text-xs mt-1 hidden"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Username</label>
+                        <div class="view"><p class="bg-gray-100 p-2 rounded-lg">{{ $user->username }}</p></div>
+                        <div class="edit hidden">
+                            <input type="text" name="username" value="{{ $user->username }}" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] outline-none">
+                            <div id="error-username" class="error-text text-red-500 text-xs mt-1 hidden"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+                        <div class="view"><p class="bg-gray-100 p-2 rounded-lg">{{ $user->email }}</p></div>
+                        <div class="edit hidden">
+                            <input type="email" name="email" value="{{ $user->email }}" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] outline-none">
+                            <div id="error-email" class="error-text text-red-500 text-xs mt-1 hidden"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">No. Telepon</label>
+                        <div class="view"><p class="bg-gray-100 p-2 rounded-lg">{{ $user->no_hp }}</p></div>
+                        <div class="edit hidden">
+                            <input type="text" name="no_hp" value="{{ $user->no_hp }}" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] outline-none">
+                            <div id="error-no_hp" class="error-text text-red-500 text-xs mt-1 hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Alamat</label>
+                        <div class="view"><p class="bg-gray-100 p-2 rounded-lg">{{ $user->alamat }}</p></div>
+                        <div class="edit hidden">
+                            <textarea name="alamat" rows="2" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] outline-none">{{ $user->alamat }}</textarea>
+                            <div id="error-alamat" class="error-text text-red-500 text-xs mt-1 hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Password</label>
+                        <div class="view"><p class="bg-gray-100 p-2 rounded-lg">••••••••</p></div>
+                        <div class="edit hidden">
+                            <div class="relative">
+                                <input type="password" name="password" id="password" placeholder="Kosongkan jika tidak diubah" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] outline-none pr-10">
+                                <button type="button" onclick="togglePassword('password')" class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>
+                            </div>
+                            <div id="error-password" class="error-text text-red-500 text-xs mt-1 hidden"></div>
+                            <p class="text-xs text-gray-500 mt-1">*Kosongkan jika tidak ingin mengubah password (minimal 8 digit)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-6 pt-3 border-t border-gray-100">
+                    <button type="button" id="editBtn" class="inline-flex items-center gap-2 px-5 py-2 bg-[#FF6B00] text-white rounded-lg hover:bg-orange-700 transition font-medium"><i class="fas fa-edit"></i> Edit Profil</button>
+                    <button type="submit" id="saveBtn" class="inline-flex items-center gap-2 px-5 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium hidden"><i class="fas fa-save"></i> Simpan</button>
+                    <button type="button" id="cancelBtn" class="inline-flex items-center gap-2 px-5 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-300 transition font-medium hidden"><i class="fas fa-times"></i> Batal</button>
+                    <button type="button" id="logoutBtn" class="inline-flex items-center gap-2 px-5 py-2 bg-gray-100 text-red-600 rounded-lg hover:bg-red-200 transition font-medium"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
 <script>
-    function togglePassword(fieldId) {
-        const field = document.getElementById(fieldId);
-        const icon = field.nextElementSibling.querySelector('i');
-        if (field.type === 'password') {
-            field.type = 'text';
-            icon.classList.remove('fa-eye-slash');
-            icon.classList.add('fa-eye');
-        } else {
-            field.type = 'password';
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
+    (function() {
         const editBtn = document.getElementById('editBtn');
         const saveBtn = document.getElementById('saveBtn');
         const cancelBtn = document.getElementById('cancelBtn');
         const logoutBtn = document.getElementById('logoutBtn');
         const form = document.getElementById('profileForm');
-        const viewElements = document.querySelectorAll('.view-mode');
-        const editElements = document.querySelectorAll('.edit-mode');
-        const displayNama = document.getElementById('displayNama');
-        const backLink = document.getElementById('backLink');
+        const viewDivs = document.querySelectorAll('.view');
+        const editDivs = document.querySelectorAll('.edit');
+        const views = document.querySelectorAll('.view p');
+        const originalData = views.length >= 5 ? {
+            nama: views[0].innerText,
+            username: views[1].innerText,
+            email: views[2].innerText,
+            hp: views[3].innerText,
+            alamat: views[4].innerText
+        } : {};
 
-        function enterEditMode() {
-            viewElements.forEach(el => el.style.display = 'none');
-            editElements.forEach(el => el.style.display = 'block');
-            editBtn.style.display = 'none';
-            saveBtn.style.display = 'inline-block';
-            cancelBtn.style.display = 'inline-block';
-            logoutBtn.style.display = 'none';
-            if (backLink) backLink.style.display = 'none';
+        function clearErrors() {
+            document.querySelectorAll('.error-text').forEach(el => {
+                el.classList.add('hidden');
+                el.innerText = '';
+            });
         }
 
-        function cancelEdit() {
-            viewElements.forEach(el => el.style.display = 'block');
-            editElements.forEach(el => el.style.display = 'none');
-            editBtn.style.display = 'inline-block';
-            saveBtn.style.display = 'none';
-            cancelBtn.style.display = 'none';
-            logoutBtn.style.display = 'inline-block';
-            if (backLink) backLink.style.display = 'inline-flex';
-            document.querySelectorAll('.error-container').forEach(el => el.innerHTML = '');
-            document.querySelector('input[name="nama_lengkap"]').value = document.getElementById('viewNama').innerText;
-            document.querySelector('input[name="username"]').value = document.getElementById('viewUsername').innerText;
-            document.querySelector('input[name="email"]').value = document.getElementById('viewEmail').innerText;
-            document.querySelector('input[name="no_hp"]').value = document.getElementById('viewHp').innerText;
-            document.querySelector('select[name="peran"]').value = document.getElementById('viewPeran').innerText === 'Peternak' ? 'peternak' : 'rumah_pemotongan';
-            document.querySelector('textarea[name="alamat"]').value = document.getElementById('viewAlamat').innerText;
-            const pwd = document.getElementById('password');
-            if (pwd) pwd.value = '';
+        function showErrors(errors) {
+            for (let key in errors) {
+                let errorDiv = document.getElementById(`error-${key}`);
+                if (errorDiv) {
+                    errorDiv.innerText = errors[key][0];
+                    errorDiv.classList.remove('hidden');
+                }
+            }
         }
 
-        editBtn.addEventListener('click', enterEditMode);
-        cancelBtn.addEventListener('click', cancelEdit);
+        function showLightboxAndThen(message, callback) {
+            if (typeof showLightbox === 'function') {
+                showLightbox(message, 'error');
+                const interval = setInterval(() => {
+                    const modal = document.getElementById('lightboxModal');
+                    if (modal && modal.classList.contains('invisible')) {
+                        clearInterval(interval);
+                        if (callback) callback();
+                    }
+                }, 100);
+            } else {
+                alert(message);
+                if (callback) callback();
+            }
+        }
 
-        form.addEventListener('submit', (e) => {
+        function resetFormToOriginal() {
+            document.querySelector('input[name="nama_lengkap"]').value = originalData.nama;
+            document.querySelector('input[name="username"]').value = originalData.username;
+            document.querySelector('input[name="email"]').value = originalData.email;
+            document.querySelector('input[name="no_hp"]').value = originalData.hp;
+            document.querySelector('textarea[name="alamat"]').value = originalData.alamat;
+            document.getElementById('password').value = '';
+        }
+
+        editBtn.addEventListener('click', function() {
+            viewDivs.forEach(d => d.classList.add('hidden'));
+            editDivs.forEach(d => d.classList.remove('hidden'));
+            editBtn.classList.add('hidden');
+            saveBtn.classList.remove('hidden');
+            cancelBtn.classList.remove('hidden');
+            logoutBtn.classList.add('hidden');
+            clearErrors();
+        });
+
+        cancelBtn.addEventListener('click', function() {
+            viewDivs.forEach(d => d.classList.remove('hidden'));
+            editDivs.forEach(d => d.classList.add('hidden'));
+            editBtn.classList.remove('hidden');
+            saveBtn.classList.add('hidden');
+            cancelBtn.classList.add('hidden');
+            logoutBtn.classList.remove('hidden');
+            clearErrors();
+            resetFormToOriginal();
+        });
+
+        saveBtn.addEventListener('click', function(e) {
             e.preventDefault();
+            clearErrors();
             const formData = new FormData(form);
             fetch('{{ route("customer.profile.update") }}', {
                 method: 'POST',
                 headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json' },
                 body: formData
             })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => {
-                        if (response.status === 422 && data.errors) {
-                            alert('Data tidak sesuai, harap isi kembali');
-                            document.querySelectorAll('.error-container').forEach(el => el.innerHTML = '');
-                            for (let field in data.errors) {
-                                let inputEl = document.querySelector(`[name="${field}"]`);
-                                if (inputEl) {
-                                    let container = inputEl.closest('div');
-                                    let errorDiv = container.querySelector('.error-container');
-                                    if (errorDiv) {
-                                        errorDiv.innerHTML = `<span class="text-red-500 text-xs">${data.errors[field][0]}</span>`;
-                                    }
-                                }
-                            }
-                            return;
-                        } else {
-                            throw data;
-                        }
-                    });
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert(data.message);
-                    document.getElementById('viewNama').innerText = form.querySelector('input[name="nama_lengkap"]').value;
-                    document.getElementById('viewUsername').innerText = form.querySelector('input[name="username"]').value;
-                    document.getElementById('viewEmail').innerText = form.querySelector('input[name="email"]').value;
-                    document.getElementById('viewHp').innerText = form.querySelector('input[name="no_hp"]').value;
-                    const newPeran = form.querySelector('select[name="peran"]').value;
-                    document.getElementById('viewPeran').innerText = newPeran === 'peternak' ? 'Peternak' : 'Rumah Pemotongan';
-                    document.getElementById('viewAlamat').innerText = form.querySelector('textarea[name="alamat"]').value;
-                    displayNama.innerText = form.querySelector('input[name="nama_lengkap"]').value;
-                    cancelEdit();
+                    if (typeof showLightbox === 'function') {
+                        showLightbox(data.message, 'success');
+                        setTimeout(() => location.reload(), 1500);
+                    } else {
+                        alert(data.message);
+                        location.reload();
+                    }
+                } else {
+                    let hasEmpty = false, hasInvalid = false;
+                    for (let key in data.errors) {
+                        let errMsg = data.errors[key][0];
+                        if (errMsg.includes('harus diisi') || errMsg.includes('wajib diisi')) hasEmpty = true;
+                        if (errMsg.includes('domain') || errMsg.includes('minimal') || errMsg.includes('terdiri dari') || errMsg.includes('sudah digunakan')) hasInvalid = true;
+                    }
+                    let message = hasInvalid ? 'Data tidak sesuai, harap isi kembali.' : 'Harap isi data dengan lengkap';
+                    showLightboxAndThen(message, () => {
+                        showErrors(data.errors);
+                        const firstError = document.querySelector('.error-text:not(.hidden)');
+                        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    });
                 }
             })
-            .catch(error => {
-                console.error(error);
-                alert('Terjadi kesalahan. Silakan coba lagi.');
+            .catch(() => {
+                if (typeof showLightbox === 'function') {
+                    showLightbox('Terjadi kesalahan. Silakan coba lagi.', 'error');
+                } else {
+                    alert('Terjadi kesalahan. Silakan coba lagi.');
+                }
             });
         });
 
-        logoutBtn.addEventListener('click', () => {
-            if (confirm('Apakah anda yakin ingin logout?')) {
+        logoutBtn.addEventListener('click', function() {
+            const confirmAction = () => {
                 const logoutForm = document.createElement('form');
                 logoutForm.method = 'POST';
                 logoutForm.action = '{{ route("logout") }}';
                 logoutForm.innerHTML = '@csrf';
                 document.body.appendChild(logoutForm);
                 logoutForm.submit();
+            };
+            if (typeof showConfirm === 'function') {
+                showConfirm('Apakah anda yakin ingin logout?', confirmAction);
+            } else {
+                if (confirm('Apakah anda yakin ingin logout?')) confirmAction();
             }
         });
-    });
+    })();
 </script>
+
 @endsection

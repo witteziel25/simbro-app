@@ -10,7 +10,6 @@ class AdminUserSeeder extends Seeder
 {
     public function run()
     {
-        // Cek apakah admin sudah ada, jika belum buat
         if (!M_User::where('username', 'admin')->exists()) {
             M_User::create([
                 'nama_lengkap' => 'Administrator',
@@ -19,7 +18,7 @@ class AdminUserSeeder extends Seeder
                 'alamat' => 'Kantor Pusat SIMBRO',
                 'username' => 'admin',
                 'password' => Hash::make('admin123'),
-                'role' => 1, // admin
+                'role' => 1, 
             ]);
         }
     }
