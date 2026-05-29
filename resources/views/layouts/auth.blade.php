@@ -17,6 +17,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @stack('styles')
+
+    <style>
+        /* Sembunyikan scrollbar untuk Chrome, Safari dan Opera */
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+        }
+        /* Sembunyikan scrollbar untuk IE, Edge dan Firefox */
+        .scrollbar-none {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
 </head>
 
 <body class="font-sans antialiased relative overflow-x-hidden">
@@ -132,7 +144,6 @@
                 <button id="confirmNo" class="bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-5 rounded-lg transition shadow-md text-sm md:text-base inline-flex items-center justify-center gap-1 cursor-pointer">Tidak</button>
             `;
 
-
             document.getElementById('confirmYes').onclick = () => {
                 if (onConfirm) onConfirm();
                 hideLightbox();
@@ -146,10 +157,14 @@
             modalContent.classList.remove('scale-95');
             modalContent.classList.add('scale-100');
         }
+
+        @if(session('lightbox_message'))
+            showLightbox(@json(session('lightbox_message')), @json(session('lightbox_type')));
+        @endif
     </script>
 
     @stack('scripts')
-    
+
     <style>.animation-delay-2000 { animation-delay: 2s; }</style>
 
 </body>

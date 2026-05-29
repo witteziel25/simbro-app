@@ -18,6 +18,18 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @stack('styles')
+
+    <style>
+        /* Sembunyikan scrollbar untuk Chrome, Safari, dan Opera */
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+        }
+        /* Sembunyikan scrollbar untuk IE, Edge, dan Firefox */
+        .scrollbar-none {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
 </head>
 
 <body class="font-sans antialiased">
@@ -51,7 +63,6 @@
         function setModalStyle() {
             const msgEl = document.getElementById('modalMessage');
             const subMsgEl = document.getElementById('modalSubMessage');
-            // Ukuran teks sedikit lebih besar
             msgEl.className = 'text-gray-800 text-lg md:text-xl font-bold mb-2 leading-tight';
             subMsgEl.className = 'text-gray-600 text-base md:text-lg mb-3 leading-snug';
         }

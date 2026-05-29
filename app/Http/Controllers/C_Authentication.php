@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\M_User;
+use App\Models\M_Ulasan;
+use App\Models\M_Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -30,8 +32,8 @@ class C_Authentication extends Controller
             'username' => 'required',
             'password' => 'required'
         ], [
-            'username.required' => 'Username wajib diisi',
-            'password.required' => 'Password wajib diisi'
+            'username.required' => 'Username harus diisi',
+            'password.required' => 'Password harus diisi'
         ]);
 
         if ($validator->fails()) {
@@ -58,40 +60,46 @@ class C_Authentication extends Controller
                 return redirect()->route('customer.home');
             }
         } else {
-            return back()->withErrors(['login' => 'Data tidak sesuai, harap isi kembali'])->withInput();
+            $errors = [];
+            if (!$user) {
+                $errors['username'] = ['Username tidak ditemukan'];
+            } else {
+                $errors['password'] = ['Password salah'];
+            }
+            return back()->withErrors($errors)->withInput();
         }
     }
 
     // PROSES REGISTER
     public function klikRegister(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'nama_lengkap' => 'required',
-            'email' => 'required|email|unique:m_users,email',
-            'no_hp' => 'required|digits_between:10,13',
-            'alamat' => 'required',
-            'username' => 'required|unique:m_users,username',
-            'password' => 'required|min:8',
-            'password_confirmation' => 'required|same:password',
-        ], [
-            'nama_lengkap.required' => 'Harap isi data dengan lengkap',
-            'email.required' => 'Harap isi data dengan lengkap',
-            'email.email' => 'Data tidak sesuai, harap isi kembali',
-            'email.unique' => 'Data tidak sesuai, harap isi kembali',
-            'no_hp.required' => 'Harap isi data dengan lengkap',
-            'no_hp.digits_between' => 'Data tidak sesuai, harap isi kembali',
-            'alamat.required' => 'Harap isi data dengan lengkap',
-            'username.required' => 'Harap isi data dengan lengkap',
-            'username.unique' => 'Data tidak sesuai, harap isi kembali',
-            'password.required' => 'Harap isi data dengan lengkap',
-            'password.min' => 'Data tidak sesuai, harap isi kembali',
-            'password_confirmation.required' => 'Harap isi data dengan lengkap',
-            'password_confirmation.same' => 'Data tidak sesuai, harap isi kembali',
-        ]);
+{
+    $validator = Validator::make($request->all(), [
+        'nama_lengkap' => 'required|string|max:255',
+        'email' => 'required|email|unique:m_users,email',
+        'no_hp' => 'required|digits_between:10,13',
+        'alamat' => 'required|string',
+        'username' => 'required|string|max:255|unique:m_users,username',
+        'password' => 'required|min:8',
+        'password_confirmation' => 'required|same:password',
+    ], [
+        'nama_lengkap.required' => 'Nama lengkap harus diisi',
+        'email.required' => 'Email harus diisi',
+        'email.email' => 'Email harus memuat domain (contoh: nama@domain.com)',
+        'email.unique' => 'Email sudah terdaftar',
+        'no_hp.required' => 'Nomor telepon harus diisi',
+        'no_hp.digits_between' => 'Nomor telepon harus terdiri dari 10-13 digit',
+        'alamat.required' => 'Alamat harus diisi',
+        'username.required' => 'Username harus diisi',
+        'username.unique' => 'Username sudah digunakan',
+        'password.required' => 'Password harus diisi',
+        'password.min' => 'Password harus terdiri minimal 8 karakter',
+        'password_confirmation.required' => 'Konfirmasi password harus diisi',
+        'password_confirmation.same' => 'Password yang dikonfirmasi tidak sesuai',
+    ]);
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
+    }
 
         M_User::create([
             'nama_lengkap' => $request->nama_lengkap,
@@ -116,11 +124,13 @@ class C_Authentication extends Controller
     public function showHome()
     {
         $produk = \App\Models\M_Produk::all();
+        $ulasan = \App\Models\M_Ulasan::with(['user', 'transaksi.details.produk'])->orderBy('created_at', 'desc')->get();
+        $slides = M_Gallery::orderBy('created_at', 'desc')->get(); // ← pastikan selalu collection
 
         if (session('role') == 1) {
-            return view('admin.V_Home', compact('produk'));
+            return view('admin.V_Home', compact('produk', 'ulasan', 'slides'));
         } else {
-            return view('customer.V_Home', compact('produk'));
+            return view('customer.V_Home', compact('produk', 'ulasan', 'slides'));
         }
     }
 
@@ -135,12 +145,12 @@ class C_Authentication extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required|exists:m_users,username'
         ], [
-            'username.required' => 'Username wajib diisi',
-            'username.exists' => 'Data tidak sesuai, harap isi kembali'
+            'username.required' => 'Username harus diisi',
+            'username.exists' => 'Username tidak ditemukan'
         ]);
 
         if ($validator->fails()) {
-            return back()->withErrors($validator);
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $user = M_User::where('username', $request->username)->first();
@@ -176,29 +186,42 @@ class C_Authentication extends Controller
 
     public function verifyOTP(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'otp1' => 'required|numeric',
             'otp2' => 'required|numeric',
             'otp3' => 'required|numeric',
             'otp4' => 'required|numeric',
+        ], [
+            'otp1.required' => 'Kode OTP harus diisi',
+            'otp2.required' => 'Kode OTP harus diisi',
+            'otp3.required' => 'Kode OTP harus diisi',
+            'otp4.required' => 'Kode OTP harus diisi',
+            'otp1.numeric' => 'OTP harus berupa angka',
+            'otp2.numeric' => 'OTP harus berupa angka',
+            'otp3.numeric' => 'OTP harus berupa angka',
+            'otp4.numeric' => 'OTP harus berupa angka',
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors(['otp' => 'Kode OTP harus diisi'])->withInput();
+        }
+
         if (!session('otp_code')) {
-            return redirect()->route('password.request')->withErrors('Sesi tidak ditemukan. Silakan minta OTP ulang.');
+            return redirect()->route('password.request')->withErrors(['otp' => 'Sesi tidak ditemukan'])->withInput();
         }
         if (session('otp_expires') < Carbon::now()->timestamp) {
             session()->forget(['otp_code', 'otp_email', 'otp_expires', 'otp_verified']);
-            return redirect()->route('password.request')->withErrors('Kode OTP telah kadaluwarsa. Silakan minta ulang.');
+            return redirect()->route('password.request')->withErrors(['otp' => 'Kode OTP telah kadaluwarsa'])->withInput();
         }
 
         $enteredOtp = $request->otp1 . $request->otp2 . $request->otp3 . $request->otp4;
-        if ($enteredOtp == session('otp_code')) {
-            session(['otp_verified' => true]);
-            session()->save();
-            return redirect()->route('password.reset')->with('success', 'Data Sesuai');
-        } else {
-            return back()->withErrors(['otp' => 'Data tidak sesuai, harap isi kembali']);
+        if ($enteredOtp != session('otp_code')) {
+            return back()->withErrors(['otp' => 'Kode OTP tidak sesuai'])->withInput();
         }
+
+        session(['otp_verified' => true]);
+        session()->save();
+        return redirect()->route('password.reset')->with('success', 'Data Sesuai');
     }
 
     public function showResetForm()
@@ -215,13 +238,17 @@ class C_Authentication extends Controller
 
     public function resetPassword(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'password' => 'required|min:8|confirmed',
         ], [
-            'password.required' => 'Password wajib diisi',
-            'password.min' => 'Data tidak sesuai, harap isi kembali',
-            'password.confirmed' => 'Data tidak sesuai, harap isi kembali',
+            'password.required' => 'Password harus diisi',
+            'password.min' => 'Password harus terdiri minimal 8 karakter',
+            'password.confirmed' => 'Password yang dikonfirmasi tidak sesuai',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         $user = M_User::where('email', session('otp_email'))->first();
         if (!$user) {

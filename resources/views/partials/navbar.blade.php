@@ -10,7 +10,7 @@
         <nav class="flex gap-6 text-l font-semibold">
             <a href="#gallery" class="nav-link text-gray-700 hover:text-[#FF6B00]">Gallery</a>
             <a href="#produk" class="nav-link text-gray-700 hover:text-[#FF6B00]">Produk</a>
-            <a href="#" class="nav-link text-gray-700 hover:text-[#FF6B00]">Pembelian</a>
+            <a href="{{ route('customer.riwayat.transaksi') }}" class="nav-link text-gray-700 hover:text-[#FF6B00]">Pembelian</a>
             <a href="#ulasan" class="nav-link text-gray-700 hover:text-[#FF6B00]">Ulasan</a>
         </nav>
         <a href="{{ route('customer.profile') }}" class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center hover:bg-[#FF6B00] transition">

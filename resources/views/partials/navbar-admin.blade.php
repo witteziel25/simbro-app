@@ -10,7 +10,7 @@
         <nav class="flex gap-6 text-l font-semibold">
             <a href="#gallery" class="nav-link text-gray-700 hover:text-[#FF6B00]">Gallery</a>
             <a href="#produk" class="nav-link text-gray-700 hover:text-[#FF6B00]">Produk</a>
-            <a href="#manajemen" class="nav-link text-gray-700 hover:text-[#FF6B00]">Manajemen</a>
+            <a href="{{ route('admin.manajemen') }}" class="nav-link text-gray-700 hover:text-[#FF6B00]">Manajemen</a>
             <a href="#ulasan" class="nav-link text-gray-700 hover:text-[#FF6B00]">Ulasan</a>
         </nav>
         <div class="relative">
@@ -39,7 +39,7 @@
                 if (targetElement) {
                     const navbar = document.querySelector('header');
                     const navbarHeight = navbar ? navbar.offsetHeight : 0;
-                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight - 10; // -10 untuk sedikit ruang
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight - 10;
                     window.scrollTo({ top: targetPosition, behavior: 'smooth' });
                 }
             });
