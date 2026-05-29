@@ -18,6 +18,7 @@
                         <p class="text-lg md:text-xl drop-shadow-md">{{ $slide->keterangan }}</p>
                         <div class="mt-8 flex flex-wrap gap-4">
                             <a href="{{ route('gallery.article', $slide->gallery_id) }}" class="inline-flex items-center justify-center bg-[#FF6B00] hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-full transition shadow-lg">Lebih Lanjut →</a>
+                            <a href="{{ route('chatbot.index') }}" class="inline-flex items-center justify-center bg-white border-2 border-[#FF6B00] text-[#FF6B00] hover:bg-orange-50 font-bold py-3 px-6 rounded-full transition shadow-md"><i class="fas fa-robot mr-2"></i> Tanya AI</a>
                         </div>
                     </div>
                 </div>

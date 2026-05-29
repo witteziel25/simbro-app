@@ -4,7 +4,6 @@
 
 @section('content')
 <style>
-    /* (semua style tetap sama seperti yang Anda miliki) */
     .card-riwayat-customer {
         transition: all 0.2s ease;
         border-left: 4px solid #FF6B00;
@@ -115,7 +114,6 @@
 </style>
 
 <div class="min-h-screen bg-gray-50">
-    <!-- Header (sama) -->
     <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div class="flex items-center gap-4">
@@ -125,14 +123,14 @@
                     <p class="text-orange-100 text-sm">Daftar semua pembelian yang telah Anda lakukan</p>
                 </div>
             </div>
-            <a href="{{ route('customer.home') }}" class="inline-flex items-center gap-2 text-white hover:underline text-sm font-bold">
-                <i class="fas fa-arrow-left"></i> Kembali ke Beranda
-            </a>
+            <div>
+                <i class="fas fa-arrow-left"></i>
+                <a href="{{ route('customer.home') }}" class="inline-flex items-center gap-2 text-white hover:underline text-sm font-bold">Kembali ke Beranda</a>
+            </div>
         </div>
     </div>
 
     <div class="max-w-5xl mx-auto py-8 px-4">
-        <!-- Filter (sama) -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-8">
             <form method="GET" class="flex flex-wrap items-end gap-4">
                 <div>
@@ -144,7 +142,6 @@
             </form>
         </div>
 
-        <!-- Daftar transaksi -->
         <div class="space-y-6">
             @forelse($transaksis as $t)
                 @php
@@ -161,7 +158,6 @@
                     $ulasan = $t->ulasan;
                 @endphp
                 <div class="card-riwayat-customer" data-transaksi-id="{{ $t->transaksi_id }}">
-                    <!-- Header card (sama) -->
                     <div class="px-5 py-3 border-b border-gray-100 flex justify-between items-center bg-gray-50/50 cursor-pointer" onclick="toggleDetail(this)">
                         <div class="flex items-center gap-3">
                             <i class="fas {{ $icon }} text-xs text-[#FF6B00]"></i>
@@ -172,7 +168,6 @@
                         <i class="fas fa-chevron-down dropdown-icon text-gray-400"></i>
                     </div>
 
-                    <!-- Informasi ringkas (sama) -->
                     <div class="p-5">
                         <div class="flex justify-between items-start gap-4">
                             <div>
@@ -193,7 +188,6 @@
                         </div>
                     </div>
 
-                    <!-- Stepper (sama) -->
                     @if(!$isCancelled)
                     <div class="px-5 pb-3">
                         <div class="relative p-4 border-y border-gray-100 bg-gray-50/30 rounded-lg">
@@ -217,7 +211,7 @@
                     </div>
                     @endif
 
-                    <!-- Detail panel (sama) -->
+                    <!-- Detail panel (muncul saat diklik) -->
                     <div class="detail-panel hidden border-t border-gray-100">
                         <div class="p-5 space-y-5">
                             <div class="info-payment">
@@ -280,61 +274,61 @@
                                     </button>
                                 </div>
                             @endif
-                        </div>
-                    </div>
 
-                    <!-- === AREA ULASAN === -->
-                    @if($status != 'dibatalkan')
-                    <div class="px-5 pb-5">
-                        @if($status == 'diterima')
-                            @if($ulasan)
-                                <div class="review-card">
-                                    <div class="flex justify-between items-start gap-4">
-                                        <div class="flex-1 min-w-0 max-w-full overflow-hidden">
-                                            <div class="flex items-center gap-1 mb-2">
-                                                @for($i=1; $i<=5; $i++)
-                                                    <i class="fas fa-star {{ $i <= $ulasan->rating ? 'text-yellow-400' : 'text-gray-300' }} text-sm"></i>
-                                                @endfor
+                            <!-- === AREA ULASAN (SEKARANG BERADA DI DALAM DETAIL PANEL) === -->
+                            @if($status != 'dibatalkan')
+                            <div class="border-t border-gray-100 pt-4">
+                                @if($status == 'diterima')
+                                    @if($ulasan)
+                                        <div class="review-card">
+                                            <div class="flex justify-between items-start gap-4">
+                                                <div class="flex-1 min-w-0 max-w-full overflow-hidden">
+                                                    <div class="flex items-center gap-1 mb-2">
+                                                        @for($i=1; $i<=5; $i++)
+                                                            <i class="fas fa-star {{ $i <= $ulasan->rating ? 'text-yellow-400' : 'text-gray-300' }} text-sm"></i>
+                                                        @endfor
+                                                    </div>
+                                                    <p class="text-gray-700 text-sm italic break-words whitespace-pre-wrap max-w-full overflow-hidden">"{{ $ulasan->ulasan }}"</p>
+                                                    <p class="text-xs text-gray-400 mt-2">{{ \Carbon\Carbon::parse($ulasan->created_at)->format('d M Y H:i') }}</p>
+                                                </div>
+                                                <button type="button" class="delete-review-btn flex-shrink-0" data-ulasan-id="{{ $ulasan->ulasan_id }}" title="Hapus ulasan">
+                                                    <i class="fas fa-trash-alt text-xs"></i> Hapus
+                                                </button>
                                             </div>
-                                            <p class="text-gray-700 text-sm italic break-words whitespace-pre-wrap max-w-full overflow-hidden">"{{ $ulasan->ulasan }}"</p>
-                                            <p class="text-xs text-gray-400 mt-2">{{ \Carbon\Carbon::parse($ulasan->created_at)->format('d M Y H:i') }}</p>
                                         </div>
-                                        <button type="button" class="delete-review-btn flex-shrink-0" data-ulasan-id="{{ $ulasan->ulasan_id }}" title="Hapus ulasan">
-                                            <i class="fas fa-trash-alt text-xs"></i> Hapus
-                                        </button>
-                                    </div>
-                                </div>
-                            @else
-                                <div class="review-form-card">
-                                    <textarea rows="3" class="review-text w-full border border-orange-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#FF6B00]" placeholder="Bagaimana pengalaman Anda dengan produk ini?"></textarea>
-                                    <div class="flex flex-wrap items-center justify-between mt-3 gap-3">
-                                        <div class="flex items-center gap-1 rating-stars">
+                                    @else
+                                        <div class="review-form-card">
+                                            <textarea rows="3" class="review-text w-full border border-orange-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#FF6B00]" placeholder="Bagaimana pengalaman Anda dengan produk ini?"></textarea>
+                                            <div class="flex flex-wrap items-center justify-between mt-3 gap-3">
+                                                <div class="flex items-center gap-1 rating-stars">
+                                                    @for($i=1; $i<=5; $i++)
+                                                        <i class="fas fa-star rating-star" data-rating="{{ $i }}"></i>
+                                                    @endfor
+                                                </div>
+                                                <button type="button" class="submit-review-btn btn-submit-review">
+                                                    <i class="fas fa-paper-plane"></i> Kirim Ulasan
+                                                </button>
+                                            </div>
+                                            <input type="hidden" class="selected-rating" value="0">
+                                        </div>
+                                    @endif
+                                @else
+                                    <div class="review-disabled-card">
+                                        <div class="flex items-center gap-2 text-gray-400">
+                                            <i class="fas fa-lock text-xs"></i>
+                                            <p class="text-sm italic">Buat ulasan setelah produk yang dipesan telah diterima</p>
+                                        </div>
+                                        <div class="flex items-center gap-1 mt-2">
                                             @for($i=1; $i<=5; $i++)
-                                                <i class="fas fa-star rating-star" data-rating="{{ $i }}"></i>
+                                                <i class="fas fa-star text-gray-300 text-sm"></i>
                                             @endfor
                                         </div>
-                                        <button type="button" class="submit-review-btn btn-submit-review">
-                                            <i class="fas fa-paper-plane"></i> Kirim Ulasan
-                                        </button>
                                     </div>
-                                    <input type="hidden" class="selected-rating" value="0">
-                                </div>
-                            @endif
-                        @else
-                            <div class="review-disabled-card">
-                                <div class="flex items-center gap-2 text-gray-400">
-                                    <i class="fas fa-lock text-xs"></i>
-                                    <p class="text-sm italic">Buat ulasan setelah produk yang dipesan telah diterima</p>
-                                </div>
-                                <div class="flex items-center gap-1 mt-2">
-                                    @for($i=1; $i<=5; $i++)
-                                        <i class="fas fa-star text-gray-300 text-sm"></i>
-                                    @endfor
-                                </div>
+                                @endif
                             </div>
-                        @endif
+                            @endif
+                        </div>
                     </div>
-                    @endif
                 </div>
             @empty
                 <div class="text-center py-12 bg-white rounded-xl border border-gray-200">
@@ -357,7 +351,6 @@
         }
     }
 
-    // Rating star handler
     document.querySelectorAll('.rating-star').forEach(star => {
         star.addEventListener('click', function() {
             const rating = parseInt(this.getAttribute('data-rating'));
@@ -371,7 +364,6 @@
         });
     });
 
-    // Fungsi untuk reload setelah modal lightbox ditutup (user klik Dimengerti)
     function reloadAfterModalClosed() {
         const checkInterval = setInterval(() => {
             const modal = document.getElementById('lightboxModal');
@@ -382,7 +374,6 @@
         }, 200);
     }
 
-    // Submit ulasan
     document.querySelectorAll('.submit-review-btn').forEach(btn => {
         btn.addEventListener('click', async function() {
             const card = this.closest('.card-riwayat-customer');
@@ -422,7 +413,6 @@
                 if (data.success) {
                     if (typeof showLightbox === 'function') {
                         showLightbox(data.message, 'success');
-                        // Tunggu modal ditutup baru reload
                         reloadAfterModalClosed();
                     } else {
                         alert(data.message);
@@ -443,7 +433,6 @@
         });
     });
 
-    // Hapus ulasan
     document.querySelectorAll('.delete-review-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -459,7 +448,6 @@
                         if (data.success) {
                             if (typeof showLightbox === 'function') {
                                 showLightbox(data.message, 'success');
-                                // Tunggu modal ditutup baru reload
                                 reloadAfterModalClosed();
                             } else {
                                 alert(data.message);

@@ -6,6 +6,7 @@ use App\Http\Controllers\C_Produk;
 use App\Http\Controllers\C_Transaksi;
 use App\Http\Controllers\C_Ulasan;
 use App\Http\Controllers\C_Gallery;
+use App\Http\Controllers\C_Chatbot;
 use Illuminate\Support\Facades\Route;
 
 // LANDING & AUTH
@@ -105,3 +106,10 @@ Route::middleware(['role:1'])->prefix('admin')->group(function () {
 
 // ========== GALLERY (PUBLIC) ==========
 Route::get('/gallery/{id}', [C_Gallery::class, 'show'])->name('gallery.article');
+
+// Chatbot AI
+Route::middleware(['role:0,1'])->prefix('chatbot')->group(function () {
+    Route::get('/', [C_Chatbot::class, 'index'])->name('chatbot.index');
+    Route::post('/send', [C_Chatbot::class, 'sendMessage'])->name('chatbot.send');
+    Route::post('/clear', [C_Chatbot::class, 'clearSession'])->name('chatbot.clear');
+});
