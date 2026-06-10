@@ -1,40 +1,10 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Transaksi Aktif - SIMBRO Admin')
 
 @section('content')
-<style>
-    .card-transaksi {
-        transition: all 0.2s ease;
-        border-left: 4px solid #FF6B00;
-    }
-    .card-transaksi:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-    }
-    .badge-status {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.375rem;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        font-size: 0.7rem;
-        font-weight: 600;
-        letter-spacing: 0.02em;
-    }
-    .btn-outline-orange {
-        border: 1px solid #FF6B00;
-        color: #FF6B00;
-        transition: all 0.2s;
-    }
-    .btn-outline-orange:hover {
-        background-color: #FF6B00;
-        color: white;
-    }
-</style>
 
 <div class="min-h-screen bg-gray-50">
-    <!-- Header Oranye (sama seperti data customer) -->
     <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div class="flex items-center gap-4">
@@ -52,7 +22,8 @@
     </div>
 
     <div class="max-w-6xl mx-auto py-8 px-4">
-        <!-- Filter -->
+
+        {{-- Form Filter --}}
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-8">
             <form method="GET" class="flex flex-wrap items-end gap-4">
                 <div>
@@ -64,11 +35,12 @@
                     <input type="date" name="tanggal_selesai" value="{{ request('tanggal_selesai') }}" class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-44">
                 </div>
                 <button type="submit" class="bg-[#FF6B00] hover:bg-orange-700 text-white px-5 py-2 rounded-lg text-sm font-bold transition shadow-sm">Filter</button>
-                <a href="{{ route('admin.transaksi.aktif') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-lg text-sm font-bold transition">Reset</a>
+                <a href="{{ route('admin.transaksi.V_Aktif') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-lg text-sm font-bold transition">Reset</a>
             </form>
         </div>
 
-        <!-- Daftar transaksi -->
+
+        {{-- Daftar Transaksi Aktif --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             @forelse($transaksis as $t)
                 @php
@@ -87,8 +59,7 @@
                     };
                 @endphp
                 <div class="card-transaksi bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-                    <!-- Header card -->
-                    <div class="px-5 py-3 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                <div class="px-5 py-3 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
                         <div class="flex items-center gap-2">
                             <i class="fas {{ $icon }} text-xs text-[#FF6B00]"></i>
                             <span class="badge-status {{ $badgeClass }} border">
@@ -99,7 +70,6 @@
                         <span class="text-xs text-gray-400">{{ \Carbon\Carbon::parse($t->tanggal_pemesanan)->format('d M Y H:i') }} WIB</span>
                     </div>
 
-                    <!-- Body card -->
                     <div class="p-5">
                         <div class="flex justify-between items-start gap-4">
                             <div>
@@ -120,9 +90,8 @@
                         </div>
                     </div>
 
-                    <!-- Footer card (tombol detail) -->
                     <div class="px-5 py-3 border-t border-gray-100 bg-gray-50/30 flex justify-end">
-                        <a href="{{ route('admin.transaksi.detail', $t->transaksi_id) }}" class="btn-outline-orange text-sm font-medium px-4 py-1.5 rounded-lg inline-flex items-center gap-1 transition">
+                        <a href="{{ route('admin.transaksi.V_Detail', $t->transaksi_id) }}" class="btn-outline-orange text-sm font-medium px-4 py-1.5 rounded-lg inline-flex items-center gap-1 transition">
                             Detail <i class="fas fa-arrow-right text-xs"></i>
                         </a>
                     </div>

@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', $gallery->judul . ' - SIMBRO')
 
@@ -49,7 +49,7 @@
 
                 @if(session('role') == 1)
                     <div class="mt-12 flex justify-end gap-4 border-t border-gray-100 pt-8">
-                        <a href="{{ route('admin.gallery.edit', $gallery->gallery_id) }}" class="inline-flex items-center justify-center gap-2.5 px-6 py-2.5 rounded-full border-2 border-[#FF7A1D] text-[#FF7A1D] bg-white hover:bg-orange-50 font-bold transition-all duration-200 min-w-[125px] shadow-sm">
+                        <a href="{{ route('admin.gallery.V_Edit', $gallery->gallery_id) }}" class="inline-flex items-center justify-center gap-2.5 px-6 py-2.5 rounded-full border-2 border-[#FF7A1D] text-[#FF7A1D] bg-white hover:bg-orange-50 font-bold transition-all duration-200 min-w-[125px] shadow-sm">
                             <i class="fas fa-edit text-base"></i> Edit
                         </a>
                         <form action="{{ route('admin.gallery.destroy', $gallery->gallery_id) }}" method="POST" id="deleteForm" class="inline">

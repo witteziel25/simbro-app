@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Tambah Produk')
 
@@ -98,23 +98,7 @@
         const errorDeskripsi = document.getElementById('error-deskripsi');
         const errorFoto = document.getElementById('error-foto');
 
-        let pendingErrors = null;
 
-        function showLightboxAndThen(message, callback) {
-            if (typeof showLightbox === 'function') {
-                showLightbox(message, 'error'); // Tipe 'error' akan menampilkan gambar warning
-                const interval = setInterval(() => {
-                    const modal = document.getElementById('lightboxModal');
-                    if (modal && modal.classList.contains('invisible')) {
-                        clearInterval(interval);
-                        if (callback) callback();
-                    }
-                }, 100);
-            } else {
-                alert(message);
-                if (callback) callback();
-            }
-        }
 
         function clearErrors() {
             [errorNama, errorKategori, errorHarga, errorStok, errorDeskripsi, errorFoto].forEach(el => el.classList.add('hidden'));

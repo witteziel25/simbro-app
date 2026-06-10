@@ -1,10 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.V_App')
 
 @section('title', 'Beranda - SIMBRO')
 
 @section('content')
-
-<!-- SECTION GALLERY - Versi Customer (tanpa tombol tambah) -->
+{{-- Section Gallery --}}
 <section id="gallery" class="relative w-full h-screen overflow-hidden">
     <div class="gallery-container relative w-full h-full">
         <div class="gallery-track flex h-full transition-transform duration-700 ease-out">
@@ -33,8 +32,6 @@
             @endforelse
         </div>
     </div>
-
-    <!-- Indikator Slide tanpa tombol tambah -->
     <div class="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 flex flex-col items-center space-y-3">
         <img src="{{ asset('images/logo-simbro-2.png') }}" alt="SIMBRO" class="w-8 h-8 md:w-10 md:h-10 opacity-100 drop-shadow-lg">
         <div id="slideCounter" class="bg-black/50 backdrop-blur-sm text-white text-sm md:text-base font-semibold px-3 py-1 rounded-full">
@@ -51,8 +48,7 @@
         </div>
     </div>
 </section>
-
-<!-- SECTION KEUNGGULAN -->
+{{-- Section Keunggulan --}}
 <section class="bg-auth-full relative py-20 px-6 overflow-hidden" data-aos="fade-up">
     <div class="auth-blur-circles"><div></div><div></div></div>
     <div class="max-w-7xl mx-auto relative z-10">
@@ -68,8 +64,7 @@
         </div>
     </div>
 </section>
-
-<!-- SECTION PRODUK -->
+{{-- Section Produk --}}
 <section id="produk" class="bg-clear-white py-12 px-4 md:py-20 md:px-6" data-aos="fade-up">
     <div class="max-w-7xl mx-auto">
         <div class="inline-flex items-center gap-2 bg-orange-100 rounded-full px-4 py-1.5 mb-4">
@@ -165,8 +160,7 @@
         </div>
     </div>
 </section>
-
-<!-- SECTION ULASAN -->
+{{-- Section Ulasan --}}
 <section id="ulasan" class="bg-auth-full relative py-20 px-6 overflow-hidden" data-aos="fade-up">
     <div class="auth-blur-circles"><div></div><div></div></div>
     <div class="max-w-7xl mx-auto relative z-10">
@@ -184,11 +178,7 @@
                             $foto = $produk && $produk->foto ? Storage::url($produk->foto) : asset('images/default-product.jpg');
                             $namaProduk = $produk->nama_produk ?? 'Produk tidak tersedia';
                         @endphp
-
-                        <!-- CARD ULASAN DIPERBESAR -->
                         <div class="bg-white border border-gray-100/80 rounded-2xl w-[380px] md:w-[420px] p-6 flex-shrink-0 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
-
-                            <!-- Header Card -->
                             <div class="flex items-center justify-between border-b border-gray-100 pb-4 mb-4">
                                 <div class="flex items-center gap-3 min-w-0">
                                     <div class="w-10 h-10 flex items-center justify-center bg-orange-50 rounded-full">
@@ -201,10 +191,7 @@
                                 </div>
                                 <span class="text-gray-300 text-xl font-serif opacity-40 leading-none">“</span>
                             </div>
-
-                            <!-- Body Card: Foto produk di kiri, rating & ulasan di kanan -->
                             <div class="flex gap-5 items-start flex-1 mb-5">
-                                <!-- Foto produk diperbesar -->
                                 <div class="flex-shrink-0">
                                     <div class="relative group cursor-zoom-in">
                                         <img src="{{ $foto }}" alt="{{ $namaProduk }}" class="w-24 h-24 object-cover rounded-xl border border-gray-200 shadow-sm group-hover:scale-105 transition-transform duration-200">
@@ -212,20 +199,16 @@
                                     </div>
                                 </div>
                                 <div class="flex-1 min-w-0">
-                                    <!-- Rating bintang diperbesar -->
                                     <div class="mb-2 flex items-center gap-1">
                                         @for($i=1; $i<=5; $i++)
                                             <i class="fas fa-star {{ $i <= $ulasanItem->rating ? 'text-amber-400' : 'text-gray-200' }} text-base"></i>
                                         @endfor
                                     </div>
-                                    <!-- Teks ulasan diperbesar -->
                                     <p class="text-gray-700 text-sm leading-relaxed line-clamp-3 font-medium italic cursor-help" title="{{ $ulasanItem->ulasan }}">
                                         "{{ $ulasanItem->ulasan }}"
                                     </p>
                                 </div>
                             </div>
-
-                            <!-- Footer Card: Nama Produk -->
                             <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-sm">
                                 <span class="text-gray-500 font-medium flex items-center gap-1.5">
                                     <i class="fas fa-shopping-bag text-xs text-gray-400"></i> Produk:
@@ -258,75 +241,5 @@
     </div>
 </section>
 
-@push('scripts')
-<script>
-    document.addEventListener('click', function (e) {
-        const card = e.target.closest('.flip-card');
-        if (card) {
-            // Jangan flip jika yang diklik adalah link atau button di dalam card
-            if (e.target.closest('a') || e.target.closest('button')) {
-                return;
-            }
-            card.classList.toggle('flipped');
-        }
-    });
-
-    function initGallery() {
-        const track = document.querySelector('.gallery-track');
-        const slides = document.querySelectorAll('.gallery-slide');
-        const currentSpan = document.getElementById('currentSlide');
-        const totalSpan = document.getElementById('totalSlides');
-        const dots = document.querySelectorAll('.dot');
-        if (!track || slides.length === 0) return;
-
-        let currentIndex = 0;
-        const slideCount = slides.length;
-        let autoSlideInterval;
-
-        function updateIndicators() {
-            if (currentSpan) currentSpan.innerText = currentIndex + 1;
-            dots.forEach((dot, idx) => {
-                if (idx === currentIndex) {
-                    dot.classList.add('bg-white');
-                    dot.classList.remove('bg-white/50');
-                } else {
-                    dot.classList.remove('bg-white');
-                    dot.classList.add('bg-white/50');
-                }
-            });
-        }
-
-        function goToSlide(index) {
-            if (index < 0) index = slideCount - 1;
-            if (index >= slideCount) index = 0;
-            currentIndex = index;
-            track.style.transform = `translateX(-${currentIndex * 100}%)`;
-            updateIndicators();
-        }
-
-        function nextSlide() { goToSlide(currentIndex + 1); }
-        function startAutoSlide() {
-            if (autoSlideInterval) clearInterval(autoSlideInterval);
-            autoSlideInterval = setInterval(nextSlide, 5000);
-        }
-
-        dots.forEach((dot, idx) => {
-            dot.addEventListener('click', () => {
-                goToSlide(idx);
-                startAutoSlide();
-            });
-        });
-
-        goToSlide(0);
-        startAutoSlide();
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initGallery);
-    } else {
-        initGallery();
-    }
-</script>
-@endpush
-
 @endsection
+

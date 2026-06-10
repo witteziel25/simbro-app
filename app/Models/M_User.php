@@ -9,6 +9,8 @@ class M_User extends Authenticatable
 {
     use HasFactory;
 
+    // --- KONFIGURASI TABEL ---
+
     protected $table = 'm_users';
     protected $primaryKey = 'user_id';
     protected $fillable = [

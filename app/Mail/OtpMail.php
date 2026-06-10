@@ -22,6 +22,6 @@ class OtpMail extends Mailable
     public function build()
     {
         return $this->subject('Kode OTP Reset Password SIMBRO')
-                    ->view('emails.otp');
+                    ->view('emails.V_Otp');
     }
 }

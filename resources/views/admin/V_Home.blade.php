@@ -1,10 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.V_App')
 
 @section('title', 'Beranda Admin - SIMBRO')
 
 @section('content')
-
-<!-- SECTION GALLERY - ADMIN -->
+{{-- Section Gallery --}}
 <section id="gallery" class="relative w-full h-screen overflow-hidden">
     <div class="gallery-container relative w-full h-full">
         <div class="gallery-track flex h-full transition-transform duration-700 ease-out">
@@ -34,8 +33,6 @@
             @endforelse
         </div>
     </div>
-
-    <!-- Indikator Slide dan Tombol Tambah Konten -->
     <div class="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 flex flex-col items-center space-y-3">
         <img src="{{ asset('images/logo-simbro-2.png') }}" alt="SIMBRO" class="w-8 h-8 md:w-10 md:h-10 opacity-100 drop-shadow-lg">
         <div id="slideCounter" class="bg-black/50 backdrop-blur-sm text-white text-sm md:text-base font-semibold px-3 py-1 rounded-full">
@@ -53,7 +50,7 @@
 
         @if(session('role') == 1)
         <div class="group">
-            <a href="{{ route('admin.gallery.create') }}"
+            <a href="{{ route('admin.gallery.V_Create') }}"
                class="flex items-center justify-center h-11 w-11 group-hover:w-44 bg-white rounded-full shadow-lg border border-gray-200 text-[#FF6B00] overflow-hidden transition-all duration-300 ease-in-out">
                 <i class="fas fa-plus text-base leading-none flex-shrink-0 group-hover:hidden"></i>
                 <div class="hidden group-hover:flex items-center gap-2 px-5">
@@ -65,11 +62,9 @@
         @endif
     </div>
 </section>
-
-<!-- SECTION PRODUK -->
+{{-- Section Produk --}}
 <section id="produk" class="bg-clear-white py-12 px-4 md:py-20 md:px-6" data-aos="fade-up">
     <div class="max-w-7xl mx-auto">
-        <!-- Badge atas -->
         <div class="inline-flex items-center gap-2 bg-orange-100 rounded-full px-4 py-1.5 mb-4">
             <i class="fas fa-egg text-[#FF6B00] text-sm"></i>
             <span class="text-xs font-bold text-[#FF6B00] uppercase tracking-wider">Ayam Berkualitas Unggul</span>
@@ -80,7 +75,6 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-16">
-            <!-- FRAME PRODUK (slider horizontal) -->
             <div class="md:col-span-2">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-sm md:text-base font-semibold">Geser untuk lihat semua produk <i class="fas fa-arrow-right text-xs"></i></h3>
@@ -96,7 +90,6 @@
                             @endphp
                             <div class="flip-card w-56 md:w-64 flex-shrink-0 h-[290px] md:h-[310px] cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" data-id="{{ $item->produk_id }}">
                                 <div class="flip-card-inner relative w-full h-full transition-transform duration-500 transform-style-preserve-3d">
-                                    <!-- FRONT -->
                                     <div class="flip-card-front absolute w-full h-full backface-hidden bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
                                         <div class="h-44 md:h-48 overflow-hidden bg-gray-100">
                                             @if($item->foto) <img src="{{ Storage::url($item->foto) }}" alt="{{ $item->nama_produk }}" class="w-full h-full object-cover"> @else <div class="w-full h-full flex items-center justify-center text-gray-400">No Image</div> @endif
@@ -112,7 +105,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- BACK (dengan ID produk untuk admin) -->
                                     <div class="flip-card-back absolute w-full h-full backface-hidden bg-white rounded-2xl shadow-md overflow-hidden rotate-y-180 flex flex-col">
                                         <div class="bg-gradient-to-r from-orange-50 to-white p-2 md:p-3 border-b">
                                             <h3 class="text-sm md:text-base font-bold text-gray-800">{{ $item->nama_produk }}</h3>
@@ -159,12 +151,9 @@
                     </div>
                 </div>
             </div>
-
-            <!-- STATISTIK (hanya Total Produk Aktif, Stok Menipis, Total Inventaris) -->
             <div class="md:col-span-1">
-                <!-- Tombol Tambah Produk & Produk Dihapus (flex row) -->
                 <div class="flex flex-row gap-2 mb-6">
-                    <a href="{{ route('produk.tambah') }}" class="flex-1 bg-[#FF6B00] hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg shadow transition text-sm inline-flex items-center justify-center gap-2">
+                    <a href="{{ route('produk.V_Tambah') }}" class="flex-1 bg-[#FF6B00] hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg shadow transition text-sm inline-flex items-center justify-center gap-2">
                         <i class="fas fa-plus"></i> Tambah Produk
                     </a>
                     <a href="{{ route('produk.deleted') }}" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg shadow transition text-sm inline-flex items-center justify-center gap-2">
@@ -185,7 +174,6 @@
                     $totalInventaris = $produk->sum(function($p) { return $p->harga * $p->stok; });
                 @endphp
                 <div class="grid grid-cols-2 gap-3 md:block md:space-y-4">
-                    <!-- Total Produk Aktif -->
                     <div class="bg-gradient-to-br from-white to-orange-50 rounded-xl md:rounded-2xl shadow-md p-3 md:p-4 border border-orange-100 flex items-center justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                         <div class="flex items-center gap-2 md:gap-3">
                             <div class="w-8 h-8 md:w-10 md:h-10 bg-[#FF6B00] rounded-full flex items-center justify-center"><i class="fas fa-boxes text-white text-sm md:text-lg"></i></div>
@@ -193,7 +181,6 @@
                         </div>
                         <p class="text-xl md:text-3xl font-extrabold text-[#FF6B00]">{{ $produk->count() }}</p>
                     </div>
-                    <!-- Stok Menipis (dengan batasan baru) -->
                     <div class="bg-gradient-to-br from-white to-orange-50 rounded-xl md:rounded-2xl shadow-md p-3 md:p-4 border border-orange-100 flex items-center justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                         <div class="flex items-center gap-2 md:gap-3">
                             <div class="w-8 h-8 md:w-10 md:h-10 bg-[#FF6B00] rounded-full flex items-center justify-center"><i class="fas fa-exclamation-triangle text-white text-sm md:text-lg"></i></div>
@@ -201,7 +188,6 @@
                         </div>
                         <p class="text-xl md:text-3xl font-extrabold {{ $stokMenipis > 0 ? 'text-[#FF6B00]' : 'text-green-600' }}">{{ $stokMenipis }}</p>
                     </div>
-                    <!-- Total Inventaris -->
                     <div class="bg-gradient-to-br from-white to-orange-50 rounded-xl md:rounded-2xl shadow-md p-3 md:p-4 border border-orange-100 flex items-center justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                         <div class="flex items-center gap-2 md:gap-3">
                             <div class="w-8 h-8 md:w-10 md:h-10 bg-[#FF6B00] rounded-full flex items-center justify-center"><i class="fas fa-money-bill-wave text-white text-sm md:text-lg"></i></div>
@@ -214,8 +200,7 @@
         </div>
     </div>
 </section>
-
-<!-- SECTION ULASAN (tidak berubah) -->
+{{-- Section Ulasan --}}
 <section id="ulasan" class="bg-auth-full relative py-20 px-6 overflow-hidden" data-aos="fade-up">
     <div class="auth-blur-circles"><div></div><div></div></div>
     <div class="max-w-7xl mx-auto relative z-10">
@@ -292,75 +277,5 @@
     </div>
 </section>
 
-@push('scripts')
-<script>
-    document.addEventListener('click', function (e) {
-        const card = e.target.closest('.flip-card');
-        if (card) {
-            // Jangan flip jika yang diklik adalah link atau button di dalam card
-            if (e.target.closest('a') || e.target.closest('button')) {
-                return;
-            }
-            card.classList.toggle('flipped');
-        }
-    });
-
-    function initGallery() {
-        const track = document.querySelector('.gallery-track');
-        const slides = document.querySelectorAll('.gallery-slide');
-        const currentSpan = document.getElementById('currentSlide');
-        const totalSpan = document.getElementById('totalSlides');
-        const dots = document.querySelectorAll('.dot');
-        if (!track || slides.length === 0) return;
-
-        let currentIndex = 0;
-        const slideCount = slides.length;
-        let autoSlideInterval;
-
-        function updateIndicators() {
-            if (currentSpan) currentSpan.innerText = currentIndex + 1;
-            dots.forEach((dot, idx) => {
-                if (idx === currentIndex) {
-                    dot.classList.add('bg-white');
-                    dot.classList.remove('bg-white/50');
-                } else {
-                    dot.classList.remove('bg-white');
-                    dot.classList.add('bg-white/50');
-                }
-            });
-        }
-
-        function goToSlide(index) {
-            if (index < 0) index = slideCount - 1;
-            if (index >= slideCount) index = 0;
-            currentIndex = index;
-            track.style.transform = `translateX(-${currentIndex * 100}%)`;
-            updateIndicators();
-        }
-
-        function nextSlide() { goToSlide(currentIndex + 1); }
-        function startAutoSlide() {
-            if (autoSlideInterval) clearInterval(autoSlideInterval);
-            autoSlideInterval = setInterval(nextSlide, 5000);
-        }
-
-        dots.forEach((dot, idx) => {
-            dot.addEventListener('click', () => {
-                goToSlide(idx);
-                startAutoSlide();
-            });
-        });
-
-        goToSlide(0);
-        startAutoSlide();
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initGallery);
-    } else {
-        initGallery();
-    }
-</script>
-@endpush
-
 @endsection
+

@@ -1,10 +1,11 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Data Customer - SIMBRO Admin')
 
 @section('content')
 
 <div class="min-h-screen bg-white">
+    {{-- Header Data Customer --}}
     <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div class="flex items-center gap-4">
@@ -22,7 +23,8 @@
     </div>
 
     <div class="w-full px-4 py-8 sm:px-6 lg:px-8">
-    <div class="overflow-x-auto">
+        {{-- Tabel Data Customer --}}
+        <div class="overflow-x-auto">
             @if($customers->count() > 0)
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">

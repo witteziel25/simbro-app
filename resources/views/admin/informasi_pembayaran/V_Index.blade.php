@@ -1,123 +1,10 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Informasi Pembayaran - SIMBRO Admin')
 
 @section('content')
-<style>
-    .card-info {
-        transition: all 0.2s ease;
-        border-left: 4px solid #FF6B00 !important;
-        background: white;
-        border-radius: 0.75rem;
-        border: 1px solid #e5e7eb;
-        border-left-width: 4px !important;
-        overflow: hidden;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    }
-    .card-info:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-    .rekening-card {
-        transition: all 0.2s ease;
-        border-left: 4px solid #FF6B00 !important;
-        background: white;
-        border-radius: 0.75rem;
-        border: 1px solid #e5e7eb;
-        border-left-width: 4px !important;
-        overflow: hidden;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    }
-    .rekening-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-    /* Style untuk konten CKEditor (supaya tampil rapi) */
-    .ck-content {
-        line-height: 1.6;
-    }
-    .ck-content ul, .ck-content ol {
-        list-style: revert !important;
-        padding-left: 1.5rem !important;
-        margin: 0.5rem 0 !important;
-    }
-    .ck-content li {
-        margin: 0.25rem 0;
-    }
-    .ck-content h1, .ck-content h2, .ck-content h3 {
-        font-size: revert;
-        font-weight: revert;
-        margin: 0.5rem 0;
-    }
-    .ck-content p {
-        margin: 0 0 0.5rem 0;
-    }
-    .badge-bank {
-        background: #FF6B00;
-        color: white;
-        font-weight: 600;
-        font-size: 0.7rem;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        display: inline-block;
-    }
-    .info-row {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.875rem;
-        color: #334155;
-        margin-top: 0.5rem;
-    }
-    .info-row i {
-        width: 1.25rem;
-        color: #FF6B00;
-    }
-    .btn-outline-orange {
-        border: 1px solid #FF6B00;
-        color: #FF6B00;
-        transition: all 0.2s;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        font-size: 0.75rem;
-        font-weight: 500;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.25rem;
-        background: transparent;
-        cursor: pointer;
-    }
-    .btn-outline-orange:hover {
-        background-color: #FF6B00;
-        color: white;
-    }
-    .btn-outline-red {
-        border: 1px solid #ef4444;
-        color: #ef4444;
-        transition: all 0.2s;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        font-size: 0.75rem;
-        font-weight: 500;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.25rem;
-        background: transparent;
-        cursor: pointer;
-    }
-    .btn-outline-red:hover {
-        background-color: #ef4444;
-        color: white;
-    }
-    .rekening-item-editing {
-        opacity: 0.5;
-        transition: opacity 0.2s;
-        pointer-events: none;
-    }
-</style>
 
 <div class="min-h-screen bg-gray-50">
-    <!-- Header (tidak berubah) -->
     <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div class="flex items-center gap-4">
@@ -135,14 +22,13 @@
     </div>
 
     <div class="max-w-5xl mx-auto py-8 px-4">
-        <!-- Tombol tambah card -->
         <div class="flex justify-end mb-6">
             <a href="{{ route('admin.informasi-pembayaran.create') }}" class="bg-[#FF6B00] hover:bg-orange-700 font-semibold text-white px-4 py-2 rounded-lg shadow flex items-center gap-2 transition">
                 <i class="fas fa-plus"></i> Tambah Informasi
             </a>
         </div>
 
-        <!-- Daftar card informasi -->
+        {{-- Daftar Card Informasi Pembayaran --}}
         <div class="space-y-8">
             @foreach($informasis as $info)
                 @php
@@ -180,7 +66,7 @@
             @endforeach
         </div>
 
-        <!-- Daftar Rekening Bank -->
+        {{-- Daftar Rekening Bank --}}
         <div class="rekening-card mt-8">
             <div class="px-5 py-3 border-b border-gray-100 bg-gray-50/50">
                 <div class="flex items-center gap-2">
@@ -189,7 +75,7 @@
                 </div>
             </div>
             <div class="p-5">
-                <!-- Form tambah / edit rekening -->
+                {{-- Form Tambah/Edit Rekening Bank --}}
                 <div id="rekeningFormContainer" class="mb-8 p-4 bg-gray-50 rounded-xl border border-gray-200">
                     <form id="rekeningForm" method="POST" action="{{ route('admin.rekening.store') }}">
                         @csrf
@@ -212,7 +98,7 @@
                     </form>
                 </div>
 
-                <!-- Daftar rekening -->
+                {{-- List Data Rekening Bank --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="rekeningList">
                     @php $rekeningAll = \App\Models\M_RekeningPembayaran::all(); @endphp
                     @forelse($rekeningAll as $rek)
@@ -244,7 +130,6 @@
 </div>
 
 <script>
-    // Fungsi konfirmasi hapus card informasi
     function confirmDeleteCard(id) {
         if (typeof showConfirm === 'function') {
             showConfirm('Yakin ingin menghapus card informasi ini?', function() {
@@ -267,7 +152,6 @@
         }
     }
 
-    // Konfirmasi hapus rekening
     document.querySelectorAll('.delete-rekening-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -279,8 +163,6 @@
             }
         });
     });
-
-    // ... kode edit rekening (sama seperti sebelumnya) ...
     const rekeningForm = document.getElementById('rekeningForm');
     const formMethod = document.getElementById('formMethod');
     const editRekeningId = document.getElementById('editRekeningId');

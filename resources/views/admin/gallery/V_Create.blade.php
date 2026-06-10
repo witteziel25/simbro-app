@@ -1,17 +1,8 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Tambah Konten Gallery - SIMBRO Admin')
 
 @section('content')
-<style>
-    .ck-content ul, .ck-content ol { list-style: revert !important; padding-left: 2rem !important; margin: 0.5rem 0 !important; }
-    .ck-content h1, .ck-content h2, .ck-content h3 { font-size: revert; font-weight: revert; }
-    .ck-content p { margin: 0 0 0.5rem 0; }
-    .counter-error { color: #dc2626; }
-    .counter-warning { color: #eab308; }
-    .error-text { color: #dc2626; font-size: 0.75rem; margin-top: 4px; display: block; }
-    .char-counter { font-size: 0.75rem; text-align: right; }
-</style>
 
 <div class="min-h-screen bg-white">
     <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
@@ -34,16 +25,12 @@
             @csrf
             <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6 space-y-6">
                 <h2 class="text-xl font-bold text-gray-800 mb-5 border-l-4 border-[#FF6B00] pl-3">Buat Konten Gallery Baru</h2>
-
-                <!-- Gambar -->
                 <div>
                     <label class="block font-semibold text-gray-800 mb-1">Gambar</label>
                     <input type="file" name="gambar" id="gambar" accept="image/*" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                     <div id="error-gambar" class="error-text"></div>
                     <p class="error-text" style="color: #6b7280;">Maksimal ukuran 30 MB (jpeg, png, jpg)</p>
                 </div>
-
-                <!-- Judul -->
                 <div>
                     <label class="block font-semibold text-gray-800 mb-1">Judul <span class="text-sm font-normal text-gray-500">(maksimal 50 karakter)</span></label>
                     <input type="text" name="judul" id="judul" value="{{ old('judul') }}" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
@@ -52,8 +39,6 @@
                         <span id="judul-counter" class="char-counter text-gray-500">0 / 50 karakter</span>
                     </div>
                 </div>
-
-                <!-- Keterangan -->
                 <div>
                     <label class="block font-semibold text-gray-800 mb-1">Keterangan <span class="text-sm font-normal text-gray-500">(maksimal 255 karakter)</span></label>
                     <input type="text" name="keterangan" id="keterangan" value="{{ old('keterangan') }}" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
@@ -62,8 +47,6 @@
                         <span id="keterangan-counter" class="char-counter text-gray-500">0 / 255 karakter</span>
                     </div>
                 </div>
-
-                <!-- Artikel -->
                 <div>
                     <label class="block font-semibold text-gray-800 mb-1">Artikel (detail) <span class="text-sm font-normal text-gray-500">Maksimal 2000 karakter, termasuk spasi</span></label>
                     <textarea name="artikel" id="editor" rows="10" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">{{ old('artikel') }}</textarea>

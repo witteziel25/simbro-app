@@ -44,7 +44,7 @@ Route::middleware(['role:1'])->prefix('admin')->group(function () {
 
 // PRODUK (hanya admin)
 Route::middleware(['role:1'])->prefix('produk')->group(function () {
-    Route::get('/tambah', [C_Produk::class, 'showFormTambahDataProduk'])->name('produk.tambah');
+    Route::get('/tambah', [C_Produk::class, 'showFormTambahDataProduk'])->name('produk.V_Tambah');
     Route::post('/tambah', [C_Produk::class, 'tambahProduk'])->name('produk.store');
     Route::get('/{id}/edit', [C_Produk::class, 'showFormUbahDataProduk'])->name('produk.edit');
     Route::put('/{id}', [C_Produk::class, 'simpan'])->name('produk.update');
@@ -54,7 +54,7 @@ Route::middleware(['role:1'])->prefix('produk')->group(function () {
     Route::post('/restore/{id}', [C_Produk::class, 'restore'])->name('produk.restore');
 });
 
-// ========== ADMIN - MANAJEMEN ==========
+// ADMIN - MANAJEMEN
 Route::middleware(['role:1'])->prefix('admin')->group(function () {
     Route::get('/manajemen', [C_Transaksi::class, 'manajemen'])->name('admin.manajemen');
 
@@ -73,16 +73,16 @@ Route::middleware(['role:1'])->prefix('admin')->group(function () {
     Route::delete('/rekening/{id}', [C_Transaksi::class, 'hapusRekening'])->name('admin.rekening.destroy');
 
     // Transaksi
-    Route::get('/transaksi-aktif', [C_Transaksi::class, 'adminTransaksiAktif'])->name('admin.transaksi.aktif');
+    Route::get('/transaksi-aktif', [C_Transaksi::class, 'adminTransaksiAktif'])->name('admin.transaksi.V_Aktif');
     Route::get('/riwayat-transaksi', [C_Transaksi::class, 'adminRiwayatTransaksi'])->name('admin.riwayat.transaksi');
-    Route::get('/transaksi/{id}', [C_Transaksi::class, 'showDetailTransaksiAdmin'])->name('admin.transaksi.detail');
+    Route::get('/transaksi/{id}', [C_Transaksi::class, 'showDetailTransaksiAdmin'])->name('admin.transaksi.V_Detail');
     Route::put('/transaksi/{id}/status', [C_Transaksi::class, 'updateStatus'])->name('admin.transaksi.update.status');
 
-    Route::get('/laporan-penjualan', [C_Transaksi::class, 'laporanPenjualan'])->name('admin.laporan.penjualan');
+    Route::get('/laporan-penjualan', [C_Transaksi::class, 'laporanPenjualan'])->name('admin.laporan.V_Penjualan');
     Route::get('/resi/cetak/{transaksi_id}', [C_Transaksi::class, 'cetakResi'])->name('admin.resi.cetak');
 });
 
-// ========== CUSTOMER - TRANSAKSI ==========
+// CUSTOMER - TRANSAKSI
 Route::middleware(['role:0'])->prefix('customer')->group(function () {
     Route::get('/beli/{produk_id}', [C_Transaksi::class, 'beli'])->name('customer.transaksi.beli');
     Route::post('/prepare-checkout/{produk_id}', [C_Transaksi::class, 'prepareCheckout'])->name('customer.transaksi.prepare');
@@ -95,16 +95,16 @@ Route::middleware(['role:0'])->prefix('customer')->group(function () {
     Route::delete('/ulasan/{id}', [C_Ulasan::class, 'destroy'])->name('customer.ulasan.destroy');
 });
 
-// ========== GALLERY (ADMIN) ==========
+// GALLERY (ADMIN)
 Route::middleware(['role:1'])->prefix('admin')->group(function () {
-    Route::get('/gallery/create', [C_Gallery::class, 'create'])->name('admin.gallery.create');
+    Route::get('/gallery/create', [C_Gallery::class, 'create'])->name('admin.gallery.V_Create');
     Route::post('/gallery', [C_Gallery::class, 'store'])->name('admin.gallery.store');
-    Route::get('/gallery/{id}/edit', [C_Gallery::class, 'edit'])->name('admin.gallery.edit');
+    Route::get('/gallery/{id}/edit', [C_Gallery::class, 'edit'])->name('admin.gallery.V_Edit');
     Route::put('/gallery/{id}', [C_Gallery::class, 'update'])->name('admin.gallery.update');
     Route::delete('/gallery/{id}', [C_Gallery::class, 'destroy'])->name('admin.gallery.destroy');
 });
 
-// ========== GALLERY (PUBLIC) ==========
+// GALLERY (PUBLIC)
 Route::get('/gallery/{id}', [C_Gallery::class, 'show'])->name('gallery.article');
 
 // Chatbot AI

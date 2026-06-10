@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Riwayat Transaksi - SIMBRO')
 
@@ -210,8 +210,6 @@
                         </div>
                     </div>
                     @endif
-
-                    <!-- Detail panel (muncul saat diklik) -->
                     <div class="detail-panel hidden border-t border-gray-100">
                         <div class="p-5 space-y-5">
                             <div class="info-payment">
@@ -274,8 +272,6 @@
                                     </button>
                                 </div>
                             @endif
-
-                            <!-- === AREA ULASAN (SEKARANG BERADA DI DALAM DETAIL PANEL) === -->
                             @if($status != 'dibatalkan')
                             <div class="border-t border-gray-100 pt-4">
                                 @if($status == 'diterima')
@@ -341,16 +337,6 @@
 </div>
 
 <script>
-    function toggleDetail(element) {
-        const card = element.closest('.card-riwayat-customer');
-        const panel = card.querySelector('.detail-panel');
-        const icon = element.querySelector('.dropdown-icon');
-        if (panel && icon) {
-            panel.classList.toggle('hidden');
-            icon.classList.toggle('rotate-180');
-        }
-    }
-
     document.querySelectorAll('.rating-star').forEach(star => {
         star.addEventListener('click', function() {
             const rating = parseInt(this.getAttribute('data-rating'));

@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Ubah Produk - ' . $produk->nama_produk)
 

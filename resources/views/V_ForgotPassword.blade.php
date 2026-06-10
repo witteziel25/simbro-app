@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Lupa Password - SIMBRO')
 
@@ -10,8 +10,6 @@
             <h2 class="text-2xl font-black mt-2">Lupa Password?</h2>
             <p class="text-gray-500 text-sm mt-1">Masukkan username Anda, kami akan kirim OTP ke email terdaftar</p>
         </div>
-
-        {{-- Error summary --}}
         @if($errors->any())
             <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-3 mb-4 text-sm rounded text-left">
                 @php

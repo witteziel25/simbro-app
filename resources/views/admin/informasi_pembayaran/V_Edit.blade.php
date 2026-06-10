@@ -1,6 +1,6 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
-@section('title', 'Tambah Card Informasi - SIMBRO Admin')
+@section('title', 'Edit Card Informasi - SIMBRO Admin')
 
 @section('content')
 <style>
@@ -27,8 +27,8 @@
 <div class="min-h-screen flex flex-col md:flex-row">
     <div class="w-full md:w-80 bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] flex flex-col justify-center px-10 py-10 text-white shadow-xl">
         <img src="{{ asset('images/logo-simbro-2.png') }}" class="h-28 w-28 mb-4">
-        <h1 class="text-3xl font-bold mb-3">Tambah Informasi</h1>
-        <p class="text-orange-100 text-sm mb-4 leading-relaxed">Buat informasi baru untuk ditampilkan di proses transaksi</p>
+        <h1 class="text-3xl font-bold mb-3">Edit Informasi</h1>
+        <p class="text-orange-100 text-sm mb-4 leading-relaxed">Ubah judul dan deskripsi informasi yang sudah ada</p>
         <div class="mt-3">
             <i class="fas fa-arrow-left"></i>
             <a href="{{ route('admin.informasi-pembayaran') }}" class="inline-flex items-center gap-2 text-white hover:underline text-sm font-bold"> Kembali ke Info. Pembayaran</a>
@@ -38,12 +38,13 @@
     <div class="flex-1 bg-white p-6 md:p-10 flex items-center">
         <div class="max-w-4xl w-full mx-auto">
             <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-                <h2 class="text-xl font-bold text-gray-800 mb-5 border-l-4 border-[#FF6B00] pl-3">Tambah Informasi</h2>
-                <form method="POST" action="{{ route('admin.informasi-pembayaran.store') }}" id="formInformasi" novalidate>
+                <h2 class="text-xl font-bold text-gray-800 mb-5 border-l-4 border-[#FF6B00] pl-3">Edit Informasi</h2>
+                <form method="POST" action="{{ route('admin.informasi-pembayaran.update', $informasi->informasi_id) }}" id="formInformasi" novalidate>
                     @csrf
+                    @method('PUT')
                     <div class="mb-5">
                         <label class="block font-semibold text-gray-700 mb-2">Judul</label>
-                        <input type="text" name="judul" id="judul" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-[#FF6B00] focus:border-[#FF6B00]" value="{{ old('judul') }}">
+                        <input type="text" name="judul" id="judul" value="{{ old('judul', $informasi->judul) }}" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-[#FF6B00] focus:border-[#FF6B00]">
                         <div id="error-judul" class="error-text"></div>
                         @error('judul')
                             <div class="error-text">{{ $message }}</div>
@@ -51,7 +52,7 @@
                     </div>
                     <div class="mb-5">
                         <label class="block font-semibold text-gray-700 mb-2">Deskripsi</label>
-                        <textarea name="deskripsi" id="editor" rows="10" class="w-full border border-gray-300 rounded-lg px-4 py-2">{{ old('deskripsi') }}</textarea>
+                        <textarea name="deskripsi" id="editor" rows="12" class="w-full border border-gray-300 rounded-lg px-4 py-2">{{ old('deskripsi', $informasi->deskripsi) }}</textarea>
                         <div id="error-deskripsi" class="error-text"></div>
                         @error('deskripsi')
                             <div class="error-text">{{ $message }}</div>

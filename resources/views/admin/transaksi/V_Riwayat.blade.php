@@ -1,48 +1,8 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Riwayat Transaksi - SIMBRO Admin')
 
 @section('content')
-<style>
-    .card-riwayat {
-        transition: all 0.2s ease;
-        border-left: 4px solid #FF6B00;
-        background: white;
-        border-radius: 0.75rem;
-        border: 1px solid #e5e7eb;
-        overflow: hidden;
-    }
-    .card-riwayat:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-    }
-    .badge-status {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.375rem;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        font-size: 0.7rem;
-        font-weight: 600;
-    }
-    .info-payment {
-        border: 1px dashed #FF6B00;
-        background-color: #fffaf5;
-        border-radius: 0.75rem;
-        padding: 1rem;
-    }
-    .dropdown-icon {
-        transition: transform 0.2s;
-    }
-    .rotate-180 {
-        transform: rotate(180deg);
-    }
-    .prose-list {
-        list-style: revert;
-        padding-left: 1.5rem;
-        margin: 0.5rem 0;
-    }
-</style>
 
 <div class="min-h-screen bg-gray-50">
     <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
@@ -62,7 +22,7 @@
     </div>
 
     <div class="max-w-5xl mx-auto py-8 px-4">
-        <!-- Filter -->
+        {{-- Form Filter --}}
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-8">
             <form method="GET" class="flex flex-wrap items-end gap-4">
                 <div>
@@ -78,6 +38,7 @@
             </form>
         </div>
 
+        {{-- Daftar Riwayat Transaksi --}}
         <div class="space-y-6">
             @forelse($transaksis as $t)
                 @php
@@ -116,9 +77,9 @@
                         </div>
                     </div>
 
+                    {{-- Panel Detail Transaksi --}}
                     <div class="detail-panel hidden border-t border-gray-100">
                         <div class="p-5 space-y-5">
-                            <!-- Informasi Pembayaran & Pengiriman (menggunakan struktur baru) -->
                             <div class="info-payment">
                                 <div class="flex items-center gap-2 mb-2">
                                     <i class="fas fa-credit-card text-[#FF6B00] text-sm"></i>
@@ -145,7 +106,6 @@
                                         @endif
                                     </div>
                                 </div>
-                                <!-- Rekening Tujuan -->
                                 <div class="bg-gray-50 rounded-lg p-3">
                                     <span class="font-semibold text-gray-600 block mb-1">Rekening Tujuan</span>
                                     @if($t->rekening)
@@ -176,16 +136,5 @@
         </div>
     </div>
 </div>
-
-<script>
-    function toggleDetail(element) {
-        const card = element.closest('.card-riwayat');
-        const panel = card.querySelector('.detail-panel');
-        const icon = element.querySelector('.dropdown-icon');
-        if (panel && icon) {
-            panel.classList.toggle('hidden');
-            icon.classList.toggle('rotate-180');
-        }
-    }
-</script>
 @endsection
+

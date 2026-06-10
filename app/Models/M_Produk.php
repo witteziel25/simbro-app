@@ -10,6 +10,8 @@ class M_Produk extends Model
 {
     use HasFactory, SoftDeletes;
 
+    // --- KONFIGURASI TABEL ---
+
     protected $table = 'm_produks';
     protected $primaryKey = 'produk_id';
     protected $fillable = [

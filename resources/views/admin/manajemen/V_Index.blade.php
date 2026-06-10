@@ -1,10 +1,9 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Manajemen - SIMBRO Admin')
 
 @section('content')
 <div class="min-h-screen bg-white">
-    <!-- Header mengikuti style V_DataCustomer -->
     <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div class="flex items-center gap-4">
@@ -23,7 +22,7 @@
 
     <div class="max-w-7xl mx-auto py-12 px-4">
         <div class="space-y-12">
-            <!-- Card 1 - Informasi Pembayaran -->
+            {{-- Card Informasi Pembayaran --}}
             <div class="flex flex-col md:flex-row gap-8 items-center">
                 <div class="w-full md:w-1/2 transform transition duration-300 hover:-translate-y-1">
                     <a href="{{ route('admin.informasi-pembayaran') }}" class="block bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] rounded-2xl shadow-xl p-6 text-white hover:shadow-2xl transition-all duration-300 group">
@@ -40,8 +39,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Card 2 - Transaksi Aktif -->
             <div class="flex flex-col md:flex-row gap-8 items-center">
                 <div class="w-full md:w-1/2 order-2 md:order-1">
                     <div class="bg-white rounded-xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition">
@@ -49,7 +46,7 @@
                     </div>
                 </div>
                 <div class="w-full md:w-1/2 order-1 md:order-2 transform transition duration-300 hover:-translate-y-1">
-                    <a href="{{ route('admin.transaksi.aktif') }}" class="block bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] rounded-2xl shadow-xl p-6 text-white hover:shadow-2xl transition-all duration-300 group">
+                    <a href="{{ route('admin.transaksi.V_Aktif') }}" class="block bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] rounded-2xl shadow-xl p-6 text-white hover:shadow-2xl transition-all duration-300 group">
                         <div class="flex items-center gap-4">
                             <i class="fas fa-exchange-alt text-4xl group-hover:scale-110 transition-transform"></i>
                             <h3 class="text-xl font-bold">Transaksi Aktif</h3>
@@ -58,8 +55,7 @@
                     </a>
                 </div>
             </div>
-
-            <!-- Card 3 - Riwayat Transaksi -->
+            {{-- Card Riwayat Transaksi --}}
             <div class="flex flex-col md:flex-row gap-8 items-center">
                 <div class="w-full md:w-1/2 transform transition duration-300 hover:-translate-y-1">
                     <a href="{{ route('admin.riwayat.transaksi') }}" class="block bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] rounded-2xl shadow-xl p-6 text-white hover:shadow-2xl transition-all duration-300 group">
@@ -76,8 +72,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Card 4 - Laporan Penjualan -->
             <div class="flex flex-col md:flex-row gap-8 items-center">
                 <div class="w-full md:w-1/2 order-2 md:order-1">
                     <div class="bg-white rounded-xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition">
@@ -85,7 +79,7 @@
                     </div>
                 </div>
                 <div class="w-full md:w-1/2 order-1 md:order-2 transform transition duration-300 hover:-translate-y-1">
-                    <a href="{{ route('admin.laporan.penjualan') }}" class="block bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] rounded-2xl shadow-xl p-6 text-white hover:shadow-2xl transition-all duration-300 group">
+                    <a href="{{ route('admin.laporan.V_Penjualan') }}" class="block bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] rounded-2xl shadow-xl p-6 text-white hover:shadow-2xl transition-all duration-300 group">
                         <div class="flex items-center gap-4">
                             <i class="fas fa-chart-line text-4xl group-hover:scale-110 transition-transform"></i>
                             <h3 class="text-xl font-bold">Laporan Penjualan</h3>

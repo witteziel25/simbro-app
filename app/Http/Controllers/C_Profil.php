@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class C_Profil extends Controller
 {
-    // CUSTOMER PROFIL
+    // --- Customer Profil ---
     public function showCustomerProfil()
     {
         $user = (object) [
@@ -22,8 +22,7 @@ class C_Profil extends Controller
         ];
         return view('customer.V_Profil', compact('user'));
     }
-
-    // PROSES UBAH-SIMPAN PROFIL CUSTOMER
+    // --- Update Profil Customer ---
     public function klikUpdateCustomerProfil(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -72,8 +71,7 @@ class C_Profil extends Controller
 
         return response()->json(['success' => true, 'message' => 'Data berhasil diperbarui.']);
     }
-
-    // ADMIN PROFIL
+    // --- Admin Profil ---
     public function showAdminProfil()
     {
         $user = (object) [
@@ -83,8 +81,7 @@ class C_Profil extends Controller
         ];
         return view('admin.V_Profil', compact('user'));
     }
-
-    // PROSES UBAH-SIMPAN PROFIL ADMIN
+    // --- Update Profil Admin ---
     public function klikUpdateAdminProfil(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -119,8 +116,7 @@ class C_Profil extends Controller
 
         return response()->json(['success' => true, 'message' => 'Data admin berhasil diperbarui.']);
     }
-
-    //  ADMIN LIHAT DATA SEMUA CUSTOMER
+    // --- Data Customer (Admin) ---
     public function showDataCustomer()
     {
         $customers = M_User::where('role', 0)->get();

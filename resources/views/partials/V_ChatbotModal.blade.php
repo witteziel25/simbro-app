@@ -1,203 +1,8 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Chatbot AI - SIMBRO')
 
 @section('content')
-<style>
-    /* Layout utama */
-    .chat-layout {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        overflow: hidden;
-    }
-    /* Header oranye */
-    .orange-header {
-        flex-shrink: 0;
-        background: linear-gradient(to bottom right, #FF7A1D, #CD5500);
-        padding: 1.5rem 2rem;
-    }
-    .orange-header .container {
-        max-width: 1280px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-    .header-left {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-    .header-left img {
-        height: 48px;
-        width: auto;
-    }
-    .header-left h1 {
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin: 0;
-        color: white !important;
-    }
-    .header-left p {
-        font-size: 0.875rem;
-        margin: 0;
-        color: white !important;
-        opacity: 0.9;
-    }
-    .back-link {
-        color: white !important;
-        text-decoration: none;
-        font-weight: bold;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-    .back-link:hover {
-        text-decoration: underline;
-    }
-    /* Area chat scroll */
-    .chat-scroll-area {
-        flex: 1;
-        overflow-y: auto;
-        background: white;
-        padding: 1rem 2rem;
-    }
-    /* Welcome section */
-    .welcome-section {
-        max-width: 800px;
-        margin: 4rem auto 4rem auto; /* sesuaikan jarak */
-        text-align: center;
-    }
-    .welcome-greeting {
-        font-size: 2rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-    .greeting-text {
-        color: #FF6B00;
-    }
-    .user-name {
-        color: #1f2937;
-    }
-    .welcome-sub {
-        font-size: 1.125rem;
-        color: #4b5563;
-    }
-    /* Input area */
-    .input-area {
-        flex-shrink: 0;
-        background: white;
-        padding: 1rem 1.5rem;
-        border-top: none;
-    }
-    .input-container {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-    input:focus {
-        outline: none;
-        box-shadow: none;
-    }
-    /* Gaya pesan */
-    .chat-message-container {
-        margin-bottom: 1.5rem;
-        display: flex;
-        gap: 0.75rem;
-        align-items: flex-start;
-        max-width: 1000px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .chat-message-container.flex-row-reverse {
-        flex-direction: row-reverse;
-    }
-    .chat-message-wrapper {
-        max-width: 70%;
-        display: flex;
-        flex-direction: column;
-    }
-    .chat-message-container.flex-row-reverse .chat-message-wrapper {
-        margin-left: auto;
-    }
-    .chat-message {
-        border-radius: 1.25rem;
-        padding: 0.75rem 1rem;
-        word-wrap: break-word;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    }
-    .user-message {
-        background-color: #FF6B00;
-        color: white;
-        border-top-right-radius: 0.25rem;
-    }
-    .assistant-message {
-        background-color: #f3f4f6;
-        color: #1f2937;
-        border-top-left-radius: 0.25rem;
-        border: 1px solid #e5e7eb;
-    }
-    /* Gaya untuk list yang dihasilkan dari markdown */
-    .assistant-message ul {
-        list-style-type: disc;
-        padding-left: 1.5rem;
-        margin: 0.5rem 0;
-    }
-    .assistant-message li {
-        margin: 0.25rem 0;
-    }
-    .assistant-message strong {
-        font-weight: 600;
-    }
-    .message-actions {
-        display: flex;
-        gap: 0.75rem;
-        margin-top: 0.25rem;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-    }
-    .message-actions button {
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 0.7rem;
-        color: #9ca3af;
-        transition: color 0.2s;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.25rem;
-    }
-    .message-actions button:hover {
-        color: #FF6B00;
-    }
-    .typing-indicator span {
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background-color: #9ca3af;
-        animation: typing 1.4s infinite ease-in-out both;
-    }
-    .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-    .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-    @keyframes typing {
-        0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
-        40% { transform: scale(1); opacity: 1; }
-    }
-    @media (max-width: 768px) {
-        .chat-message-wrapper {
-            max-width: 85%;
-        }
-        .chat-scroll-area {
-            padding: 1rem;
-        }
-        .welcome-greeting {
-            font-size: 1.5rem;
-        }
-    }
-</style>
 
 <div class="chat-layout">
     <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10 z-10 shadow-sm flex-shrink-0">
@@ -215,7 +20,6 @@
         </div>
     </div>
 
-    <!-- Area Chat Scrollable -->
     <div id="chatMessages" class="chat-scroll-area">
         <div class="welcome-section" id="welcomeSection">
             @php
@@ -232,10 +36,9 @@
             </div>
             <div class="welcome-sub">Katakan apa yang bisa kami bantu.</div>
         </div>
-        <!-- Percakapan akan dimuat di sini oleh JavaScript -->
+
     </div>
 
-    <!-- Input Area -->
     <div class="input-area">
         <div class="input-container">
             <form id="chatForm" class="flex gap-3">

@@ -1,24 +1,20 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Detail Transaksi - SIMBRO Admin')
 
 @section('content')
 <div class="min-h-screen flex flex-col md:flex-row">
-    <!-- Sidebar kiri oranye -->
     <div class="w-full md:w-80 bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] flex flex-col justify-center px-10 py-10 text-white">
         <img src="{{ asset('images/logo-simbro-2.png') }}" alt="SIMBRO" class="h-28 w-28 mb-4">
         <h1 class="text-3xl font-bold mb-3">Detail Transaksi</h1>
         <p class="text-orange-100 text-sm mb-4">Informasi lengkap pesanan customer dan kelola status transaksi.</p>
         <div class="mt-3">
             <i class="fas fa-arrow-left"></i>
-            <a href="{{ route('admin.transaksi.aktif') }}" class="inline-flex items-center gap-2 text-white hover:underline transition text-sm font-bold"> Kembali ke Transaksi Aktif</a>
+            <a href="{{ route('admin.transaksi.V_Aktif') }}" class="inline-flex items-center gap-2 text-white hover:underline transition text-sm font-bold"> Kembali ke Transaksi Aktif</a>
         </div>
     </div>
-
-    <!-- Konten kanan -->
     <div class="flex-1 bg-white p-6 md:p-10 flex items-center">
         <div class="max-w-4xl w-full mx-auto">
-            <!-- Badge status dan ID -->
             <div class="flex flex-wrap justify-between items-center mb-6 pb-4 border-b border-gray-100">
                 <div>
                     <p class="text-xs text-gray-400 uppercase tracking-wide">ID Transaksi</p>
@@ -40,8 +36,6 @@
                     {{ ucfirst($status) }}
                 </span>
             </div>
-
-            <!-- Informasi utama grid 2 kolom -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div class="space-y-1">
                     <p class="text-xs font-semibold text-gray-400 uppercase">Customer</p>
@@ -64,8 +58,6 @@
                     @endif
                 </div>
             </div>
-
-            <!-- Tabel produk -->
             <div class="mb-8">
                 <div class="flex items-center gap-2 mb-3">
                     <i class="fas fa-box-open text-[#FF6B00]"></i>
@@ -98,8 +90,6 @@
                     </table>
                 </div>
             </div>
-
-            <!-- Bukti pembayaran -->
             <div class="mb-8">
                 <div class="flex items-center gap-2 mb-2">
                     <i class="fas fa-receipt text-[#FF6B00]"></i>
@@ -113,8 +103,6 @@
                     <p class="text-gray-400 text-sm italic">Belum ada bukti pembayaran</p>
                 @endif
             </div>
-
-            <!-- Form update status -->
             <div class="pt-4 border-t border-gray-100">
                 <div class="flex items-center gap-2 mb-3">
                     <i class="fas fa-sync-alt text-[#FF6B00]"></i>
@@ -175,7 +163,7 @@
                     if (selectedStatusText === 'dibatalkan' || selectedStatusText === 'diterima') {
                         redirectUrl = '{{ route("admin.riwayat.transaksi") }}';
                     } else {
-                        redirectUrl = '{{ route("admin.transaksi.aktif") }}';
+                        redirectUrl = '{{ route("admin.transaksi.V_Aktif") }}';
                     }
 
                     if (typeof showLightbox === 'function') {

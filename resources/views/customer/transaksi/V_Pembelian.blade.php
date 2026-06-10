@@ -1,126 +1,8 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Pembelian Produk - SIMBRO')
 
 @section('content')
-<style>
-    input[type="number"].no-spinner::-webkit-inner-spin-button,
-    input[type="number"].no-spinner::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-    input[type="number"].no-spinner {
-        -moz-appearance: textfield;
-        appearance: textfield;
-    }
-    .rekening-radio {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.75rem;
-        border: 1px solid #e5e7eb;
-        border-radius: 0.75rem;
-        transition: all 0.2s;
-        cursor: pointer;
-    }
-    .rekening-radio:hover {
-        background-color: #fef3c7;
-        border-color: #FF6B00;
-    }
-    .rekening-radio input[type="radio"] {
-        appearance: none;
-        -webkit-appearance: none;
-        width: 1.2rem;
-        height: 1.2rem;
-        border: 2px solid #FF6B00;
-        border-radius: 50%;
-        background-color: white;
-        cursor: pointer;
-        position: relative;
-        flex-shrink: 0;
-    }
-    .rekening-radio input[type="radio"]:checked {
-        background-color: #FF6B00;
-        border-color: #FF6B00;
-    }
-    .rekening-radio input[type="radio"]:checked::after {
-        content: '';
-        display: block;
-        width: 0.5rem;
-        height: 0.5rem;
-        background-color: white;
-        border-radius: 50%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    .link-bukti {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        background-color: #f3f4f6;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        color: #FF6B00;
-        font-weight: 500;
-        transition: all 0.2s;
-        cursor: pointer;
-        margin-top: 0.75rem;
-    }
-    .link-bukti:hover {
-        background-color: #FF6B00;
-        color: white;
-        text-decoration: none;
-    }
-    .disabled-blur {
-        opacity: 0.6;
-        filter: grayscale(0.1);
-    }
-    .disabled-blur .total-harga-text {
-        color: #9ca3af !important;
-    }
-    .jumlah-wrapper.disabled-blur input,
-    .jumlah-wrapper.disabled-blur button {
-        opacity: 0.6;
-        cursor: not-allowed;
-    }
-    .card-produk {
-        height: auto;
-        display: block;
-    }
-    .ck-content {
-        word-wrap: break-word;
-    }
-    .ck-content ul, .ck-content ol {
-        list-style: revert !important;
-        padding-left: 1.5rem !important;
-        margin: 0.5rem 0 !important;
-    }
-    .ck-content li {
-        margin: 0.25rem 0;
-    }
-    .ck-content h1, .ck-content h2, .ck-content h3 {
-        font-size: revert;
-        font-weight: revert;
-        margin: 0.5rem 0;
-    }
-    .ck-content p {
-        margin: 0 0 0.5rem 0;
-    }
-    .accordion-content {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.5s ease-out;
-    }
-    .accordion-content.open {
-        max-height: 2000px;
-        transition: max-height 0.5s ease-in;
-    }
-    .cursor-pointer {
-        cursor: pointer;
-    }
-</style>
 
 <div class="min-h-screen bg-white">
     <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
@@ -149,8 +31,7 @@
                 <p class="text-gray-800 font-bold">Waktu pemesanan akan tercatat dilakukan pada: <span class="text-[#FF6B00]">{{ now()->format('d F Y') }}</span></p>
             </div>
         </div>
-
-        <!-- Semua card informasi -->
+        {{-- Semua Card Informasi & Syarat --}}
         <div class="border-2 border-dashed border-gray-300 rounded-2xl p-6 mb-8 bg-white shadow-sm">
             @foreach($informasis as $index => $info)
                 @php
@@ -184,13 +65,12 @@
                     </div>
                 </div>
             @endforeach
-
-            <!-- Pilihan Rekening Bank -->
             @php
                 $firstInfo = $informasis->first();
                 $rekeningList = $firstInfo ? $firstInfo->rekening : collect();
             @endphp
             @if($rekeningList->count())
+            {{-- Pilihan Rekening Bank --}}
             <div class="border-t border-gray-200 pt-4 mt-4" id="rekeningSection">
                 <h3 class="text-md font-bold text-gray-700 mb-3 flex items-center gap-2">
                     <i class="fas fa-university text-[#FF6B00]"></i> Pilih Rekening Tujuan
@@ -210,10 +90,8 @@
             </div>
             @endif
         </div>
-
-        <!-- Card Produk dan Checkout -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            <!-- Card Produk -->
+            {{-- Card Detail Produk --}}
             <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden border border-gray-100 card-produk">
                 <div class="relative w-full bg-gray-50 overflow-hidden group" style="height: 320px;">
                     @if($produk->foto)
@@ -268,9 +146,8 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Form Checkout & Upload -->
             <div class="space-y-6">
+                {{-- Form Checkout --}}
                 <div id="checkoutFormContainer" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
                     @php
                         $minPembelian = ($produk->kategori == 'Bibit Ayam Broiler') ? 60 : 2;
@@ -310,6 +187,7 @@
                     </div>
                 </div>
 
+                {{-- Form Upload Bukti --}}
                 <div id="uploadSection" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 opacity-50 pointer-events-none transition">
                     <div class="mb-3 p-3 bg-blue-50 rounded-lg text-sm text-blue-700">
                         <i class="fas fa-info-circle"></i> Silakan transfer sesuai total harga ke rekening tujuan yang dipilih, lalu upload bukti.

@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\Storage;
 
 class C_Gallery extends Controller
 {
+    // --- HALAMAN TAMBAH GALLERY ---
     public function create()
     {
-        return view('admin.gallery.create');
+        return view('admin.gallery.V_Create');
     }
 
+    // --- PROSES SIMPAN GALLERY ---
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -78,18 +80,21 @@ class C_Gallery extends Controller
             ->with('lightbox_type', 'success');
     }
 
+    // --- HALAMAN BACA ARTIKEL GALLERY ---
     public function show($id)
     {
         $gallery = M_Gallery::findOrFail($id);
-        return view('admin.gallery.artikel', compact('gallery'));
+        return view('admin.gallery.V_Artikel', compact('gallery'));
     }
 
+    // --- HALAMAN UBAH GALLERY ---
     public function edit($id)
     {
         $gallery = M_Gallery::findOrFail($id);
-        return view('admin.gallery.edit', compact('gallery'));
+        return view('admin.gallery.V_Edit', compact('gallery'));
     }
 
+    // --- PROSES UPDATE GALLERY ---
     public function update(Request $request, $id)
     {
         $gallery = M_Gallery::findOrFail($id);
@@ -155,6 +160,7 @@ class C_Gallery extends Controller
             ->with('lightbox_type', 'success');
     }
 
+    // --- PROSES HAPUS GALLERY ---
     public function destroy($id)
     {
         $gallery = M_Gallery::findOrFail($id);

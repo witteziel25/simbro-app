@@ -8,9 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class M_StatusTransaksi extends Model
 {
     use HasFactory;
+    // --- KONFIGURASI TABEL ---
     protected $table = 'status_transaksi';
     protected $primaryKey = 'status_id';
     protected $fillable = ['nama_status', 'warna'];
+
+    // --- RELASI: transaksis ---
 
     public function transaksis()
     {

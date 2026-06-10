@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Daftar - SIMBRO')
 
@@ -64,7 +64,6 @@
                 @enderror
             </div>
             <div class="grid md:grid-cols-2 gap-4">
-                {{-- Password field --}}
                 <div>
                     <div class="relative">
                         <input type="password" name="password" id="password" placeholder="Password"
@@ -78,7 +77,6 @@
                         <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
                     @enderror
                 </div>
-                {{-- Konfirmasi Password field --}}
                 <div>
                     <div class="relative">
                         <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Konfirmasi Password"

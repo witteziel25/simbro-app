@@ -9,13 +9,12 @@ use Illuminate\Support\Facades\Validator;
 
 class C_Produk extends Controller
 {
-    // FORM TAMBAH PRODUK
+    // --- Form Tambah ---
     public function showFormTambahDataProduk()
     {
-        return view('produk.tambah');
+        return view('produk.V_Tambah');
     }
-
-    // PROSES TAMBAH PRODUK
+    // --- Proses Tambah ---
     public function tambahProduk(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -52,15 +51,13 @@ class C_Produk extends Controller
 
         return redirect()->to(route('admin.home') . '#produk')->with('lightbox_message', 'Produk berhasil ditambahkan.')->with('lightbox_type', 'success');
     }
-
-    // FORM UBAH PRODUK
+    // --- Form Ubah ---
     public function showFormUbahDataProduk($id)
     {
         $produk = M_Produk::findOrFail($id);
-        return view('produk.ubah', compact('produk'));
+        return view('produk.V_Ubah', compact('produk'));
     }
-
-    // PROSES UBAH-SIMPAN PRODUK
+    // --- Proses Ubah ---
     public function simpan(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -98,8 +95,7 @@ class C_Produk extends Controller
 
         return redirect()->to(route('admin.home') . '#produk')->with('lightbox_message', 'Produk berhasil diubah.')->with('lightbox_type', 'success');
     }
-
-    // HAPUS PRODUK
+    // --- Hapus Produk (soft delete) ---
     public function hapus($id)
     {
         $produk = M_Produk::findOrFail($id);

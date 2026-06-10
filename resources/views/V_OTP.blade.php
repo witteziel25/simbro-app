@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Verifikasi OTP - SIMBRO')
 
@@ -20,8 +20,6 @@
         @if(session('error'))
             <div class="bg-red-50 text-red-600 p-2 rounded-lg text-sm mt-3">{{ session('error') }}</div>
         @endif
-
-        {{-- Error summary --}}
         @if($errors->any())
             <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-3 mt-4 text-sm rounded text-left">
                 @php
@@ -56,8 +54,6 @@
                 Konfirmasi
             </button>
         </form>
-
-        {{-- Link kembali ke halaman lupa password --}}
         <div class="mt-6 text-center">
             <a href="{{ route('password.request') }}" class="text-sm text-gray-500 hover:text-[#FF6B00]">← Kembali ke Lupa Password</a>
         </div>

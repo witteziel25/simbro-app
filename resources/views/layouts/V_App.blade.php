@@ -34,14 +34,14 @@
 
 <body class="font-sans antialiased">
     @if(session('role') == 1)
-        @include('partials.navbar-admin')
+        @include('partials.V_NavbarAdmin')
     @else
-        @include('partials.navbar')
+        @include('partials.V_Navbar')
     @endif
     <main>
         @yield('content')
     </main>
-    @include('partials.footer')
+    @include('partials.V_Footer')
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 

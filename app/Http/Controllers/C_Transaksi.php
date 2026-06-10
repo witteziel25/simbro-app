@@ -15,22 +15,21 @@ use Illuminate\Support\Facades\Storage;
 
 class C_Transaksi extends Controller
 {
-    // ========== MANAJEMEN ADMIN ==========
+    // --- Manajemen Admin ---
     public function manajemen()
     {
-        return view('admin.manajemen.index');
+        return view('admin.manajemen.V_Index');
     }
-
-    // ========== INFORMASI PEMBAYARAN (ADMIN) - CARD DINAMIS ==========
+    // --- Informasi Pembayaran (Admin) ---
     public function showHallInformasiPembayaran()
     {
         $informasis = M_InformasiPembayaran::with('rekening')->orderBy('informasi_id')->get();
-        return view('admin.informasi_pembayaran.index', compact('informasis'));
+        return view('admin.informasi_pembayaran.V_Index', compact('informasis'));
     }
 
     public function showFormTambah()
     {
-        return view('admin.informasi_pembayaran.create');
+        return view('admin.informasi_pembayaran.V_Create');
     }
 
     public function simpanInformasi(Request $request)
@@ -64,7 +63,7 @@ class C_Transaksi extends Controller
     public function showFormUbah($id)
     {
         $informasi = M_InformasiPembayaran::findOrFail($id);
-        return view('admin.informasi_pembayaran.edit', compact('informasi'));
+        return view('admin.informasi_pembayaran.V_Edit', compact('informasi'));
     }
 
     public function updateInformasi(Request $request, $id)
@@ -113,8 +112,7 @@ class C_Transaksi extends Controller
         return redirect()->route('admin.informasi-pembayaran')
             ->with('lightbox_message', 'Card informasi berhasil dihapus.', 'success');
     }
-
-    // ========== MANAJEMEN REKENING BANK ==========
+    // --- Rekening Bank ---
     public function simpanRekening(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -166,8 +164,7 @@ class C_Transaksi extends Controller
         return redirect()->route('admin.informasi-pembayaran')
             ->with('lightbox_message', 'Rekening berhasil dihapus', 'success');
     }
-
-    // ========== TRANSAKSI CUSTOMER ==========
+    // --- Transaksi Customer ---
     /**
      * Helper: cek ketersediaan produk (tidak dihapus & stok cukup)
      */
@@ -193,7 +190,7 @@ class C_Transaksi extends Controller
     {
         $produk = M_Produk::findOrFail($produk_id);
         $informasis = M_InformasiPembayaran::with('rekening')->get();
-        return view('customer.transaksi.pembelian', compact('produk', 'informasis'));
+        return view('customer.transaksi.V_Pembelian', compact('produk', 'informasis'));
     }
 
     public function prepareCheckout(Request $request, $produk_id)
@@ -285,7 +282,7 @@ class C_Transaksi extends Controller
             'total_harga' => $temp['total_harga'],
         ]);
 
-        // 🔻 KURANGI STOK PRODUK (langsung setelah transaksi dibuat)
+        // Kurangi stok produk
         $produk = M_Produk::find($temp['produk_id']);
         if ($produk) {
             $produk->decrement('stok', $temp['jumlah']);
@@ -313,14 +310,14 @@ class C_Transaksi extends Controller
         }
 
         $transaksis = $query->get();
-        return view('customer.transaksi.riwayat', compact('transaksis'));
+        return view('customer.transaksi.V_Riwayat', compact('transaksis'));
     }
 
     public function batalkanPesanan($transaksi_id)
     {
         $transaksi = M_Transaksi::where('user_id', session('user_id'))->findOrFail($transaksi_id);
         if ($transaksi->status->nama_status == 'diproses') {
-            // 🔻 KEMBALIKAN STOK karena transaksi dibatalkan sebelum status berubah menjadi dibayar
+            // Kembalikan stok karena transaksi dibatalkan
             foreach ($transaksi->details as $detail) {
                 $produk = $detail->produk;
                 if ($produk) {
@@ -335,8 +332,7 @@ class C_Transaksi extends Controller
             return redirect()->route('customer.riwayat.transaksi')->with('lightbox_message', 'Pembatalan tidak berhasil')->with('lightbox_type', 'error');
         }
     }
-
-    // ========== TRANSAKSI ADMIN ==========
+    // --- Transaksi Admin ---
     public function adminTransaksiAktif(Request $request)
     {
         $query = M_Transaksi::with(['user', 'status', 'details.produk', 'informasiPembayaran'])
@@ -353,7 +349,7 @@ class C_Transaksi extends Controller
         }
 
         $transaksis = $query->get();
-        return view('admin.transaksi.aktif', compact('transaksis'));
+        return view('admin.transaksi.V_Aktif', compact('transaksis'));
     }
 
     public function adminRiwayatTransaksi(Request $request)
@@ -372,7 +368,7 @@ class C_Transaksi extends Controller
         }
 
         $transaksis = $query->get();
-        return view('admin.transaksi.riwayat', compact('transaksis'));
+        return view('admin.transaksi.V_Riwayat', compact('transaksis'));
     }
 
     public function showDetailTransaksiAdmin($id)
@@ -381,7 +377,7 @@ class C_Transaksi extends Controller
             $q->withTrashed();
         }, 'informasiPembayaran.rekening', 'rekening'])->findOrFail($id);
         $statuses = M_StatusTransaksi::all();
-        return view('admin.transaksi.detail', compact('transaksi', 'statuses'));
+        return view('admin.transaksi.V_Detail', compact('transaksi', 'statuses'));
     }
 
     public function updateStatus(Request $request, $id)
@@ -402,7 +398,7 @@ class C_Transaksi extends Controller
         $statusDibayar = M_StatusTransaksi::where('nama_status', 'dibayar')->first();
         $statusDibatalkan = M_StatusTransaksi::where('nama_status', 'dibatalkan')->first();
 
-        // 🔻 Jika status baru 'dibatalkan' dan status lama 'diproses' → kembalikan stok (karena stok sudah dikurangi saat upload bukti)
+        // Kembalikan stok jika dibatalkan dari status 'diproses'
         if ($statusDibatalkan && $newStatusId == $statusDibatalkan->status_id && $oldStatusId == $statusDiproses->status_id) {
             foreach ($transaksi->details as $detail) {
                 $produk = $detail->produk;
@@ -412,7 +408,7 @@ class C_Transaksi extends Controller
             }
         }
 
-        // 🔻 Jika status baru 'dibatalkan' dan status lama 'dibayar' → kembalikan stok (dari kode sebelumnya, tetap dipertahankan)
+        // Kembalikan stok jika dibatalkan dari status 'dibayar'
         if ($statusDibatalkan && $newStatusId == $statusDibatalkan->status_id && $oldStatusId == $statusDibayar->status_id) {
             foreach ($transaksi->details as $detail) {
                 $produk = $detail->produk;
@@ -435,8 +431,7 @@ class C_Transaksi extends Controller
 
         return response()->json(['success' => true, 'message' => 'Informasi berhasil diubah']);
     }
-
-    // ========== LAPORAN PENJUALAN ==========
+    // --- Laporan Penjualan ---
     public function laporanPenjualan(Request $request)
     {
         $tanggalMulai = $request->filled('tanggal_mulai') ? $request->tanggal_mulai : \Carbon\Carbon::yesterday()->toDateString();
@@ -488,7 +483,7 @@ class C_Transaksi extends Controller
             'pendapatanJuta' => $pendapatanJuta,
         ];
 
-        return view('admin.laporan.penjualan', compact('total_pendapatan', 'total_transaksi', 'total_dibatalkan', 'chartData', 'statusData'));
+        return view('admin.laporan.V_Penjualan', compact('total_pendapatan', 'total_transaksi', 'total_dibatalkan', 'chartData', 'statusData'));
     }
 
     public function cetakResi($transaksi_id)
@@ -510,7 +505,7 @@ class C_Transaksi extends Controller
             'nama_cv' => 'CV. Mitra Gemuk Bersama',
         ];
 
-        $pdf = Pdf::loadView('pdf.resi', $data);
+        $pdf = Pdf::loadView('pdf.V_Resi', $data);
         $pdf->setPaper([0, 0, 235, 550], 'portrait');
         return $pdf->download('resi_' . $transaksi->transaksi_id . '.pdf');
     }

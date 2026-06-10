@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Reset Password - SIMBRO')
 
@@ -13,8 +13,6 @@
         @if(session('success'))
             <div class="bg-green-50 text-green-700 p-3 rounded-xl text-sm mb-4">{{ session('success') }}</div>
         @endif
-
-        {{-- Error summary --}}
         @if($errors->any())
             <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-3 mb-4 text-sm rounded">
                 @php

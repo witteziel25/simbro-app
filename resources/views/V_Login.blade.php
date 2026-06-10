@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Masuk - SIMBRO')
 
@@ -9,8 +9,6 @@
             <img src="{{ asset('images/logo-simbro-1.png') }}" alt="SIMBRO" class="w-20 h-20 mx-auto object-contain">
             <h1 class="text-2xl font-black mt-2">Masuk ke <span class="text-[#FF6B00]">SIMBRO</span></h1>
         </div>
-
-        {{-- Error summary --}}
         @if($errors->any())
             <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-3 mb-4 text-sm rounded">
                 @php
@@ -27,7 +25,6 @@
 
         <form method="POST" action="{{ route('login.submit') }}">
             @csrf
-            {{-- Username field --}}
             <div class="mb-4">
                 <input type="text" name="username" id="username" placeholder="Username" value="{{ old('username') }}"
                     class="w-full px-4 py-3 rounded-xl border @error('username') border-red-500 @else border-gray-300 @enderror focus:border-[#FF6B00] outline-none">
@@ -35,8 +32,6 @@
                     <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
                 @enderror
             </div>
-
-            {{-- Password field --}}
             <div class="mb-4">
                 <div class="relative">
                     <input type="password" name="password" id="password" placeholder="Password"

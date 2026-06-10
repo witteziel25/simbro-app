@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 class C_Authentication extends Controller
 {
-    // FORM LOGIN & REGISTER
+    // --- Form Login & Register ---
     public function showFormLogin()
     {
         return view('V_Login');
@@ -24,8 +24,7 @@ class C_Authentication extends Controller
     {
         return view('V_Register');
     }
-
-    // PROSES LOGIN
+    // --- Proses Login ---
     public function klikLogin(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -69,8 +68,7 @@ class C_Authentication extends Controller
             return back()->withErrors($errors)->withInput();
         }
     }
-
-    // PROSES REGISTER
+    // --- Proses Register ---
     public function klikRegister(Request $request)
 {
     $validator = Validator::make($request->all(), [
@@ -112,15 +110,13 @@ class C_Authentication extends Controller
 
         return redirect()->route('login')->with('success', 'Pendaftaran berhasil, silakan login.');
     }
-
-    // LOGOUT
+    // --- Logout ---
     public function klikLogout()
     {
         session()->flush();
         return redirect()->route('landing')->with('success', 'Anda telah logout.');
     }
-
-    // HALAMAN HOME
+    // --- Halaman Home ---
     public function showHome()
     {
         $produk = \App\Models\M_Produk::all();
@@ -133,8 +129,7 @@ class C_Authentication extends Controller
             return view('customer.V_Home', compact('produk', 'ulasan', 'slides'));
         }
     }
-
-    // LUPA PASSWORD - OTP - RESET
+    // --- Lupa Password - OTP - Reset ---
     public function showForgotForm()
     {
         return view('V_ForgotPassword');

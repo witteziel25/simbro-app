@@ -8,15 +8,17 @@ use Illuminate\Support\Facades\Log;
 
 class C_Chatbot extends Controller
 {
+    // --- HALAMAN CHATBOT ---
     public function index()
     {
         if (!auth()->check() && !session('user_logged_in')) {
             return redirect()->route('login');
         }
         $conversation = session()->get('chatbot_conversation', []);
-        return view('partials.chatbot-modal', compact('conversation'));
+        return view('partials.V_ChatbotModal', compact('conversation'));
     }
 
+    // --- PROSES KIRIM PESAN CHATBOT ---
     public function sendMessage(Request $request)
     {
         $request->validate([
@@ -86,6 +88,7 @@ class C_Chatbot extends Controller
         }
     }
 
+    // --- HAPUS RIWAYAT PERCAKAPAN ---
     public function clearSession()
     {
         session()->forget('chatbot_conversation');

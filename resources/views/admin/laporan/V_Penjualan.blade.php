@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.V_Auth')
 
 @section('title', 'Laporan Penjualan - SIMBRO Admin')
 
@@ -49,7 +49,7 @@
                     <input type="date" name="tanggal_selesai" value="{{ request('tanggal_selesai', \Carbon\Carbon::today()->toDateString()) }}" class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-44">
                 </div>
                 <button type="submit" class="bg-[#FF6B00] hover:bg-orange-700 text-white px-5 py-2 rounded-lg text-sm font-bold transition shadow-sm">Filter</button>
-                <a href="{{ route('admin.laporan.penjualan') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-lg text-sm font-bold transition">Reset</a>
+                <a href="{{ route('admin.laporan.V_Penjualan') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-lg text-sm font-bold transition">Reset</a>
             </form>
         </div>
 

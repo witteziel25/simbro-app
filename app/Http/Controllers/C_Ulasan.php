@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class C_Ulasan extends Controller
 {
+    // --- PROSES SIMPAN ULASAN ---
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -51,6 +52,7 @@ class C_Ulasan extends Controller
         return response()->json(['success' => true, 'message' => 'Ulasan terkirim', 'data' => $ulasan]);
     }
 
+    // --- PROSES HAPUS ULASAN ---
     public function destroy($id)
     {
         $ulasan = M_Ulasan::where('ulasan_id', $id)
