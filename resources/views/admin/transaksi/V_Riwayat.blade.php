@@ -108,7 +108,7 @@
                                 <div class="bg-gray-50 rounded-lg p-3">
                                     <span class="font-semibold text-gray-600 block mb-1">Bukti Pembayaran</span>
                                     @if($t->bukti_pembayaran)
-                                        <i class="fa-solid fa-arrow-up-right-from-square text-[#FF6B00]"></i><a class="text-[#FF6B00] font-semibold text-sm" href="{{ Storage::url($t->bukti_pembayaran) }}" target="_blank"> Lihat bukti pembayaran</a>
+                                        <i class="fa-solid fa-arrow-up-right-from-square text-[#FF6B00]"></i><a class="text-[#FF6B00] font-semibold text-sm" href="{{ \App\Helpers\ImageHelper::getUrl($t->bukti_pembayaran) }}" target="_blank"> Lihat bukti pembayaran</a>
                                     @else
                                         <span class="text-gray-400">-</span>
                                     @endif

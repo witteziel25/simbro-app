@@ -92,7 +92,7 @@
                     <h3 class="font-semibold text-gray-800">Bukti Pembayaran</h3>
                 </div>
                 @if($transaksi->bukti_pembayaran)
-                    <a href="{{ Storage::url($transaksi->bukti_pembayaran) }}" target="_blank" class="inline-flex items-center gap-2 text-sm text-[#FF6B00] font-medium border border-orange-200 bg-orange-50 px-3 py-1.5 rounded-lg hover:bg-orange-100 transition">
+                    <a href="{{ \App\Helpers\ImageHelper::getUrl($transaksi->bukti_pembayaran) }}" target="_blank" class="inline-flex items-center gap-2 text-sm text-[#FF6B00] font-medium border border-orange-200 bg-orange-50 px-3 py-1.5 rounded-lg hover:bg-orange-100 transition">
                         <i class="fa-solid fa-arrow-up-right-from-square"></i> Lihat Berkas
                     </a>
                 @else

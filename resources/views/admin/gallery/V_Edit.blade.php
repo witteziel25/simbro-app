@@ -30,7 +30,7 @@
                     <label class="block font-semibold text-gray-800 mb-1">Gambar <span class="text-gray-500 text-sm">(kosongkan jika tidak ingin mengubah)</span></label>
                     @if($gallery->gambar)
                         <div class="mb-3">
-                            <img src="{{ Storage::url($gallery->gambar) }}" class="w-32 rounded border shadow-sm">
+                            <img src="{{ \App\Helpers\ImageHelper::getUrl($gallery->gambar) }}" class="w-32 rounded border shadow-sm">
                         </div>
                     @endif
                     <input type="file" name="gambar" id="gambar" accept="image/*" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">

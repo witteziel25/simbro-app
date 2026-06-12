@@ -85,7 +85,7 @@
             <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden border border-gray-100 card-produk">
                 <div class="relative w-full bg-gray-50 overflow-hidden group" style="height: 320px;">
                     @if($produk->foto)
-                        <img src="{{ Storage::url($produk->foto) }}" alt="{{ $produk->nama_produk }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <img src="{{ \App\Helpers\ImageHelper::getUrl($produk->foto) }}" alt="{{ $produk->nama_produk }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                     @else
                         <div class="w-full h-full flex flex-col items-center justify-center text-gray-400">
                             <i class="fas fa-image text-4xl mb-2 text-gray-300"></i>

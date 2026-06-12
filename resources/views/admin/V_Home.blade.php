@@ -9,7 +9,7 @@
         <div class="gallery-track flex h-full transition-transform duration-700 ease-out">
             @forelse($slides as $slide)
             <div class="gallery-slide flex-shrink-0 w-full h-full relative">
-                <img src="{{ Storage::url($slide->gambar) }}" alt="{{ $slide->judul }}" class="w-full h-full object-cover">
+                <img src="{{ \App\Helpers\ImageHelper::getUrl($slide->gambar) }}" alt="{{ $slide->judul }}" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/80"></div>
                 <div class="absolute inset-0 flex items-center justify-start px-6 md:px-12 lg:px-20">
                     <div class="max-w-xl text-white">
@@ -91,7 +91,7 @@
                                 <div class="flip-card-inner relative w-full h-full transition-transform duration-500 transform-style-preserve-3d">
                                     <div class="flip-card-front absolute w-full h-full backface-hidden bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
                                         <div class="h-44 md:h-48 overflow-hidden bg-gray-100">
-                                            @if($item->foto) <img src="{{ Storage::url($item->foto) }}" alt="{{ $item->nama_produk }}" class="w-full h-full object-cover"> @else <div class="w-full h-full flex items-center justify-center text-gray-400">No Image</div> @endif
+                                            @if($item->foto) <img src="{{ \App\Helpers\ImageHelper::getUrl($item->foto) }}" alt="{{ $item->nama_produk }}" class="w-full h-full object-cover"> @else <div class="w-full h-full flex items-center justify-center text-gray-400">No Image</div> @endif
                                         </div>
                                         <div class="p-2 md:p-3 flex-1 flex flex-col">
                                             <div class="flex justify-between items-start gap-2">
@@ -224,7 +224,7 @@
                     @foreach($ulasan as $ulasanItem)
                         @php
                             $produk = $ulasanItem->transaksi->details->first()->produk ?? null;
-                            $foto = $produk && $produk->foto ? Storage::url($produk->foto) : asset('images/default-product.jpg');
+                            $foto = $produk && $produk->foto ? \App\Helpers\ImageHelper::getUrl($produk->foto) : asset('images/default-product.jpg');
                             $namaProduk = $produk->nama_produk ?? 'Produk tidak tersedia';
                         @endphp
                         <div class="bg-white border border-gray-100/80 rounded-2xl w-[380px] md:w-[420px] p-6 flex-shrink-0 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">

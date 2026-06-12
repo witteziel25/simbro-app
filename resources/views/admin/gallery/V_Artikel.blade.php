@@ -12,7 +12,7 @@
 
     <div class="w-full flex-1 grid grid-cols-1 md:grid-cols-2">
         <div class="relative w-full h-[280px] sm:h-[380px] md:h-auto min-h-[400px] md:min-h-screen bg-gray-50 overflow-hidden">
-            <img src="{{ Storage::url($gallery->gambar) }}" alt="{{ $gallery->judul }}" class="absolute inset-0 w-full h-full object-cover block">
+            <img src="{{ \App\Helpers\ImageHelper::getUrl($gallery->gambar) }}" alt="{{ $gallery->judul }}" class="absolute inset-0 w-full h-full object-cover block">
             <div class="hidden md:block absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-white pointer-events-none"></div>
             <div class="block md:hidden absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent pointer-events-none"></div>
         </div>

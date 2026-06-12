@@ -240,7 +240,7 @@
                                     <span class="font-semibold text-gray-600 block mb-1">Bukti Pembayaran</span>
                                     @if($t->bukti_pembayaran)
                                         <i class="fas fa-external-link-alt text-[#FF6B00] text-xs"></i>
-                                        <a class="text-[#FF6B00] font-semibold text-sm ml-1" href="{{ Storage::url($t->bukti_pembayaran) }}" target="_blank"> Lihat bukti</a>
+                                        <a class="text-[#FF6B00] font-semibold text-sm ml-1" href="{{ \App\Helpers\ImageHelper::getUrl($t->bukti_pembayaran) }}" target="_blank"> Lihat bukti</a>
                                     @else -
                                     @endif
                                 </div>
