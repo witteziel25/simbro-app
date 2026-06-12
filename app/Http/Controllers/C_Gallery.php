@@ -62,7 +62,7 @@ class C_Gallery extends Controller
                 ->with('lightbox_type', 'error');
         }
 
-        $path = $request->file('gambar')->store('gallery', 'public');
+        $path = \App\Helpers\ImageHelper::convertAndStoreAsWebp($request->file('gambar'), 'gallery');
 
         M_Gallery::create([
             'judul'      => $request->judul,
@@ -146,7 +146,7 @@ class C_Gallery extends Controller
 
         if ($request->hasFile('gambar')) {
             if ($gallery->gambar) Storage::disk('public')->delete($gallery->gambar);
-            $data['gambar'] = $request->file('gambar')->store('gallery', 'public');
+            $data['gambar'] = \App\Helpers\ImageHelper::convertAndStoreAsWebp($request->file('gambar'), 'gallery');
         }
 
         $gallery->update($data);

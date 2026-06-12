@@ -2,24 +2,13 @@
 
 @section('title', 'Manajemen - SIMBRO Admin')
 
-@section('content')
-<div class="min-h-screen bg-white">
-    <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div class="flex items-center gap-4">
-                <img src="{{ asset('images/logo-simbro-2.png') }}" alt="SIMBRO" class="h-12 w-auto">
-                <div>
-                    <h1 class="text-2xl font-bold">Manajemen</h1>
-                    <p class="text-orange-100 text-sm">Kelola informasi pembayaran, transaksi, dan laporan</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-2">
-                <i class="fas fa-arrow-left"></i>
-                <a href="{{ route('admin.home') }}" class="inline-flex items-center gap-2 text-white hover:underline transition text-sm font-bold"> Kembali ke Beranda</a>
-            </div>
-        </div>
-    </div>
+@section('header_title', 'Manajemen')
+@section('header_desc', 'Kelola informasi pembayaran, transaksi, dan laporan')
+@section('header_back_url', route('admin.home'))
+@section('header_back_text', 'Kembali ke Beranda Admin')
 
+@section('content')
+<div class="flex-1 bg-white">
     <div class="max-w-7xl mx-auto py-12 px-4">
         <div class="space-y-12">
             {{-- Card Informasi Pembayaran --}}

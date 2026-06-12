@@ -2,28 +2,18 @@
 
 @section('title', 'Pembelian Produk - SIMBRO')
 
+@section('header_title', 'Pembelian Produk')
+@section('header_desc', 'Lengkapi data di bawah untuk melakukan pembelian')
+@section('header_back_url', route('customer.home'))
+@section('header_back_text', 'Kembali ke Beranda')
+
 @section('content')
 
-<div class="min-h-screen bg-white">
-    <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div class="flex items-center gap-4">
-                <img src="{{ asset('images/logo-simbro-2.png') }}" alt="SIMBRO" class="h-12 w-auto">
-                <div>
-                    <h1 class="text-2xl font-bold">Pembelian Produk</h1>
-                    <p class="text-orange-100 text-sm">Lengkapi data di bawah untuk melakukan pembelian</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-2">
-                <i class="fas fa-arrow-left"></i>
-                <a href="{{ route('customer.home') }}" class="inline-flex items-center gap-2 text-white hover:underline transition text-sm font-bold"> Kembali ke Beranda</a>
-            </div>
-        </div>
-    </div>
+<div class="flex-1 bg-white">
 
     <div class="max-w-7xl mx-auto py-8 px-4">
         <div class="flex items-center gap-4 bg-gradient-to-r from-orange-50 to-white border border-orange-100 px-6 py-4 rounded-2xl shadow-sm mb-6">
-            <div class="bg-[#FF6B00] text-white w-10 h-10 rounded-xl flex items-center justify-center shadow-md">
+            <div class="btn-orange w-10 h-10 rounded-xl flex items-center justify-center shadow-md">
                 <i class="far fa-calendar-alt text-lg"></i>
             </div>
             <div>
@@ -148,7 +138,7 @@
             </div>
             <div class="space-y-6">
                 {{-- Form Checkout --}}
-                <div id="checkoutFormContainer" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+                <div id="checkoutFormContainer" class="card-form p-6">
                     @php
                         $minPembelian = ($produk->kategori == 'Bibit Ayam Broiler') ? 60 : 2;
                         $satuan = ($produk->kategori == 'Bibit Ayam Broiler') ? 'ekor' : 'kg';
@@ -181,14 +171,14 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="button" id="btnCheckout" class="w-full bg-[#FF6B00] hover:bg-orange-700 text-white font-bold py-3 rounded-xl transition flex items-center justify-center gap-2">
+                        <button type="button" id="btnCheckout" class="w-full btn-orange font-bold py-3 rounded-md transition flex items-center justify-center gap-2">
                             <i class="fas fa-shopping-cart"></i> Checkout
                         </button>
                     </div>
                 </div>
 
                 {{-- Form Upload Bukti --}}
-                <div id="uploadSection" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 opacity-50 pointer-events-none transition">
+                <div id="uploadSection" class="card-form p-6 opacity-50 pointer-events-none transition">
                     <div class="mb-3 p-3 bg-blue-50 rounded-lg text-sm text-blue-700">
                         <i class="fas fa-info-circle"></i> Silakan transfer sesuai total harga ke rekening tujuan yang dipilih, lalu upload bukti.
                     </div>
@@ -205,10 +195,10 @@
                     </div>
                     <div id="linkBuktiContainer" class="text-center hidden">
                         <a id="buktiLink" href="#" target="_blank" class="link-bukti">
-                            <i class="fas fa-eye"></i> Lihat Bukti Pembayaran
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Lihat Bukti Pembayaran
                         </a>
                     </div>
-                    <button id="btnKirim" class="mt-4 w-full bg-gray-400 text-white font-semibold py-2 rounded-xl transition cursor-not-allowed flex items-center justify-center gap-2">
+                    <button id="btnKirim" class="mt-4 w-full bg-gray-400 text-white font-semibold py-2 rounded-md transition cursor-not-allowed flex items-center justify-center gap-2">
                         <i class="fas fa-paper-plane"></i> Kirim Bukti
                     </button>
                 </div>
@@ -298,7 +288,7 @@
     function checkoutHandler() {
         let rekeningId = document.querySelector('input[name="rekening_id"]:checked')?.value;
         if (!rekeningId) {
-            if (typeof showLightbox === 'function') showLightbox('Silakan pilih rekening tujuan terlebih dahulu.', 'error');
+            if (typeof showLightbox === 'function') showLightbox('Silakan pilih rekening tujuan terlebih dahulu', 'error');
             else alert('Silakan pilih rekening tujuan terlebih dahulu.');
             return;
         }
@@ -328,11 +318,11 @@
                     btnCheckout.classList.add('bg-red-500', 'hover:bg-red-600');
                     btnCheckout.onclick = () => {
                         if (typeof showConfirm === 'function') {
-                            showConfirm('Batalkan proses checkout? Data yang belum disimpan akan hilang.', () => {
+                            showConfirm('Batalkan proses checkout? Data yang belum disimpan akan hilang', () => {
                                 resetCheckoutForm();
                             });
                         } else {
-                            if (confirm('Batalkan proses checkout? Data yang belum disimpan akan hilang.')) resetCheckoutForm();
+                            if (confirm('Batalkan proses checkout? Data yang belum disimpan akan hilang')) resetCheckoutForm();
                         }
                     };
                     uploadSection.classList.remove('opacity-50', 'pointer-events-none');

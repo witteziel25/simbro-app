@@ -6,7 +6,6 @@
 <style>
     .card-riwayat-customer {
         transition: all 0.2s ease;
-        border-left: 4px solid #FF6B00;
         background: white;
         border-radius: 0.75rem;
         border: 1px solid #e5e7eb;
@@ -80,7 +79,7 @@
         background: #FF6B00;
         color: white;
         padding: 0.5rem 1rem;
-        border-radius: 9999px;
+        border-radius: 0.375rem;
         font-weight: 600;
         font-size: 0.75rem;
         transition: 0.2s;
@@ -95,7 +94,7 @@
     .delete-review-btn {
         background-color: white;
         border: 1px solid #e5e7eb;
-        border-radius: 9999px;
+        border-radius: 0.375rem;
         padding: 0.25rem 0.75rem;
         font-size: 0.7rem;
         font-weight: 500;
@@ -112,33 +111,24 @@
         color: #ef4444;
     }
 </style>
+@section('header_title', 'Riwayat Transaksi')
+@section('header_desc', 'Daftar semua pembelian yang telah Anda lakukan')
+@section('header_back_url', route('customer.home'))
+@section('header_back_text', 'Kembali ke Beranda')
 
-<div class="min-h-screen bg-gray-50">
-    <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div class="flex items-center gap-4">
-                <img src="{{ asset('images/logo-simbro-2.png') }}" alt="SIMBRO" class="h-12 w-auto">
-                <div>
-                    <h1 class="text-2xl font-bold">Riwayat Transaksi</h1>
-                    <p class="text-orange-100 text-sm">Daftar semua pembelian yang telah Anda lakukan</p>
-                </div>
-            </div>
-            <div>
-                <i class="fas fa-arrow-left"></i>
-                <a href="{{ route('customer.home') }}" class="inline-flex items-center gap-2 text-white hover:underline text-sm font-bold">Kembali ke Beranda</a>
-            </div>
-        </div>
-    </div>
+@section('content')
+
+<div class="flex-1 bg-white">
 
     <div class="max-w-5xl mx-auto py-8 px-4">
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-8">
+        <div class="card-form p-5 mb-8">
             <form method="GET" class="flex flex-wrap items-end gap-4">
                 <div>
                     <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Tanggal</label>
                     <input type="date" name="tanggal" value="{{ request('tanggal') }}" class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-44">
                 </div>
-                <button type="submit" class="bg-[#FF6B00] hover:bg-orange-700 text-white px-5 py-2 rounded-lg text-sm font-bold transition shadow-sm">Filter</button>
-                <a href="{{ route('customer.riwayat.transaksi') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-lg text-sm font-bold transition">Reset</a>
+                <button type="submit" class="btn-orange px-5 py-2 rounded-md text-sm font-bold transition shadow-sm">Filter</button>
+                <a href="{{ route('customer.riwayat.transaksi') }}" class="bg-[#FF6B00] hover:bg-[#e05a00] text-white px-5 py-2 rounded-md text-sm font-bold transition shadow-sm">Reset</a>
             </form>
         </div>
 
@@ -152,24 +142,24 @@
                     $statusWarna = $t->status->warna ?? 'gray';
                     $badgeColorClass = match($statusWarna) {
                         'orange' => 'badge-orange', 'green' => 'badge-green', 'blue' => 'badge-blue',
-                        'teal' => 'badge-teal', 'red' => 'badge-red', default => 'bg-gray-100 text-gray-700',
+                        'teal' => 'badge-teal', 'red' => 'badge-red', default => 'btn-red',
                     };
                     $icon = $isCancelled ? 'fa-times-circle' : 'fa-check-double';
                     $ulasan = $t->ulasan;
                 @endphp
                 <div class="card-riwayat-customer" data-transaksi-id="{{ $t->transaksi_id }}">
-                    <div class="px-5 py-3 border-b border-gray-100 flex justify-between items-center bg-gray-50/50 cursor-pointer" onclick="toggleDetail(this)">
-                        <div class="flex items-center gap-3">
-                            <i class="fas {{ $icon }} text-xs text-[#FF6B00]"></i>
+                    <div class="px-5 py-3 border-b border-gray-100 flex justify-between items-start sm:items-center bg-gray-50/50 cursor-pointer gap-3" onclick="toggleDetail(this)">
+                        <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+                            <i class="fas {{ $icon }} text-xs text-[#FF6B00] mt-1 sm:mt-0"></i>
                             <span class="badge-status {{ $badgeColorClass }}">{{ ucfirst($status) }}</span>
                             <span class="text-sm text-gray-500">#{{ $t->transaksi_id }}</span>
-                            <span class="text-sm text-gray-500">{{ \Carbon\Carbon::parse($t->tanggal_pemesanan)->format('d M Y H:i') }} WIB</span>
+                            <span class="text-sm text-gray-500 w-full sm:w-auto mt-1 sm:mt-0">{{ \Carbon\Carbon::parse($t->tanggal_pemesanan)->format('d M Y H:i') }} WIB</span>
                         </div>
-                        <i class="fas fa-chevron-down dropdown-icon text-gray-400"></i>
+                        <i class="fas fa-chevron-down dropdown-icon text-gray-400 flex-shrink-0 mt-1 sm:mt-0"></i>
                     </div>
 
                     <div class="p-5">
-                        <div class="flex justify-between items-start gap-4">
+                        <div class="flex flex-col sm:flex-row justify-between items-start gap-4">
                             <div>
                                 <h3 class="font-bold text-gray-800 text-lg">{{ $t->details->first()->produk->nama_produk ?? '-' }}</h3>
                                 <div class="mt-1 space-y-1">
@@ -177,12 +167,12 @@
                                     <p class="text-xl font-bold text-[#FF6B00]">Rp{{ number_format($t->details->sum('total_harga'), 0, ',', '.') }}</p>
                                 </div>
                             </div>
-                            <div class="text-right text-sm">
-                                <div class="text-gray-600 flex items-center gap-1">
-                                    <i class="fas fa-user text-[#FF6B00] text-xs"></i> {{ $t->user->nama_lengkap ?? 'Customer' }}
+                            <div class="text-left sm:text-right text-sm w-full sm:w-auto border-t border-gray-100 sm:border-0 pt-3 sm:pt-0 mt-2 sm:mt-0">
+                                <div class="text-gray-600 flex items-center sm:justify-end gap-1">
+                                    <i class="fas fa-user text-[#FF6B00] text-xs w-4 text-center"></i> {{ $t->user->nama_lengkap ?? 'Customer' }}
                                 </div>
-                                <div class="text-gray-500 text-xs mt-1">
-                                    <i class="fas fa-credit-card"></i> {{ $t->metode_pembayaran ?? 'Transfer' }}
+                                <div class="text-gray-500 text-xs mt-1 flex items-center sm:justify-end gap-1">
+                                    <i class="fas fa-credit-card w-4 text-center"></i> {{ $t->metode_pembayaran ?? 'Transfer' }}
                                 </div>
                             </div>
                         </div>
@@ -259,14 +249,14 @@
                                 <div class="mt-2 flex justify-end">
                                     <form action="{{ route('customer.transaksi.batalkan', $t->transaksi_id) }}" method="POST">
                                         @csrf
-                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg text-sm font-bold transition flex items-center gap-2">
+                                        <button type="submit" class="btn-red px-4 py-1.5 rounded-md text-sm font-bold transition flex items-center gap-2">
                                             <i class="fas fa-times-circle"></i> Batalkan Pesanan
                                         </button>
                                     </form>
                                 </div>
                             @elseif(in_array($status, ['dibayar', 'dikirim', 'diterima']))
                                 <div class="mt-2 flex justify-end">
-                                    <button disabled class="bg-gray-400 text-white px-4 py-1.5 rounded-lg text-sm font-bold cursor-not-allowed flex items-center gap-2"
+                                    <button disabled class="bg-gray-400 text-white px-4 py-1.5 rounded-md text-sm font-bold cursor-not-allowed flex items-center gap-2"
                                             title="Transaksi sudah {{ $status }}, tidak dapat dibatalkan">
                                         <i class="fas fa-times-circle"></i> Batalkan Pesanan
                                     </button>
@@ -327,7 +317,7 @@
                     </div>
                 </div>
             @empty
-                <div class="text-center py-12 bg-white rounded-xl border border-gray-200">
+                <div class="text-center py-12 card-form">
                     <i class="fas fa-inbox text-4xl text-gray-300 mb-2"></i>
                     <p class="text-gray-500">Belum ada transaksi</p>
                 </div>

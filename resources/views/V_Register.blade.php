@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="min-h-screen flex flex-col items-center justify-center p-6">
-    <div class="max-w-2xl w-full bg-white rounded-3xl shadow-xl border p-8">
+    <div class="max-w-2xl w-full card-form p-8">
         <div class="text-center mb-6">
             <img src="{{ asset('images/logo-simbro-1.png') }}" alt="SIMBRO" class="w-20 h-20 mx-auto object-contain">
             <h2 class="text-2xl font-black mt-2">Daftar Akun Baru</h2>
@@ -91,7 +91,7 @@
                     @enderror
                 </div>
             </div>
-            <button type="submit" class="w-full bg-[#FF6B00] hover:bg-orange-700 text-white font-bold py-3 rounded-xl shadow-lg transition">
+            <button type="submit" class="w-full bg-[#FF6B00] text-white hover:bg-orange-700 font-bold py-3 rounded-md transition">
                 Daftar
             </button>
             <div class="text-center">

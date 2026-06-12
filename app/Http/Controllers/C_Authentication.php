@@ -108,13 +108,13 @@ class C_Authentication extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('login')->with('success', 'Pendaftaran berhasil, silakan login.');
+        return redirect()->route('login')->with('success', 'Pendaftaran berhasil, silakan login');
     }
     // --- Logout ---
     public function klikLogout()
     {
         session()->flush();
-        return redirect()->route('landing')->with('success', 'Anda telah logout.');
+        return redirect()->route('landing')->with('success', 'Anda telah logout');
     }
     // --- Halaman Home ---
     public function showHome()
@@ -255,6 +255,6 @@ class C_Authentication extends Controller
 
         session()->forget(['otp_code', 'otp_email', 'otp_expires', 'otp_verified']);
 
-        return redirect()->route('login')->with('success', 'Password baru telah disimpan. Silakan login.');
+        return redirect()->route('login')->with('success', 'Password baru telah disimpan. Silakan login');
     }
 }

@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="min-h-screen flex flex-col items-center justify-center p-6">
-    <div class="max-w-md w-full bg-white rounded-3xl shadow-xl border p-8">
+    <div class="max-w-md w-full card-form p-8">
         <div class="text-center mb-8">
             <img src="{{ asset('images/logo-simbro-1.png') }}" alt="SIMBRO" class="w-20 h-20 mx-auto object-contain">
             <h1 class="text-2xl font-black mt-2">Masuk ke <span class="text-[#FF6B00]">SIMBRO</span></h1>
@@ -49,7 +49,7 @@
             <div class="flex justify-between text-sm mb-6">
                 <a href="{{ route('password.request') }}" class="text-[#FF6B00] hover:underline">Lupa Password</a>
             </div>
-            <button type="submit" class="w-full bg-[#FF6B00] hover:bg-orange-700 text-white font-bold py-3 rounded-xl shadow-lg transition">
+            <button type="submit" class="w-full bg-[#FF6B00] text-white hover:bg-orange-700 font-bold py-3 rounded-md transition">
                 Masuk
             </button>
         </form>

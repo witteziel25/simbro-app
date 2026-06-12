@@ -2,28 +2,18 @@
 
 @section('title', 'Riwayat Transaksi - SIMBRO Admin')
 
+@section('header_title', 'Riwayat Transaksi')
+@section('header_desc', 'Transaksi yang telah selesai atau dibatalkan')
+@section('header_back_url', route('admin.manajemen'))
+@section('header_back_text', 'Kembali ke Manajemen')
+
 @section('content')
 
-<div class="min-h-screen bg-gray-50">
-    <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div class="flex items-center gap-4">
-                <img src="{{ asset('images/logo-simbro-2.png') }}" alt="SIMBRO" class="h-12 w-auto">
-                <div>
-                    <h1 class="text-2xl font-bold">Riwayat Transaksi</h1>
-                    <p class="text-orange-100 text-sm">Transaksi yang telah selesai atau dibatalkan</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-2">
-                <i class="fas fa-arrow-left"></i>
-                <a href="{{ route('admin.manajemen') }}" class="inline-flex items-center gap-2 text-white hover:underline transition text-sm font-bold"> Kembali ke Manajemen</a>
-            </div>
-        </div>
-    </div>
+<div class="flex-1 bg-white">
 
     <div class="max-w-5xl mx-auto py-8 px-4">
         {{-- Form Filter --}}
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-8">
+        <div class="card-form p-5 mb-8">
             <form method="GET" class="flex flex-wrap items-end gap-4">
                 <div>
                     <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Tanggal Mulai</label>
@@ -33,8 +23,8 @@
                     <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Tanggal Selesai</label>
                     <input type="date" name="tanggal_selesai" value="{{ request('tanggal_selesai') }}" class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-44">
                 </div>
-                <button type="submit" class="bg-[#FF6B00] hover:bg-orange-700 text-white px-5 py-2 rounded-lg text-sm font-bold transition shadow-sm">Filter</button>
-                <a href="{{ route('admin.riwayat.transaksi') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-lg text-sm font-bold transition">Reset</a>
+                <button type="submit" class="btn-orange px-5 py-2 rounded-md text-sm font-bold transition shadow-sm">Filter</button>
+                <a href="{{ route('admin.riwayat.transaksi') }}" class="bg-[#FF6B00] border-2 border-[#FF6B00] text-white hover:bg-[#e66000] hover:border-[#e66000] px-5 py-2 rounded-md text-sm font-bold transition">Reset</a>
             </form>
         </div>
 
@@ -47,18 +37,18 @@
                     $icon = $status == 'dibatalkan' ? 'fa-times-circle' : 'fa-check-double';
                 @endphp
                 <div class="card-riwayat">
-                    <div class="px-5 py-3 border-b border-gray-100 flex justify-between items-center bg-gray-50/50 cursor-pointer" onclick="toggleDetail(this)">
-                        <div class="flex items-center gap-3">
-                            <i class="fas {{ $icon }} text-xs text-[#FF6B00]"></i>
+                    <div class="px-5 py-3 border-b border-gray-100 flex justify-between items-start sm:items-center bg-gray-50/50 cursor-pointer gap-3" onclick="toggleDetail(this)">
+                        <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+                            <i class="fas {{ $icon }} text-xs text-[#FF6B00] mt-1 sm:mt-0"></i>
                             <span class="badge-status {{ $badgeClass }} border">{{ ucfirst($status) }}</span>
                             <span class="text-sm text-gray-500">#{{ $t->transaksi_id }}</span>
-                            <span class="text-sm text-gray-500">{{ \Carbon\Carbon::parse($t->tanggal_pemesanan)->format('d M Y H:i') }} WIB</span>
+                            <span class="text-sm text-gray-500 w-full sm:w-auto mt-1 sm:mt-0">{{ \Carbon\Carbon::parse($t->tanggal_pemesanan)->format('d M Y H:i') }} WIB</span>
                         </div>
-                        <i class="fas fa-chevron-down dropdown-icon text-gray-400"></i>
+                        <i class="fas fa-chevron-down dropdown-icon text-gray-400 flex-shrink-0 mt-1 sm:mt-0"></i>
                     </div>
 
                     <div class="p-5">
-                        <div class="flex justify-between items-start gap-4">
+                        <div class="flex flex-col sm:flex-row justify-between items-start gap-4">
                             <div>
                                 <h3 class="font-bold text-gray-800 text-lg">{{ $t->details->first()->produk->nama_produk ?? '-' }}</h3>
                                 <div class="mt-1 space-y-1">
@@ -66,12 +56,12 @@
                                     <p class="text-xl font-bold text-[#FF6B00]">Rp{{ number_format($t->details->sum('total_harga'), 0, ',', '.') }}</p>
                                 </div>
                             </div>
-                            <div class="text-right text-sm">
-                                <div class="text-gray-600 flex items-center gap-1">
-                                    <i class="fas fa-user text-[#FF6B00] text-xs"></i> {{ $t->user->nama_lengkap }}
+                            <div class="text-left sm:text-right text-sm w-full sm:w-auto border-t border-gray-100 sm:border-0 pt-3 sm:pt-0 mt-2 sm:mt-0">
+                                <div class="text-gray-600 flex items-center sm:justify-end gap-1">
+                                    <i class="fas fa-user text-[#FF6B00] text-xs w-4 text-center"></i> {{ $t->user->nama_lengkap }}
                                 </div>
-                                <div class="text-gray-500 text-xs mt-1">
-                                    <i class="fas fa-credit-card"></i> {{ $t->metode_pembayaran ?? 'Transfer' }}
+                                <div class="text-gray-500 text-xs mt-1 flex items-center sm:justify-end gap-1">
+                                    <i class="fas fa-credit-card w-4 text-center"></i> {{ $t->metode_pembayaran ?? 'Transfer' }}
                                 </div>
                             </div>
                         </div>
@@ -128,7 +118,7 @@
                     </div>
                 </div>
             @empty
-                <div class="text-center text-gray-500 py-12 bg-white rounded-xl border border-gray-200">
+                <div class="text-center text-gray-500 py-12 card-form">
                     <i class="fas fa-inbox text-4xl text-gray-300 mb-2"></i>
                     <p>Belum ada transaksi final</p>
                 </div>

@@ -16,8 +16,8 @@
                         <h2 class="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">{{ $slide->judul }}</h2>
                         <p class="text-lg md:text-xl drop-shadow-md">{{ $slide->keterangan }}</p>
                         <div class="mt-8 flex flex-wrap gap-4">
-                            <a href="{{ route('gallery.article', $slide->gallery_id) }}" class="inline-flex items-center justify-center bg-[#FF6B00] hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-full transition shadow-lg">Lebih Lanjut →</a>
-                            <a href="{{ route('chatbot.index') }}" class="inline-flex items-center justify-center bg-white border-2 border-[#FF6B00] text-[#FF6B00] hover:bg-orange-50 font-bold py-3 px-6 rounded-full transition shadow-md"><i class="fas fa-robot mr-2"></i> Tanya AI</a>
+                            <a href="{{ route('gallery.article', $slide->gallery_id) }}" class="inline-flex items-center justify-center bg-[#FF6B00] text-white hover:bg-orange-700 font-bold py-3 px-8 rounded-lg transition shadow-lg">Lebih Lanjut →</a>
+                            <a href="{{ route('chatbot.index') }}" class="inline-flex items-center justify-center bg-white border-2 border-[#FF6B00] text-[#FF6B00] hover:bg-orange-50 font-bold py-3 px-6 rounded-md transition shadow-md"><i class="fas fa-robot mr-2"></i> Tanya AI</a>
                         </div>
                     </div>
                 </div>
@@ -32,18 +32,17 @@
             @endforelse
         </div>
     </div>
-    <div class="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 flex flex-col items-center space-y-3">
-        <img src="{{ asset('images/logo-simbro-2.png') }}" alt="SIMBRO" class="w-8 h-8 md:w-10 md:h-10 opacity-100 drop-shadow-lg">
-        <div id="slideCounter" class="bg-black/50 backdrop-blur-sm text-white text-sm md:text-base font-semibold px-3 py-1 rounded-full">
+    <div class="absolute bottom-[15%] md:bottom-[25%] right-6 md:right-12 lg:right-20 z-20 flex flex-row items-center space-x-4 md:space-x-6">
+        <div id="slideCounter" class="bg-black/50 backdrop-blur-sm text-white text-xs md:text-sm font-semibold px-3 py-1.5 rounded-full shadow-sm">
             @if($slides->count() > 0)
                 <span id="currentSlide">1</span> dari <span id="totalSlides">{{ $slides->count() }}</span>
             @else
                 0 dari 0
             @endif
         </div>
-        <div id="slideDots" class="flex flex-col space-y-2">
+        <div id="slideDots" class="flex flex-row space-x-2">
             @foreach($slides as $index => $slide)
-                <div class="dot w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/50 transition-all duration-300 cursor-pointer hover:bg-white/80" data-index="{{ $index }}"></div>
+                <div class="dot w-2 h-2 rounded-full bg-white/50 transition-all duration-500 cursor-pointer hover:bg-white/80" data-index="{{ $index }}"></div>
             @endforeach
         </div>
     </div>
@@ -76,7 +75,7 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-16">
             <div class="md:col-span-2">
-                <h3 class="text-sm md:text-base font-semibold mb-5">Geser ke kanan untuk lihat semua produk <i class="fas fa-arrow-right text-xs"></i></h3>
+                <h3 class="text-sm md:text-base font-semibold mb-5">Produk dibedakan berdasarkan umur</h3>
                 <div class="overflow-x-auto py-4 -my-4 pb-2 -mx-2 px-2 scrollbar-none">
                     <div class="flex space-x-4 md:space-x-6" style="min-width: min-content;">
                         @forelse($produk as $item)
@@ -119,11 +118,11 @@
                                         </div>
                                         <div class="p-3 border-t bg-gray-50">
                                             @if($status == 'Tersedia')
-                                                <button onclick="window.location.href='{{ route('customer.transaksi.beli', $item->produk_id) }}'" class="w-full bg-[#FF6B00] hover:bg-orange-700 text-white font-semibold py-1.5 rounded-lg transition text-sm inline-flex items-center justify-center gap-2">
+                                                <button onclick="window.location.href='{{ route('customer.transaksi.beli', $item->produk_id) }}'" class="w-full bg-[#FF6B00] hover:bg-orange-700 text-white font-semibold py-1.5 rounded-md transition text-sm inline-flex items-center justify-center gap-2">
                                                     <i class="fas fa-shopping-cart"></i> Beli
                                                 </button>
                                             @else
-                                                <button disabled class="w-full bg-gray-400 cursor-not-allowed text-white font-semibold py-1.5 rounded-lg text-sm inline-flex items-center justify-center gap-2">
+                                                <button disabled class="w-full bg-gray-400 cursor-not-allowed text-white font-semibold py-1.5 rounded-md text-sm inline-flex items-center justify-center gap-2">
                                                     <i class="fas fa-times-circle"></i> Stok Habis
                                                 </button>
                                             @endif
@@ -164,13 +163,23 @@
 <section id="ulasan" class="bg-auth-full relative py-20 px-6 overflow-hidden" data-aos="fade-up">
     <div class="auth-blur-circles"><div></div><div></div></div>
     <div class="max-w-7xl mx-auto relative z-10">
-        <div class="text-center mb-12">
-            <span class="text-[#FF6B00] bg-orange-100 px-4 py-1 rounded-full"><i class="fas fa-comment-dots"></i> Testimoni</span>
-            <h2 class="text-3xl font-extrabold mt-2">Ulasan <span class="text-[#FF6B00]">Pelanggan</span></h2>
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center gap-2 bg-orange-100 rounded-full px-4 py-1.5 mb-4">
+                <i class="fas fa-comment-dots text-[#FF6B00] text-sm"></i>
+                <span class="text-xs font-bold text-[#FF6B00] uppercase tracking-wider">Testimoni</span>
+            </div>
+            <div class="mb-6 md:mb-4">
+                <h2 class="text-2xl md:text-3xl font-extrabold">Ulasan <span class="text-[#FF6B00]">Pelanggan</span></h2>
+            </div>
+            @if($ulasan && $ulasan->count() > 0)
+                <div class="inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm px-6 py-2 rounded-full shadow-sm border border-gray-200">
+                    <span class="text-sm font-semibold text-gray-600 tracking-wide">Geser untuk lihat ulasan lainnya</span>
+                </div>
+            @endif
         </div>
 
         @if($ulasan && $ulasan->count() > 0)
-            <div class="overflow-x-auto pb-6 scroll-smooth scrollbar-none">
+            <div class="overflow-x-auto py-4 -my-4 pb-2 -mx-2 px-2 scroll-smooth scrollbar-none">
                 <div class="flex gap-6 w-max p-3">
                     @foreach($ulasan as $ulasanItem)
                         @php
@@ -222,11 +231,7 @@
                 </div>
             </div>
 
-            <div class="mt-10 flex justify-center">
-                <div class="inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-sm border border-gray-200">
-                    <span class="text-sm font-semibold text-gray-600 tracking-wide">Geser untuk lihat ulasan lainnya</span>
-                </div>
-            </div>
+
         @else
             <div class="flex flex-col items-center justify-center py-20 px-6 relative bg-gray-50/80 backdrop-blur-xl rounded-2xl border border-gray-200 shadow-md mt-6">
                 <div class="w-28 h-28 mb-6 rounded-full bg-gray-200 flex items-center justify-center border-4 border-white shadow-inner">

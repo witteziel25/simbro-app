@@ -2,28 +2,18 @@
 
 @section('title', 'Tambah Konten Gallery - SIMBRO Admin')
 
+@section('header_title', 'Tambah Konten Gallery')
+@section('header_desc', 'Unggah gambar dan tulis judul, keterangan, serta artikel')
+@section('header_back_url', url()->previous())
+@section('header_back_text', 'Kembali ke Gallery')
+
 @section('content')
 
-<div class="min-h-screen bg-white">
-    <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div class="flex items-center gap-4">
-                <img src="{{ asset('images/logo-simbro-2.png') }}" class="h-12 w-auto">
-                <div>
-                    <h1 class="text-2xl font-bold">Tambah Konten Gallery</h1>
-                    <p class="text-orange-100 text-sm">Unggah gambar dan tulis judul, keterangan, serta artikel</p>
-                </div>
-            </div>
-            <div>
-                <i class="fas fa-arrow-left"></i> <a href="{{ url()->previous() }}" class="inline-flex items-center gap-2 text-white hover:underline text-sm font-bold"> Kembali ke Gallery</a>
-            </div>
-        </div>
-    </div>
-
+<div class="flex-1 bg-white">
     <div class="max-w-4xl mx-auto py-8 px-4">
         <form method="POST" action="{{ route('admin.gallery.store') }}" enctype="multipart/form-data" id="formGallery" novalidate>
             @csrf
-            <div class="bg-white rounded-xl shadow-md border border-gray-200 p-6 space-y-6">
+            <div class="card-form p-6 space-y-6">
                 <h2 class="text-xl font-bold text-gray-800 mb-5 border-l-4 border-[#FF6B00] pl-3">Buat Konten Gallery Baru</h2>
                 <div>
                     <label class="block font-semibold text-gray-800 mb-1">Gambar</label>
@@ -57,10 +47,10 @@
                 </div>
 
                 <div class="flex justify-end gap-3">
-                    <a href="{{ route('admin.home', ['#gallery']) }}" class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-5 py-2 rounded-lg transition">
+                    <a href="{{ route('admin.home', ['#gallery']) }}" class="inline-flex items-center gap-2 bg-transparent border-2 border-red-500 text-red-500 hover:bg-red-50 hover:text-red-600 font-bold px-5 py-2 rounded-md transition">
                         <i class="fas fa-times"></i> Batal
                     </a>
-                    <button type="submit" id="submitBtn" class="inline-flex items-center gap-2 bg-[#FF6B00] hover:bg-orange-700 text-white font-bold px-5 py-2 rounded-lg transition">
+                    <button type="submit" id="submitBtn" class="inline-flex items-center gap-2 btn-orange font-bold px-5 py-2 rounded-md transition">
                         <i class="fas fa-save"></i> Simpan
                     </button>
                 </div>

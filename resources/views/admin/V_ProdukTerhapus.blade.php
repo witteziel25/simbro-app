@@ -2,24 +2,14 @@
 
 @section('title', 'Produk Dihapus - SIMBRO Admin')
 
+@section('header_title', 'Produk Dihapus')
+@section('header_desc', 'Produk yang telah dihapus sementara. Klik Restore untuk mengembalikan.')
+@section('header_back_url', route('admin.home'))
+@section('header_back_text', 'Kembali ke Beranda Admin')
+
 @section('content')
 
-<div class="min-h-screen bg-white">
-    <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div class="flex items-center gap-4">
-                <img src="{{ asset('images/logo-simbro-2.png') }}" alt="SIMBRO" class="h-12 w-auto">
-                <div>
-                    <h1 class="text-2xl font-bold">Produk Dihapus</h1>
-                    <p class="text-orange-100 text-sm">Produk yang telah dihapus sementara. Klik Restore untuk mengembalikan.</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-2">
-                <i class="fas fa-arrow-left"></i>
-                <a href="{{ route('admin.home') }}" class="inline-flex items-center gap-2 text-white hover:underline transition text-sm font-bold">Kembali ke Beranda Admin</a>
-            </div>
-        </div>
-    </div>
+<div class="flex-1 bg-white">
 
     <div class="w-full px-4 py-8 sm:px-6 lg:px-8">
         <div class="overflow-x-auto">
@@ -46,7 +36,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $item->stok }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->deleted_at->format('d/m/Y H:i') }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <button onclick="restoreProduk({{ $item->produk_id }})" class="bg-green-600 hover:bg-green-700 text-white py-1 px-3 rounded-lg text-xs font-semibold">Restore</button>
+                                <button onclick="restoreProduk({{ $item->produk_id }})" class="bg-[#FF6B00] hover:bg-orange-700 text-white py-1 px-3 rounded-md text-xs font-semibold">Restore</button>
                             </td>
                         </tr>
                         @endforeach

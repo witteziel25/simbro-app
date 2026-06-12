@@ -16,8 +16,13 @@ function initGallerySlider() {
             slide.classList.toggle('active', idx === currentIndex);
         });
         dots.forEach((dot, idx) => {
-            dot.classList.toggle('bg-white', idx === currentIndex);
-            dot.classList.toggle('bg-white/50', idx !== currentIndex);
+            if (idx === currentIndex) {
+                dot.classList.add('w-8', 'bg-[#FF6B00]');
+                dot.classList.remove('w-2', 'md:w-2', 'bg-white/50', 'bg-white');
+            } else {
+                dot.classList.add('w-2', 'bg-white/50');
+                dot.classList.remove('w-8', 'bg-[#FF6B00]', 'bg-white');
+            }
         });
     }
 
@@ -31,7 +36,7 @@ function initGallerySlider() {
 
     function startAutoSlide() {
         if (autoSlideInterval) clearInterval(autoSlideInterval);
-        autoSlideInterval = setInterval(() => goToSlide(currentIndex + 1), 5000);
+        autoSlideInterval = setInterval(() => goToSlide(currentIndex + 1), 10000);
     }
 
     dots.forEach((dot, idx) => {

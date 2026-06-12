@@ -289,7 +289,7 @@ class C_Transaksi extends Controller
         }
 
         if ($request->hasFile('bukti_pembayaran')) {
-            $path = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
+            $path = \App\Helpers\ImageHelper::convertAndStoreAsWebp($request->file('bukti_pembayaran'), 'bukti_pembayaran');
             $transaksi->bukti_pembayaran = $path;
             $transaksi->save();
         }

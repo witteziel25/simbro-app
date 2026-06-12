@@ -2,17 +2,13 @@
 
 @section('title', 'Detail Transaksi - SIMBRO Admin')
 
+@section('header_title', 'Detail Transaksi')
+@section('header_desc', 'Informasi lengkap pesanan customer dan kelola status transaksi.')
+@section('header_back_url', route('admin.transaksi.V_Aktif'))
+@section('header_back_text', 'Kembali ke Transaksi Aktif')
+
 @section('content')
-<div class="min-h-screen flex flex-col md:flex-row">
-    <div class="w-full md:w-80 bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] flex flex-col justify-center px-10 py-10 text-white">
-        <img src="{{ asset('images/logo-simbro-2.png') }}" alt="SIMBRO" class="h-28 w-28 mb-4">
-        <h1 class="text-3xl font-bold mb-3">Detail Transaksi</h1>
-        <p class="text-orange-100 text-sm mb-4">Informasi lengkap pesanan customer dan kelola status transaksi.</p>
-        <div class="mt-3">
-            <i class="fas fa-arrow-left"></i>
-            <a href="{{ route('admin.transaksi.V_Aktif') }}" class="inline-flex items-center gap-2 text-white hover:underline transition text-sm font-bold"> Kembali ke Transaksi Aktif</a>
-        </div>
-    </div>
+<div class="flex-1 flex flex-col bg-white">
     <div class="flex-1 bg-white p-6 md:p-10 flex items-center">
         <div class="max-w-4xl w-full mx-auto">
             <div class="flex flex-wrap justify-between items-center mb-6 pb-4 border-b border-gray-100">
@@ -28,7 +24,7 @@
                         'dikirim' => 'bg-purple-100 text-purple-700',
                         'diterima' => 'bg-teal-100 text-teal-700',
                         'dibatalkan' => 'bg-red-100 text-red-700',
-                        default => 'bg-gray-100 text-gray-700',
+                        default => 'btn-red',
                     };
                 @endphp
                 <span class="px-3 py-1 rounded-full text-xs font-semibold {{ $statusColor }} flex items-center gap-1">
@@ -96,8 +92,8 @@
                     <h3 class="font-semibold text-gray-800">Bukti Pembayaran</h3>
                 </div>
                 @if($transaksi->bukti_pembayaran)
-                    <a href="{{ Storage::url($transaksi->bukti_pembayaran) }}" target="_blank" class="inline-flex items-center gap-2 text-sm text-[#FF6B00] border border-orange-200 bg-orange-50 px-3 py-1.5 rounded-lg hover:bg-orange-100 transition">
-                        <i class="fas fa-eye"></i> Lihat Berkas
+                    <a href="{{ Storage::url($transaksi->bukti_pembayaran) }}" target="_blank" class="inline-flex items-center gap-2 text-sm text-[#FF6B00] font-medium border border-orange-200 bg-orange-50 px-3 py-1.5 rounded-lg hover:bg-orange-100 transition">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Lihat Berkas
                     </a>
                 @else
                     <p class="text-gray-400 text-sm italic">Belum ada bukti pembayaran</p>
@@ -123,7 +119,7 @@
                             <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
                         </div>
                     </div>
-                    <button type="submit" class="bg-[#FF6B00] hover:bg-orange-700 text-white font-bold text-sm px-5 py-2 rounded-lg shadow-sm flex items-center gap-2 transition">
+                    <button type="submit" class="btn-orange font-bold text-sm px-5 py-2 rounded-md shadow-sm flex items-center gap-2 transition">
                         <i class="fas fa-save text-md"></i> Simpan
                     </button>
                 </form>
@@ -185,7 +181,7 @@
             })
             .catch(() => {
                 if (typeof showLightbox === 'function') {
-                    showLightbox('Terjadi kesalahan. Silakan coba lagi.', 'error');
+                    showLightbox('Terjadi kesalahan. Silakan coba lagi', 'error');
                 } else {
                     alert('Terjadi kesalahan. Silakan coba lagi.');
                 }

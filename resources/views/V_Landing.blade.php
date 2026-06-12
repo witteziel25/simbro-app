@@ -16,10 +16,10 @@
             Solusi digital terpercaya untuk pasokan ayam broiler premium. Kelola pesanan, pantau stok, dan nikmati kemudahan layanan customer service 24/7.
         </p>
         <div class="flex flex-wrap justify-center gap-5">
-            <a href="{{ route('login') }}" class="bg-[#FF6B00] hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105">
+            <a href="{{ route('login') }}" class="bg-[#FF6B00] text-white hover:bg-orange-700 font-bold py-3 px-8 rounded-md shadow-lg transition transform hover:scale-105">
                 <i class="fas fa-sign-in-alt mr-2"></i> Masuk
             </a>
-            <a href="{{ route('register') }}" class="bg-white border-2 border-[#FF6B00] text-[#FF6B00] hover:bg-orange-50 font-bold py-3 px-8 rounded-full shadow-md transition transform hover:scale-105">
+            <a href="{{ route('register') }}" class="btn-orange !bg-white hover:!bg-orange-50 py-3 px-8 shadow-md transition transform hover:scale-105">
                 <i class="fas fa-user-plus mr-2"></i> Daftar
             </a>
         </div>

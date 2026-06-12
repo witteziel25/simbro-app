@@ -43,7 +43,7 @@ class C_Produk extends Controller
 
         $data = $request->except('_token', 'foto');
         if ($request->hasFile('foto')) {
-            $path = $request->file('foto')->store('produk', 'public');
+            $path = \App\Helpers\ImageHelper::convertAndStoreAsWebp($request->file('foto'), 'produk');
             $data['foto'] = $path;
         }
 
@@ -88,7 +88,7 @@ class C_Produk extends Controller
         $data = $request->except('_token', 'foto', '_method');
         if ($request->hasFile('foto')) {
             if ($produk->foto) Storage::disk('public')->delete($produk->foto);
-            $path = $request->file('foto')->store('produk', 'public');
+            $path = \App\Helpers\ImageHelper::convertAndStoreAsWebp($request->file('foto'), 'produk');
             $data['foto'] = $path;
         }
         $produk->update($data);

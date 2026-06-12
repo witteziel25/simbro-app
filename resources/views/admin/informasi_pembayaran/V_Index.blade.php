@@ -2,28 +2,17 @@
 
 @section('title', 'Informasi Pembayaran - SIMBRO Admin')
 
+@section('header_title', 'Informasi Pembayaran')
+@section('header_desc', 'Kelola card informasi dan rekening bank')
+@section('header_back_url', route('admin.manajemen'))
+@section('header_back_text', 'Kembali ke Manajemen')
+
 @section('content')
 
-<div class="min-h-screen bg-gray-50">
-    <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div class="flex items-center gap-4">
-                <img src="{{ asset('images/logo-simbro-2.png') }}" class="h-12 w-auto">
-                <div>
-                    <h1 class="text-2xl font-bold">Informasi Pembayaran</h1>
-                    <p class="text-orange-100 text-sm">Kelola card informasi dan rekening bank</p>
-                </div>
-            </div>
-            <div>
-                <i class="fas fa-arrow-left"></i>
-                <a href="{{ route('admin.manajemen') }}" class="inline-flex items-center gap-2 text-white hover:underline text-sm font-bold">Kembali ke Manajemen</a>
-            </div>
-        </div>
-    </div>
-
+<div class="flex-1 bg-white">
     <div class="max-w-5xl mx-auto py-8 px-4">
         <div class="flex justify-end mb-6">
-            <a href="{{ route('admin.informasi-pembayaran.create') }}" class="bg-[#FF6B00] hover:bg-orange-700 font-semibold text-white px-4 py-2 rounded-lg shadow flex items-center gap-2 transition">
+            <a href="{{ route('admin.informasi-pembayaran.create') }}" class="bg-[#FF6B00] hover:bg-orange-700 font-semibold text-white px-4 py-2 rounded-md shadow flex items-center gap-2 transition">
                 <i class="fas fa-plus"></i> Tambah Informasi
             </a>
         </div>
@@ -88,10 +77,10 @@
                             <input type="text" name="pemilik_rekening" id="pemilik_rekening" placeholder="Pemilik Rekening" class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-[#FF6B00] focus:border-[#FF6B00]">
                         </div>
                         <div class="mt-3 flex gap-3">
-                            <button type="submit" id="submitRekeningBtn" class="bg-[#FF6B00] hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow flex items-center gap-2">
+                            <button type="submit" id="submitRekeningBtn" class="btn-orange px-4 py-2 rounded-md text-sm font-semibold shadow flex items-center gap-2">
                                 <i class="fas fa-plus"></i> Tambah Rekening
                             </button>
-                            <button type="button" id="cancelEditBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hidden items-center gap-2">
+                            <button type="button" id="cancelEditBtn" class="bg-transparent border-2 border-red-600 text-red-600 hover:bg-red-50 hover:text-red-700 transition px-4 py-2 rounded-md text-sm font-semibold hidden items-center gap-2">
                                 <i class="fas fa-times"></i> Batal
                             </button>
                         </div>

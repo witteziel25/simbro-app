@@ -1,19 +1,19 @@
-<header class="sticky top-0 bg-white/90 backdrop-blur-md shadow-sm z-50 py-6 px-6 md:px-12 flex flex-wrap justify-between items-center border-b-2 border-[#FF6B00]">
+<header class="sticky top-0 bg-white/90 backdrop-blur-md shadow-sm z-50 py-4 md:py-6 px-4 md:px-12 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 border-b-2 border-[#FF6B00]">
     <div class="flex items-center gap-2">
         <img src="{{ asset('images/logo-simbro-1.png') }}" alt="SIMBRO" class="w-10 h-10 object-contain">
         <div>
-            <span class="font-extrabold text-2xl text-[#FF6B00]">SIMBRO Admin</span>
-            <span class="block text-[9px] font-semibold text-gray-500 -mt-1">CV. Mitra Gemuk Bersama</span>
+            <span class="font-extrabold text-xl md:text-2xl text-[#FF6B00]">SIMBRO Admin</span>
+            <span class="block text-[8px] md:text-[9px] font-semibold text-gray-500 -mt-1">CV. Mitra Gemuk Bersama</span>
         </div>
     </div>
-    <div class="flex items-center gap-6">
-        <nav class="flex gap-6 text-l font-semibold">
+    <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6 w-full md:w-auto">
+        <nav class="flex flex-wrap justify-center gap-4 md:gap-6 text-sm md:text-base font-semibold w-full md:w-auto">
             <a href="#gallery" class="nav-link text-gray-700 hover:text-[#FF6B00]">Gallery</a>
             <a href="#produk" class="nav-link text-gray-700 hover:text-[#FF6B00]">Produk</a>
             <a href="{{ route('admin.manajemen') }}" class="nav-link text-gray-700 hover:text-[#FF6B00]">Manajemen</a>
             <a href="#ulasan" class="nav-link text-gray-700 hover:text-[#FF6B00]">Ulasan</a>
         </nav>
-        <div class="relative">
+        <div class="relative flex-shrink-0">
             <button id="profileDropdownBtn" class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center hover:bg-[#FF6B00] transition focus:outline-none">
                 <i class="fas fa-user-gear text-xl text-[#FF6B00] hover:text-white"></i>
             </button>

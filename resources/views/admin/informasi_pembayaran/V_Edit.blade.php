@@ -2,6 +2,11 @@
 
 @section('title', 'Edit Card Informasi - SIMBRO Admin')
 
+@section('header_title', 'Edit Informasi')
+@section('header_desc', 'Ubah judul dan deskripsi informasi yang sudah ada')
+@section('header_back_url', route('admin.informasi-pembayaran'))
+@section('header_back_text', 'Kembali ke Info. Pembayaran')
+
 @section('content')
 <style>
     .error-text {
@@ -24,20 +29,10 @@
     }
 </style>
 
-<div class="min-h-screen flex flex-col md:flex-row">
-    <div class="w-full md:w-80 bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] flex flex-col justify-center px-10 py-10 text-white shadow-xl">
-        <img src="{{ asset('images/logo-simbro-2.png') }}" class="h-28 w-28 mb-4">
-        <h1 class="text-3xl font-bold mb-3">Edit Informasi</h1>
-        <p class="text-orange-100 text-sm mb-4 leading-relaxed">Ubah judul dan deskripsi informasi yang sudah ada</p>
-        <div class="mt-3">
-            <i class="fas fa-arrow-left"></i>
-            <a href="{{ route('admin.informasi-pembayaran') }}" class="inline-flex items-center gap-2 text-white hover:underline text-sm font-bold"> Kembali ke Info. Pembayaran</a>
-        </div>
-    </div>
-
+<div class="flex-1 flex flex-col bg-white">
     <div class="flex-1 bg-white p-6 md:p-10 flex items-center">
         <div class="max-w-4xl w-full mx-auto">
-            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+            <div class="card-form p-6">
                 <h2 class="text-xl font-bold text-gray-800 mb-5 border-l-4 border-[#FF6B00] pl-3">Edit Informasi</h2>
                 <form method="POST" action="{{ route('admin.informasi-pembayaran.update', $informasi->informasi_id) }}" id="formInformasi" novalidate>
                     @csrf
@@ -59,10 +54,10 @@
                         @enderror
                     </div>
                     <div class="flex justify-end gap-3">
-                        <a href="{{ route('admin.informasi-pembayaran') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2 rounded-lg font-semibold transition flex items-center gap-2">
+                        <a href="{{ route('admin.informasi-pembayaran') }}" class="bg-transparent border-2 border-red-600 text-red-600 hover:bg-red-50 hover:text-red-700 px-5 py-2 rounded-md font-semibold transition flex items-center gap-2">
                             <i class="fas fa-times"></i> Batal
                         </a>
-                        <button type="submit" id="submitBtn" class="bg-[#FF6B00] hover:bg-orange-700 text-white px-5 py-2 rounded-lg font-semibold shadow-sm transition flex items-center gap-2">
+                        <button type="submit" id="submitBtn" class="btn-orange px-5 py-2 rounded-md font-semibold shadow-sm transition flex items-center gap-2">
                             <i class="fas fa-save"></i> Simpan
                         </button>
                     </div>

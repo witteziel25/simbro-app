@@ -30,7 +30,16 @@ class C_Chatbot extends Controller
         $limitedConversation = array_slice($conversation, -10);
         session()->put('chatbot_conversation', $limitedConversation);
 
-        $systemPrompt = config('groq.system_prompt', 'Kamu adalah asisten AI dari SIMBRO. Pengetahuanmu hanya terbatas pada peternakan ayam broiler, produk SIMBRO, dan cara kerja website SIMBRO.');
+        $promptFile = storage_path('app/chatbot_prompt.json');
+        $systemPrompt = 'Kamu adalah asisten AI dari SIMBRO...';
+        
+        if (file_exists($promptFile)) {
+            $promptData = json_decode(file_get_contents($promptFile), true);
+            if (isset($promptData['system_prompt'])) {
+                $systemPrompt = $promptData['system_prompt'];
+            }
+        }
+
         $messages = array_merge(
             [['role' => 'system', 'content' => $systemPrompt]],
             $limitedConversation

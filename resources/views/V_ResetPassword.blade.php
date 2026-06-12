@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="min-h-screen flex items-center justify-center p-6">
-    <div class="max-w-md w-full bg-white rounded-3xl shadow-xl border p-8">
+    <div class="max-w-md w-full card-form p-8">
         <div class="text-center mb-6">
             <i class="fas fa-lock text-4xl text-[#FF6B00]"></i>
             <h2 class="text-2xl font-black mt-2">Buat Password Baru</h2>
@@ -51,13 +51,16 @@
                     <div class="text-red-500 text-xs mt-1 text-left">{{ $message }}</div>
                 @enderror
             </div>
-            <button type="submit" class="w-full bg-[#FF6B00] hover:bg-orange-700 text-white font-bold py-3 rounded-xl shadow-lg transition">
+            <button type="submit" class="w-full bg-[#FF6B00] text-white hover:bg-orange-700 font-bold py-3 rounded-md transition">
                 Reset Password
             </button>
             <div class="text-center">
                 <a href="{{ route('login') }}" class="text-sm text-gray-500 hover:text-[#FF6B00]">← Kembali ke Login</a>
             </div>
         </form>
+    </div>
+    <div class="mt-6 text-center text-xs text-gray-400">
+        &copy; 2026 CV. Mitra Gemuk Bersama. All Rights Reserved.
     </div>
 </div>
 

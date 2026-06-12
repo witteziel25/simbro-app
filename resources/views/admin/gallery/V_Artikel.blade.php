@@ -2,22 +2,13 @@
 
 @section('title', $gallery->judul . ' - SIMBRO')
 
+@section('header_title', 'Konten Gallery')
+@section('header_desc', 'Temukan informasi menarik dari kami')
+@section('header_back_url', url()->previous())
+@section('header_back_text', 'Kembali ke Gallery')
+
 @section('content')
-<div class="min-h-screen bg-white flex flex-col">
-    <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10 z-10 shadow-sm flex-shrink-0">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div class="flex items-center gap-4">
-                <img src="{{ asset('images/logo-simbro-2.png') }}" class="h-12 w-auto">
-                <div>
-                    <h1 class="text-2xl font-bold">Konten Gallery</h1>
-                    <p class="text-orange-100 text-sm">Temukan informasi menarik dari kami</p>
-                </div>
-            </div>
-            <div>
-             <i class="fas fa-arrow-left"></i> <a href="{{ url()->previous() }}" class="inline-flex items-center gap-2 text-white hover:underline text-sm font-bold"> Kembali ke Gallery</a>
-            </div>
-        </div>
-    </div>
+<div class="flex-1 bg-white flex flex-col">
 
     <div class="w-full flex-1 grid grid-cols-1 md:grid-cols-2">
         <div class="relative w-full h-[280px] sm:h-[380px] md:h-auto min-h-[400px] md:min-h-screen bg-gray-50 overflow-hidden">
@@ -49,12 +40,12 @@
 
                 @if(session('role') == 1)
                     <div class="mt-12 flex justify-end gap-4 border-t border-gray-100 pt-8">
-                        <a href="{{ route('admin.gallery.V_Edit', $gallery->gallery_id) }}" class="inline-flex items-center justify-center gap-2.5 px-6 py-2.5 rounded-full border-2 border-[#FF7A1D] text-[#FF7A1D] bg-white hover:bg-orange-50 font-bold transition-all duration-200 min-w-[125px] shadow-sm">
+                        <a href="{{ route('admin.gallery.V_Edit', $gallery->gallery_id) }}" class="inline-flex items-center justify-center gap-2.5 px-6 py-2.5 rounded-md border-2 border-[#FF7A1D] text-[#FF7A1D] bg-white hover:bg-orange-50 font-bold transition-all duration-200 min-w-[125px] shadow-sm">
                             <i class="fas fa-edit text-base"></i> Edit
                         </a>
                         <form action="{{ route('admin.gallery.destroy', $gallery->gallery_id) }}" method="POST" id="deleteForm" class="inline">
                             @csrf @method('DELETE')
-                            <button type="button" id="deleteBtn" class="inline-flex items-center justify-center gap-2.5 px-6 py-2.5 rounded-full border-2 border-red-500 text-red-500 bg-white hover:bg-red-50 font-bold transition-all duration-200 min-w-[125px] shadow-sm cursor-pointer">
+                            <button type="button" id="deleteBtn" class="inline-flex items-center justify-center gap-2.5 px-6 py-2.5 rounded-md border-2 border-red-500 text-red-500 bg-white hover:bg-red-50 font-bold transition-all duration-200 min-w-[125px] shadow-sm cursor-pointer">
                                 <i class="fas fa-trash-alt text-base"></i> Hapus
                             </button>
                         </form>

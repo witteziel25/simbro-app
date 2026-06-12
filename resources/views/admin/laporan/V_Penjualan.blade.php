@@ -2,6 +2,11 @@
 
 @section('title', 'Laporan Penjualan - SIMBRO Admin')
 
+@section('header_title', 'Laporan Penjualan')
+@section('header_desc', 'Statistik pendapatan dan transaksi')
+@section('header_back_url', route('admin.manajemen'))
+@section('header_back_text', 'Kembali ke Manajemen')
+
 @section('content')
 <style>
     .stats-card {
@@ -20,25 +25,10 @@
     }
 </style>
 
-<div class="min-h-screen bg-gray-50">
-    <div class="bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] text-white px-6 py-6 md:px-10">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div class="flex items-center gap-4">
-                <img src="{{ asset('images/logo-simbro-2.png') }}" alt="SIMBRO" class="h-12 w-auto">
-                <div>
-                    <h1 class="text-2xl font-bold">Laporan Penjualan</h1>
-                    <p class="text-orange-100 text-sm">Statistik pendapatan dan transaksi</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-2">
-                <i class="fas fa-arrow-left"></i>
-                <a href="{{ route('admin.manajemen') }}" class="inline-flex items-center gap-2 text-white hover:underline transition text-sm font-bold"> Kembali ke Manajemen</a>
-            </div>
-        </div>
-    </div>
+<div class="flex-1 bg-white">
 
     <div class="max-w-7xl mx-auto py-8 px-4">
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-8">
+        <div class="card-form p-5 mb-8">
             <form method="GET" class="flex flex-wrap items-end gap-4">
                 <div>
                     <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Tanggal Mulai</label>
@@ -48,13 +38,13 @@
                     <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Tanggal Selesai</label>
                     <input type="date" name="tanggal_selesai" value="{{ request('tanggal_selesai', \Carbon\Carbon::today()->toDateString()) }}" class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-44">
                 </div>
-                <button type="submit" class="bg-[#FF6B00] hover:bg-orange-700 text-white px-5 py-2 rounded-lg text-sm font-bold transition shadow-sm">Filter</button>
-                <a href="{{ route('admin.laporan.V_Penjualan') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-lg text-sm font-bold transition">Reset</a>
+                <button type="submit" class="btn-orange px-5 py-2 rounded-md text-sm font-bold transition shadow-sm">Filter</button>
+                <a href="{{ route('admin.laporan.V_Penjualan') }}" class="bg-[#FF6B00] border-2 border-[#FF6B00] text-white hover:bg-[#e66000] hover:border-[#e66000] px-5 py-2 rounded-md text-sm font-bold transition">Reset</a>
             </form>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="stats-card bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+            <div class="stats-card card-form p-5 shadow-sm">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">TOTAL PENDAPATAN</p>
@@ -63,7 +53,7 @@
                     <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center"><i class="fas fa-chart-line text-green-600"></i></div>
                 </div>
             </div>
-            <div class="stats-card bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+            <div class="stats-card card-form p-5 shadow-sm">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">TOTAL TRANSAKSI SUKSES</p>
@@ -72,7 +62,7 @@
                     <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center"><i class="fas fa-shopping-cart text-blue-600"></i></div>
                 </div>
             </div>
-            <div class="stats-card bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+            <div class="stats-card card-form p-5 shadow-sm">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">DIBATALKAN</p>
@@ -84,7 +74,7 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+            <div class="card-form p-5">
                 <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
                     <i class="fas fa-chart-line text-[#FF6B00]"></i>
                     <h3 class="font-semibold text-gray-800">Grafik Pendapatan (Juta Rupiah)</h3>
@@ -93,7 +83,7 @@
                     <canvas id="chartPendapatan"></canvas>
                 </div>
             </div>
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+            <div class="card-form p-5">
                 <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
                     <i class="fas fa-chart-bar text-[#FF6B00]"></i>
                     <h3 class="font-semibold text-gray-800">Grafik Status Transaksi</h3>

@@ -2,21 +2,19 @@
 
 @section('title', 'Tambah Produk')
 
+@section('header_title', 'Tambah Produk')
+@section('header_desc', 'Lengkapi data produk untuk menambahkannya ke katalog. Pastikan semua field terisi dengan benar. Stok & harga harus positif.')
+@section('header_back_url', route('admin.home') . '#produk')
+@section('header_back_text', 'Kembali ke Daftar Produk')
+
 @section('content')
 
-<div class="min-h-screen flex flex-col md:flex-row">
-    <div class="w-full md:w-80 bg-gradient-to-br from-[#FF7A1D] to-[#CD5500] flex flex-col justify-center px-10 py-10 text-white">
-        <img src="{{ asset('images/logo-simbro-2.png') }}" alt="SIMBRO" class="h-28 w-28 mb-6">
-        <h1 class="text-3xl font-bold mb-3">Tambah Produk</h1>
-        <p class="text-white-100 text-sm mb-4">Lengkapi data produk untuk menambahkannya ke katalog. Pastikan semua field terisi dengan benar. Stok & harga harus positif.</p>
-        <div class="mb-5 mt-3">
-            <i class="fas fa-arrow-left"></i> <a href="{{ route('admin.home') }}#produk" class="inline-flex items-center gap-2 text-white hover:underline transition text-l font-bold"> Kembali ke Daftar Produk</a>
-        </div>
-    </div>
-
-    <div class="flex-1 bg-white p-6 md:p-32 overflow-y-auto">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-xl font-bold text-gray-800 mb-5 border-l-4 border-[#FF6B00] pl-3">Form Tambah Produk</h2>
+<div class="flex-1 flex flex-col bg-white">
+    <div class="flex-1 p-6 md:p-12 overflow-y-auto bg-gray-50/30 flex items-center">
+        <div class="max-w-4xl w-full mx-auto card-form p-8">
+            <div class="mb-8">
+                <h2 class="text-xl font-bold text-gray-800 border-l-4 border-[#FF6B00] pl-3">Form Tambah Produk</h2>
+            </div>
 
             @if($errors->any())
                 <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-3 mb-5 text-sm rounded">
@@ -69,10 +67,10 @@
                 </div>
 
                 <div class="flex justify-end gap-3 mt-6 pt-3 border-t border-gray-100">
-                    <a href="{{ route('admin.home') }}#produk" class="inline-flex items-center gap-2 px-5 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-medium">
+                    <a href="{{ route('admin.home') }}#produk" class="inline-flex items-center gap-2 px-5 py-2 bg-transparent border-2 border-red-500 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-md transition font-medium">
                         <i class="fas fa-times"></i> Batal
                     </a>
-                    <button type="submit" id="submitBtn" class="inline-flex items-center gap-2 px-5 py-2 bg-[#FF6B00] text-white rounded-lg hover:bg-orange-700 transition font-medium">
+                    <button type="submit" id="submitBtn" class="inline-flex items-center gap-2 px-5 py-2 btn-orange rounded-md hover:bg-orange-700 transition font-medium">
                         <i class="fas fa-save"></i> Simpan
                     </button>
                 </div>
