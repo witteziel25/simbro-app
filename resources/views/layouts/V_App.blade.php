@@ -33,15 +33,19 @@
 </head>
 
 <body class="font-sans antialiased">
-    @if(session('role') == 1)
-        @include('partials.V_NavbarAdmin')
-    @else
-        @include('partials.V_Navbar')
+    @if(!isset($hide_navbar))
+        @if(session('role') == 1)
+            @include('partials.V_NavbarAdmin')
+        @else
+            @include('partials.V_Navbar')
+        @endif
     @endif
     <main>
         @yield('content')
     </main>
-    @include('partials.V_Footer')
+    @if(!isset($hide_footer))
+        @include('partials.V_Footer')
+    @endif
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 

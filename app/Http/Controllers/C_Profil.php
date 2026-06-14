@@ -122,4 +122,15 @@ class C_Profil extends Controller
         $customers = M_User::where('role', 0)->get();
         return view('admin.V_DataCustomer', compact('customers'));
     }
+
+    // --- Toggle Status Customer (Admin) ---
+    public function toggleCustomerStatus($id)
+    {
+        $customer = M_User::findOrFail($id);
+        $customer->is_active = !$customer->is_active;
+        $customer->save();
+
+        $status = $customer->is_active ? 'diaktifkan' : 'dinonaktifkan';
+        return redirect()->back()->with(['lightbox_message' => "Akun customer berhasil {$status}", 'lightbox_type' => 'success']);
+    }
 }

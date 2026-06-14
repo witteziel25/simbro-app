@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Route;
 // LANDING & AUTH
 Route::get('/', fn() => view('V_Landing'))->name('landing');
 Route::get('/login', [C_Authentication::class, 'showFormLogin'])->name('login');
+Route::get('/disabled', function() {
+    if (!session('nama_lengkap')) {
+        return redirect()->route('login');
+    }
+    return view('customer.V_Disabled');
+})->name('customer.disabled');
 Route::get('/register', [C_Authentication::class, 'showFormRegister'])->name('register');
 Route::post('/login', [C_Authentication::class, 'klikLogin'])->name('login.submit');
 Route::post('/register', [C_Authentication::class, 'klikRegister'])->name('register.submit');
@@ -40,6 +46,7 @@ Route::middleware(['role:1'])->prefix('admin')->group(function () {
     Route::get('/profile', [C_Profil::class, 'showAdminProfil'])->name('admin.profile');
     Route::post('/profile/update', [C_Profil::class, 'klikUpdateAdminProfil'])->name('admin.profile.update');
     Route::get('/data-customer', [C_Profil::class, 'showDataCustomer'])->name('admin.data.customer');
+    Route::post('/data-customer/{id}/toggle', [C_Profil::class, 'toggleCustomerStatus'])->name('admin.customer.toggle');
 });
 
 // PRODUK (hanya admin)

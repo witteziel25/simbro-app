@@ -42,6 +42,10 @@ class C_Authentication extends Controller
         $user = M_User::where('username', $request->username)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
+            if ($user->role == 0 && !$user->is_active) {
+                return redirect()->route('customer.disabled')->with('nama_lengkap', $user->nama_lengkap);
+            }
+
             session([
                 'user_logged_in' => true,
                 'user_id' => $user->user_id,
