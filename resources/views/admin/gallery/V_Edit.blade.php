@@ -35,7 +35,7 @@
                     @endif
                     <input type="file" name="gambar" id="gambar" accept="image/*" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                     <div id="error-gambar" class="error-text"></div>
-                    <p class="error-text" style="color: #6b7280;">Maksimal 30 MB (jpeg, png, jpg)</p>
+                    <p class="error-text" style="color: #6b7280;">Maksimal 5 MB (jpeg, png, jpg)</p>
                 </div>
 
                 <div>
@@ -180,8 +180,8 @@
 
         const gambar = gambarInput.files[0];
         if (gambar) {
-            if (gambar.size > 30 * 1024 * 1024) {
-                errors.gambar = 'Ukuran gambar maksimal 30 MB';
+            if (gambar.size > 5 * 1024 * 1024) {
+                errors.gambar = 'Ukuran gambar maksimal 5 MB';
                 hasImageError = true;
             }
             if (!['image/jpeg', 'image/png', 'image/jpg'].includes(gambar.type)) {

@@ -22,7 +22,7 @@ class C_Gallery extends Controller
             'judul'      => 'required|string|max:50',
             'keterangan' => 'required|string|max:255',
             'artikel'    => 'required|string|max:2000',
-            'gambar'     => 'required|image|mimes:jpeg,png,jpg|max:30000',
+            'gambar'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
         ], [
             'judul.required'      => 'Judul harus diisi',
             'judul.max'           => 'Jumlah karakter maksimal adalah 50 karakter',
@@ -33,7 +33,7 @@ class C_Gallery extends Controller
             'gambar.required'     => 'Belum ada gambar yang dimuat',
             'gambar.image'        => 'File harus berupa gambar',
             'gambar.mimes'        => 'Format gambar harus jpeg, png, atau jpg',
-            'gambar.max'          => 'Ukuran gambar maksimal 30 MB',
+            'gambar.max'          => 'Ukuran gambar maksimal 5 MB',
         ]);
 
         if ($validator->fails()) {
@@ -103,7 +103,7 @@ class C_Gallery extends Controller
             'judul'      => 'required|string|max:50',
             'keterangan' => 'required|string|max:255',
             'artikel'    => 'required|string|max:2000',
-            'gambar'     => 'nullable|image|mimes:jpeg,png,jpg|max:30000',
+            'gambar'     => 'nullable|image|mimes:jpeg,png,jpg|max:5000',
         ], [
             'judul.required'      => 'Judul harus diisi',
             'judul.max'           => 'Jumlah karakter maksimal adalah 50 karakter',
@@ -113,7 +113,7 @@ class C_Gallery extends Controller
             'artikel.max'         => 'Jumlah karakter maksimal adalah 2000 karakter',
             'gambar.image'        => 'File harus berupa gambar',
             'gambar.mimes'        => 'Format gambar harus jpeg, png, atau jpg',
-            'gambar.max'          => 'Ukuran gambar maksimal 30 MB',
+            'gambar.max'          => 'Ukuran gambar maksimal 5 MB',
         ]);
 
         if ($validator->fails()) {

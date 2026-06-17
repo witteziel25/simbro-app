@@ -19,7 +19,7 @@
                     <label class="block font-semibold text-gray-800 mb-1">Gambar</label>
                     <input type="file" name="gambar" id="gambar" accept="image/*" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                     <div id="error-gambar" class="error-text"></div>
-                    <p class="error-text" style="color: #6b7280;">Maksimal ukuran 30 MB (jpeg, png, jpg)</p>
+                    <p class="error-text" style="color: #6b7280;">Maksimal ukuran 5 MB (jpeg, png, jpg)</p>
                 </div>
                 <div>
                     <label class="block font-semibold text-gray-800 mb-1">Judul <span class="text-sm font-normal text-gray-500">(maksimal 50 karakter)</span></label>
@@ -165,8 +165,8 @@
             errors.gambar = 'Belum ada gambar yang dimuat';
             hasEmpty = true;
         } else {
-            if (gambar.size > 30 * 1024 * 1024) {
-                errors.gambar = 'Ukuran gambar maksimal 30 MB';
+            if (gambar.size > 5 * 1024 * 1024) {
+                errors.gambar = 'Ukuran gambar maksimal 5 MB';
                 hasImageError = true;
             }
             if (!['image/jpeg', 'image/png', 'image/jpg'].includes(gambar.type)) {
