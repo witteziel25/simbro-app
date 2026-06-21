@@ -242,12 +242,15 @@
             })
             .then(data => {
                 if (data.success) {
-                    if (typeof showLightbox === 'function') {
+                    if (typeof showLightboxCustom === 'function') {
+                        showLightboxCustom(data.message, 'success', () => location.reload());
+                    } else if (typeof showLightbox === 'function') {
                         showLightbox(data.message, 'success');
+                        setTimeout(() => location.reload(), 1500);
                     } else {
                         alert(data.message);
+                        location.reload();
                     }
-                    setTimeout(() => location.reload(), 1500);
                 } else {
                     let errorMsg = data.message || 'Harap isi data dengan benar';
                     if (typeof showLightbox === 'function') {

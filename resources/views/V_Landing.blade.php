@@ -1,6 +1,6 @@
 @extends('layouts.V_Auth')
 
-@section('title', 'SIMBRO - Mitra Ayam Broiler Premium')
+@section('title', 'SIMBRO - Mitra Peternak Ayam Broiler')
 
 @section('content')
 

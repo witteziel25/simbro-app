@@ -126,8 +126,12 @@ function toggleDetail(element) {
 
 /* Lightbox helper: tampilkan pesan lalu jalankan callback setelah ditutup */
 function showLightboxAndThen(message, callback) {
+    showLightboxCustom(message, 'error', callback);
+}
+
+function showLightboxCustom(message, type, callback) {
     if (typeof showLightbox === 'function') {
-        showLightbox(message, 'error');
+        showLightbox(message, type);
         const interval = setInterval(() => {
             const modal = document.getElementById('lightboxModal');
             if (modal && modal.classList.contains('invisible')) {

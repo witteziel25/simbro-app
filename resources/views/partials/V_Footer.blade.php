@@ -5,7 +5,7 @@
                 <img src="{{ asset('images/logo-simbro-1.png') }}" alt="SIMBRO" class="w-8 h-8 object-contain">
                 <span class="font-black text-xl text-[#FF6B00]">SIMBRO</span>
             </div>
-            <p class="text-gray-600 text-sm mt-3">Solusi digital pasokan ayam broiler premium.</p>
+            <p class="text-gray-600 text-sm mt-3">Solusi digital pasokan ayam broiler lokal premium.</p>
             <div class="flex gap-4 mt-4">
                 <a href="#" class="text-gray-500 hover:text-[#FF6B00]"><i class="fab fa-instagram"></i></a>
                 <a href="#" class="text-gray-500 hover:text-[#FF6B00]"><i class="fab fa-facebook"></i></a>

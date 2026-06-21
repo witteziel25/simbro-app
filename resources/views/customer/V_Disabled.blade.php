@@ -16,9 +16,15 @@
         <h1 class="text-2xl font-bold text-gray-800 mb-4">Akun Anda Dinonaktifkan</h1>
 
         <!-- Teks informasi -->
-        <p class="text-gray-600 mb-8 leading-relaxed">
+        <p class="text-gray-600 mb-6 leading-relaxed">
             Mohon maaf <strong>{{ session('nama_lengkap', 'Customer') }}</strong>, saat ini akun anda sedang dinonaktifkan karena alasan tertentu. Silahkan menghubungi nomor bantuan (<a href="https://wa.me/628819124538" class="text-[#FF6B00] hover:underline font-semibold">+628819124538</a>) untuk menindaklanjuti.
         </p>
+
+        <div class="mb-6 text-center">
+            <a href="{{ route('login') }}" class="inline-block bg-[#FF6B00] text-white hover:bg-orange-700 font-bold py-2.5 px-6 rounded-md transition">
+                Kembali ke Masuk
+            </a>
+        </div>
 
         <!-- Logo SIMBRO -->
         <div class="flex items-center justify-center gap-2 pt-6 border-t border-gray-100 mt-2">

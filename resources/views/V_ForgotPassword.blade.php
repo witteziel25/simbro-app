@@ -3,7 +3,7 @@
 @section('title', 'Lupa Password - SIMBRO')
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center p-6">
+<div class="min-h-screen flex flex-col items-center justify-center p-6">
     <div class="max-w-md w-full card-form p-8 text-center">
         <div class="mb-6">
             <img src="{{ asset('images/logo-simbro-1.png') }}" alt="SIMBRO" class="w-20 h-20 mx-auto object-contain">
@@ -42,7 +42,7 @@
         </form>
     </div>
     <div class="mt-6 text-center text-xs text-gray-400">
-        &copy; 2026 CV. Mitra Gemuk Bersama. All Rights Reserved.
+        &copy; {{ date('Y') }} CV. Mitra Gemuk Bersama. All Rights Reserved.
     </div>
 </div>
 @endsection

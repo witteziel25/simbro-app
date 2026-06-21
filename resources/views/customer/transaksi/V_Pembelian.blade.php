@@ -330,7 +330,9 @@
                     btnKirim.classList.add('bg-[#FF6B00]', 'cursor-pointer', 'hover:bg-orange-700');
                     if (typeof showLightbox === 'function') showLightbox(data.message, 'success');
                 } else {
-                    if (typeof showLightbox === 'function') {
+                    if (typeof showLightboxCustom === 'function') {
+                        showLightboxCustom(data.message, 'error', () => scrollToProduk());
+                    } else if (typeof showLightbox === 'function') {
                         showLightbox(data.message, 'error');
                         setTimeout(() => scrollToProduk(), 1000);
                     } else {
@@ -340,7 +342,9 @@
                 }
             })
             .catch(() => {
-                if (typeof showLightbox === 'function') {
+                if (typeof showLightboxCustom === 'function') {
+                    showLightboxCustom('Terjadi kesalahan saat checkout', 'error', () => scrollToProduk());
+                } else if (typeof showLightbox === 'function') {
                     showLightbox('Terjadi kesalahan saat checkout', 'error');
                     setTimeout(() => scrollToProduk(), 1000);
                 } else {
@@ -402,7 +406,9 @@
 
     btnKirim.addEventListener('click', function() {
         if (!buktiFile.files.length) {
-            if (typeof showLightbox === 'function') {
+            if (typeof showLightboxCustom === 'function') {
+                showLightboxCustom('Harap pilih file bukti pembayaran', 'error', () => scrollToProduk());
+            } else if (typeof showLightbox === 'function') {
                 showLightbox('Harap pilih file bukti pembayaran', 'error');
                 setTimeout(() => scrollToProduk(), 1000);
             } else {
@@ -421,7 +427,11 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                if (typeof showLightbox === 'function') {
+                if (typeof showLightboxCustom === 'function') {
+                    showLightboxCustom(data.message, 'success', () => {
+                        window.location.href = '{{ route("customer.riwayat.transaksi") }}';
+                    });
+                } else if (typeof showLightbox === 'function') {
                     showLightbox(data.message, 'success');
                     setTimeout(() => {
                         window.location.href = '{{ route("customer.riwayat.transaksi") }}';
@@ -431,7 +441,9 @@
                     window.location.href = '{{ route("customer.riwayat.transaksi") }}';
                 }
             } else {
-                if (typeof showLightbox === 'function') {
+                if (typeof showLightboxCustom === 'function') {
+                    showLightboxCustom(data.message, 'error', () => scrollToProduk());
+                } else if (typeof showLightbox === 'function') {
                     showLightbox(data.message, 'error');
                     setTimeout(() => scrollToProduk(), 1000);
                 } else {
@@ -441,7 +453,9 @@
             }
         })
         .catch(() => {
-            if (typeof showLightbox === 'function') {
+            if (typeof showLightboxCustom === 'function') {
+                showLightboxCustom('Terjadi kesalahan saat upload bukti', 'error', () => scrollToProduk());
+            } else if (typeof showLightbox === 'function') {
                 showLightbox('Terjadi kesalahan saat upload bukti', 'error');
                 setTimeout(() => scrollToProduk(), 1000);
             } else {

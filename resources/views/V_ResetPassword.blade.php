@@ -3,7 +3,7 @@
 @section('title', 'Reset Password - SIMBRO')
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center p-6">
+<div class="min-h-screen flex flex-col items-center justify-center p-6">
     <div class="max-w-md w-full card-form p-8">
         <div class="text-center mb-6">
             <i class="fas fa-lock text-4xl text-[#FF6B00]"></i>
@@ -60,7 +60,7 @@
         </form>
     </div>
     <div class="mt-6 text-center text-xs text-gray-400">
-        &copy; 2026 CV. Mitra Gemuk Bersama. All Rights Reserved.
+        &copy; {{ date('Y') }} CV. Mitra Gemuk Bersama. All Rights Reserved.
     </div>
 </div>
 

@@ -162,7 +162,11 @@
                         redirectUrl = '{{ route("admin.transaksi.V_Aktif") }}';
                     }
 
-                    if (typeof showLightbox === 'function') {
+                    if (typeof showLightboxCustom === 'function') {
+                        showLightboxCustom(data.message, 'success', () => {
+                            window.location.href = redirectUrl;
+                        });
+                    } else if (typeof showLightbox === 'function') {
                         showLightbox(data.message, 'success');
                         setTimeout(() => {
                             window.location.href = redirectUrl;

@@ -57,8 +57,8 @@
         </div>
         <div class="grid md:grid-cols-4 gap-8">
             <div class="card-white p-6 text-center"><div class="w-16 h-16 bg-[#FF6B00] rounded-2xl flex items-center justify-center mx-auto"><i class="fas fa-leaf text-white text-2xl"></i></div><h3 class="font-bold mt-4">Ayam Sehat & Alami</h3><p class="text-gray-500 text-sm">Pakan alami, tanpa hormon.</p></div>
-            <div class="card-white p-6 text-center"><div class="w-16 h-16 bg-[#FF6B00] rounded-2xl flex items-center justify-center mx-auto"><i class="fas fa-truck-fast text-white text-2xl"></i></div><h3 class="font-bold mt-4">Pengiriman Cepat</h3><p class="text-gray-500 text-sm">Sampai dalam 2 jam.</p></div>
-            <div class="card-white p-6 text-center"><div class="w-16 h-16 bg-[#FF6B00] rounded-2xl flex items-center justify-center mx-auto"><i class="fas fa-chart-line text-white text-2xl"></i></div><h3 class="font-bold mt-4">Sistem Terintegrasi</h3><p class="text-gray-500 text-sm">Pantau pesanan realtime.</p></div>
+            <div class="card-white p-6 text-center"><div class="w-16 h-16 bg-[#FF6B00] rounded-2xl flex items-center justify-center mx-auto"><i class="fas fa-truck-fast text-white text-2xl"></i></div><h3 class="font-bold mt-4">Pengiriman Cepat</h3><p class="text-gray-500 text-sm">Sampai dalam 3 jam.</p></div>
+            <div class="card-white p-6 text-center"><div class="w-16 h-16 bg-[#FF6B00] rounded-2xl flex items-center justify-center mx-auto"><i class="fas fa-robot text-white text-2xl"></i></div><h3 class="font-bold mt-4">Dukungan AI Chatbot</h3><p class="text-gray-500 text-sm">Asisten cerdas siap membantu.</p></div>
             <div class="card-white p-6 text-center"><div class="w-16 h-16 bg-[#FF6B00] rounded-2xl flex items-center justify-center mx-auto"><i class="fas fa-hand-holding-usd text-white text-2xl"></i></div><h3 class="font-bold mt-4">Harga Kompetitif</h3><p class="text-gray-500 text-sm">Langsung dari sumber.</p></div>
         </div>
     </div>
@@ -148,7 +148,7 @@
                         Kami menerapkan standar higienis modern dari peternakan hingga ke meja Anda.
                         Setiap ayam dipastikan sehat, segar, dan diproses tanpa bahan pengawet atau hormon.
                         Dengan sertifikasi HALAL and sistem rantai dingin terintegrasi, kepercayaan pelanggan adalah prioritas utama kami.
-                        Telah dipercaya oleh <span class="font-semibold text-[#FF6B00]">500+ mitra usaha</span> di seluruh Indonesia.
+                        Telah dipercaya oleh <span class="font-semibold text-[#FF6B00]">banyak mitra</span> di Kabupaten Jember.
                     </p>
                     <div class="mt-4 flex flex-wrap gap-2 text-[10px] md:text-xs text-gray-500">
                         <i class="fas fa-check-circle text-green-500"></i> <span>Teruji secara mikrobiologi</span>
